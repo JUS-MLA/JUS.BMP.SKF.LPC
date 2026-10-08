@@ -5,57 +5,71 @@
 <title>JUS Dashboard</title>
 <style>
 body{margin:0;background:#020a18;color:#fff;font-family:Arial;min-height:100vh;}
-.header{background:rgba(0,0,0,0.8);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00c6ff;box-shadow:0 0 15px rgba(0,198,255,0.3);}
-.header h2{margin:0;color:#00c6ff;letter-spacing:1px;}
+.header{background:#000;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00c6ff;position:sticky;top:0;z-index:10;}
+.header h2{margin:0;color:#00c6ff;font-size:16px;letter-spacing:1px;}
 .header button{background:#ff3b3b;border:none;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:bold;}
-.container{padding:20px;max-width:900px;margin:auto;}
-.card{background:rgba(0,0,0,0.6);border:1px solid #00c6ff;border-radius:15px;padding:20px;margin-bottom:20px;box-shadow:0 0 20px rgba(0,198,255,0.2);}
-.card h3{margin-top:0;color:#00c6ff;}
-.info p{margin:8px 0;color:#ccc;}
+.container{padding:20px;max-width:1000px;margin:auto;}
+.card{background:#000;border:1px solid #00c6ff;border-radius:15px;padding:20px;margin-bottom:20px;box-shadow:0 0 15px rgba(0,198,255,0.3);}
+.card h3{margin-top:0;color:#00c6ff;border-bottom:1px solid #333;padding-bottom:10px;}
+.info p{margin:12px 0;color:#aaa;font-size:14px;display:flex;justify-content:space-between;border-bottom:1px dashed #222;padding-bottom:8px;}
 .info span{color:#fff;font-weight:bold;}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px;}
-.grid .box{background:linear-gradient(135deg,#00c6ff,#0072ff);padding:20px;border-radius:12px;text-align:center;font-weight:bold;font-size:18px;}
-@media(max-width:600px){.grid{grid-template-columns:1fr;}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin-top:20px;}
+.box{background:linear-gradient(135deg,#00c6ff,#0072ff);padding:25px 15px;border-radius:12px;text-align:center;font-weight:bold;cursor:pointer;transition:0.2s;}
+.box:hover{transform:scale(1.05);box-shadow:0 0 15px #00c6ff;}
+.edit-note{background:#111;border:1px dashed #00ff88;color:#00ff88;padding:10px;border-radius:8px;text-align:center;font-size:12px;margin-bottom:20px;}
 </style>
 </head>
 <body>
 <div class="header">
-<h2>JUS OFFICIAL - DASHBOARD</h2>
+<h2>JUS OFFICIAL DASHBOARD</h2>
 <button onclick="logout()">LOGOUT</button>
 </div>
 
 <div class="container">
+
+<div class="edit-note">✅ এই Dashboard এখন Index থেকে আলাদা! Index এ হাত না দিয়েই এখানে কাজ করতে পারবা!</div>
+
 <div class="card">
 <h3>Organization Info</h3>
 <div class="info">
 <p>Organization Name: <span id="dName"></span></p>
-<p>Organization ID: <span id="dID"></span></p>
+<p>Organization User ID: <span id="dID"></span></p>
+<p>Branch Shop & Others: <span id="dBso"></span></p>
 <p>Mobile Number: <span id="dMobile"></span></p>
-<p>Login Status: <span style="color:#00ff88">Active ✅</span></p>
+<p>Login Time: <span id="dTime"></span></p>
 </div>
 </div>
 
 <div class="grid">
-<div class="box">Total Members<br>0</div>
-<div class="box">Total Collection<br>৳ 0</div>
-<div class="box">Notice<br>0</div>
-<div class="box">Reports<br>View</div>
+<div class="box">Members<br><br><span style="font-size:28px">0</span></div>
+<div class="box">Collection<br><br><span style="font-size:20px">৳ 0</span></div>
+<div class="box">Notice<br><br><span style="font-size:28px">0</span></div>
+<div class="box">Report<br><br><span>View</span></div>
 </div>
+
 </div>
 
 <script>
-// Check Login
+// AUTO LOAD - Index থেকে Data আসবে, না থাকলে Dummy দেখাবে যাতে কাজ করতে পারো
+document.getElementById("dName").innerText = localStorage.getItem("jus_orgName") || "JUS Official (Demo)";
+document.getElementById("dID").innerText = localStorage.getItem("jus_userID") || "DEMO123";
+document.getElementById("dBso").innerText = localStorage.getItem("jus_bso") || "Main Branch Shop";
+document.getElementById("dMobile").innerText = localStorage.getItem("jus_mobile") || "01700000000";
+document.getElementById("dTime").innerText = new Date().toLocaleString();
+
+// Logout করলে শুধু Index এ যাবে, Index এর Code Change হবে না
+function logout(){
+  // চাইলে Login Session Clear করবে, না চাইলে এই লাইন Comment করে দাও
+  // localStorage.removeItem("jus_login");
+  window.location.href="index.html";
+}
+
+// *** Security চাইলে নিচের 3 লাইন Active করো, তাহলে Login ছাড়া Dashboard এ ঢুকতে পারবে না ***
+/*
 if(localStorage.getItem("jus_login") !== "true"){
   window.location.href="index.html";
 }
-document.getElementById("dName").innerText = localStorage.getItem("jus_orgName") || "N/A";
-document.getElementById("dID").innerText = localStorage.getItem("jus_orgID") || "N/A";
-document.getElementById("dMobile").innerText = localStorage.getItem("jus_mobile") || "N/A";
-
-function logout(){
-  localStorage.removeItem("jus_login");
-  window.location.href="index.html";
-}
+*/
 </script>
 </body>
 </html>
