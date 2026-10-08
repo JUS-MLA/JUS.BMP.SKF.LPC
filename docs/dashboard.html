@@ -5,170 +5,118 @@
 <title>JUS Dashboard</title>
 <style>
 body{margin:0;background:#020a18;color:#fff;font-family:Arial;min-height:100vh;}
-.header{background:#000;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00c6ff;position:sticky;top:0;z-index:10;}
-.header h2{margin:0;color:#00c6ff;font-size:16px;letter-spacing:1px;}
-.header button{background:#ff3b3b;border:none;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:bold;}
-/* Main Layout - Bam Pashe Siral Line */
-.main{display:flex;max-width:1200px;margin:auto;}
-.sidebar{width:200px;background:#000;border-right:1px solid #00c6ff;min-height:calc(100vh - 55px);padding:10px;position:sticky;top:55px;}
-.side-title{color:#00c6ff;font-size:11px;border-bottom:1px solid #222;padding-bottom:6px;margin:5px 0;}
-.side-item{background:#111;border:1px solid #222;padding:10px 8px;margin:6px 0;border-radius:8px;cursor:pointer;font-size:12px;display:flex;justify-content:space-between;align-items:center;}
-.side-item:hover,.side-item.active{background:#00c6ff;color:#000;font-weight:bold;}
-.sub-options{display:none;margin-left:10px;margin-bottom:8px;}
-.sub-options div{background:#0a0a0a;border:1px dashed #00ff88;padding:7px 8px;margin:3px 0;border-radius:6px;font-size:11px;cursor:pointer;color:#aaa;}
-.sub-options div:hover{color:#00ff88;border-color:#00ff88;}
-.container{flex:1;padding:20px;max-width:1000px;}
-.card{background:#000;border:1px solid #00c6ff;border-radius:15px;padding:20px;margin-bottom:20px;box-shadow:0 0 15px rgba(0,198,255,0.3);}
-.card h3{margin-top:0;color:#00c6ff;border-bottom:1px solid #333;padding-bottom:10px;}
-.info p{margin:12px 0;color:#aaa;font-size:14px;display:flex;justify-content:space-between;border-bottom:1px dashed #222;padding-bottom:8px;}
+.header{background:#000;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00c6ff;position:sticky;top:0;z-index:10;}
+.header h2{margin:0;color:#00c6ff;font-size:11px;letter-spacing:1px;}
+.header button{background:#ff3b3b;border:none;color:#fff;padding:5px 12px;border-radius:6px;font-size:11px;font-weight:bold;cursor:pointer;}
+.main{display:flex;max-width:1400px;margin:auto;}
+.sidebar{width:160px;background:#000;border-right:1px solid #113355;min-height:calc(100vh - 40px);padding:8px;position:sticky;top:41px;}
+.side-title{color:#00c6ff;font-size:9px;margin:5px 0;}
+.side-item{background:#111;border:1px solid #222;padding:10px 8px;margin:5px 0;border-radius:6px;cursor:pointer;font-size:11px;}
+.side-item.active{background:#00c6ff;color:#000;font-weight:bold;box-shadow:0 0 10px #00c6ff;}
+.sub-options{margin-left:5px;margin-top:5px;}
+.sub-options div{background:#0a0a0a;border:1px solid #222;padding:6px 8px;margin:3px 0;border-radius:4px;font-size:10px;color:#aaa;cursor:pointer;}
+.container{flex:1;padding:10px;background:#020a18;}
+.edit-note{background:rgba(0,255,136,0.05);border:1px dashed #00ff88;color:#00ff88;padding:8px;border-radius:6px;text-align:center;font-size:10px;margin-bottom:10px;}
+.top-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+.stat-box{background:#000;border:1px solid #1a3a5a;border-radius:8px;padding:10px 5px;text-align:center;}
+.stat-box p{margin:0;color:#888;font-size:8px;}
+.stat-box span{color:#00ff88;font-weight:bold;font-size:13px;display:block;margin-top:4px;}
+.stat-box.total-id{border-color:#ff9a00;}
+.stat-box.total-id span{color:#00ff88;}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+.box{padding:18px 5px;border-radius:8px;text-align:center;font-weight:bold;cursor:pointer;font-size:11px;color:#000;}
+.box span{font-size:22px!important;display:block;margin-top:5px;color:#000;}
+.card{background:#000;border:1px solid #00c6ff;border-radius:10px;padding:12px;box-shadow:0 0 15px rgba(0,198,255,0.15);}
+.card h3{margin:0 0 10px 0;color:#00c6ff;font-size:12px;border-bottom:1px solid #222;padding-bottom:8px;}
+.info p{margin:0;color:#888;font-size:10px;display:flex;justify-content:space-between;border-bottom:1px solid #111;padding:8px 0;}
 .info span{color:#fff;font-weight:bold;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin-top:20px;}
-.box{background:linear-gradient(135deg,#00c6ff,#0072ff);padding:25px 15px;border-radius:12px;text-align:center;font-weight:bold;cursor:pointer;transition:0.2s;}
-.box:hover{transform:scale(1.05);box-shadow:0 0 15px #00c6ff;}
-.edit-note{background:#111;border:1px dashed #00ff88;color:#00ff88;padding:10px;border-radius:8px;text-align:center;font-size:12px;margin-bottom:20px;}
-/* Uporer New Stats - Fast List */
-.top-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:20px;}
-.stat-box{background:#000;border:1px solid #00c6ff;border-radius:12px;padding:15px 10px;text-align:center;cursor:pointer;transition:0.2s;}
-.stat-box:hover{transform:scale(1.03);box-shadow:0 0 10px #00c6ff;}
-.stat-box p{margin:0;color:#aaa;font-size:10px;}
-.stat-box span{color:#00ff88;font-weight:bold;font-size:15px;display:block;margin-top:5px;}
-.stat-box.total-id{border-color:#ff9a00;background:linear-gradient(135deg,#1a1200,#000);}
-/* ID Select Modal */
 #idModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:100;justify-content:center;align-items:center;}
-.modal-content{background:#000;border:2px solid #ff9a00;border-radius:15px;padding:20px;width:90%;max-width:380px;max-height:80vh;overflow-y:auto;}
-.id-option{background:#111;border:1px solid #333;padding:10px;margin:6px 0;border-radius:8px;cursor:pointer;font-size:12px;}
-.id-option:hover{background:#ff9a00;color:#000;}
-@media(max-width:768px){.main{flex-direction:column;}.sidebar{width:100%;min-height:auto;position:relative;top:0;display:flex;overflow-x:auto;gap:6px;padding:8px;}.side-title{display:none;}.side-item{white-space:nowrap;}.container{padding:12px;}.top-stats{grid-template-columns:repeat(2,1fr);}}
+.modal-content{background:#000;border:2px solid #ff9a00;border-radius:12px;padding:15px;width:85%;max-width:320px;}
+.id-option{background:#111;padding:10px;margin:5px 0;border-radius:6px;font-size:12px;cursor:pointer;}
+@media(max-width:700px){.top-stats{grid-template-columns:repeat(2,1fr);}.grid{grid-template-columns:repeat(2,1fr);}.main{flex-direction:column;}.sidebar{width:100%;min-height:auto;display:flex;overflow-x:auto;gap:5px;position:relative;top:0;}.side-title{display:none;}.side-item{white-space:nowrap;}}
 </style>
 </head>
 <body>
-<div class="header">
-<h2>JUS OFFICIAL DASHBOARD</h2>
-<button onclick="logout()">LOGOUT</button>
-</div>
-
+<div class="header"><h2>JUS OFFICIAL DASHBOARD</h2><button onclick="location.href='index.html'">LOGOUT</button></div>
 <div class="main">
-<!-- BAM PASHE SIRAL LINE - Branch Shop Click korle nise option -->
 <div class="sidebar">
 <div class="side-title">Menu Serial</div>
-<div class="side-item active" onclick="toggleSub('branchSub',this)">1. Branch ▶</div>
-<div id="branchSub" class="sub-options"><div onclick="openPage('branch')">Branch List</div><div onclick="openPage('branch')">Add Branch</div><div onclick="openPage('branch')">Branch Report</div></div>
-
-<div class="side-item" onclick="toggleSub('shopSub',this)">2. Shop ▶</div>
-<div id="shopSub" class="sub-options"><div onclick="openPage('shop')">Shop List</div><div>Shop Add (Only Admin)</div><div>Shop Report</div></div>
-
-<div class="side-item" onclick="toggleSub('othersSub',this)">3. Others ▶</div>
-<div id="othersSub" class="sub-options"><div onclick="openPage('others')">Others List</div></div>
-
-<div class="side-item" onclick="openPage('members')">4. Members</div>
+<div class="side-item active" onclick="toggleSub('branchSub')">1. Branch ►</div>
+<div id="branchSub" class="sub-options"><div onclick="goPage('branch')">Branch List</div><div>Add Branch</div><div>Branch Report</div></div>
+<div class="side-item" onclick="toggleSub('shopSub')">2. Shop ►</div>
+<div id="shopSub" class="sub-options"><div onclick="goPage('shop')">Shop List</div></div>
+<div class="side-item" onclick="toggleSub('othersSub')">3. Others ►</div>
+<div id="othersSub" class="sub-options"><div onclick="goPage('others')">Others List</div></div>
+<div class="side-item">4. Members</div>
 <div class="side-item">5. Collection</div>
 <div class="side-item">6. Notice</div>
 <div class="side-item">7. Report</div>
 </div>
-
 <div class="container">
 <div class="edit-note">✅ এই Dashboard এখন Index থেকে আলাদা! Index এ হাত না দিয়েই এখানে কাজ করতে পারবা!</div>
 
-<!-- NISE NISER GULA UPORE - FAST LIST - Click korle ID Select -->
 <div class="top-stats">
-<div class="stat-box"><p>Organization Name</p><span id="sOrgName">DEMO123</span></div>
+<div class="stat-box"><p>Organization Name</p><span id="sOrgName" style="color:#00ff88">DEMO123</span></div>
 <div class="stat-box total-id" onclick="openIDSelect()"><p>Organization Total ID - Click to Select ID</p><span id="sTotalID">0 ID</span></div>
-<div class="stat-box"><p>Daily Sale Amount</p><span>৳ <span id="sDailySaleAmt">0</span></span></div>
-<div class="stat-box"><p>Daily Sale Product</p><span id="sDailySalePro">0</span></div>
-<div class="stat-box"><p>Daily Purchase Product</p><span id="sDailyPurPro">0</span></div>
-<div class="stat-box"><p>Monthly Sale Amount</p><span>৳ <span id="sMonthlySaleAmt">0</span></span></div>
-<div class="stat-box"><p>Monthly Sale Product</p><span id="sMonthlySalePro">0</span></div>
-<div class="stat-box"><p>Monthly Purchase Product</p><span id="sMonthlyPurPro">0</span></div>
-<div class="stat-box"><p>Total Sale Amount</p><span>৳ <span id="sTotalSaleAmt">0</span></span></div>
-<div class="stat-box"><p>Total Sale Product</p><span id="sTotalSalePro">0</span></div>
-<div class="stat-box"><p>Total Purchase Product</p><span id="sTotalPurPro">0</span></div>
-<div class="stat-box"><p>Total EMI Amount</p><span>৳ <span id="sTotalEmi">0</span></span></div>
-<div class="stat-box"><p>Total Product Amount</p><span id="sTotalProAmt">0</span></div>
+<div class="stat-box"><p>Daily Sale Amount</p><span>৳ 0</span></div>
+<div class="stat-box"><p>Daily Sale Product</p><span>0</span></div>
+<div class="stat-box"><p>Daily Purchase Product</p><span>0</span></div>
+<div class="stat-box"><p>Monthly Sale Amount</p><span>৳ 0</span></div>
+<div class="stat-box"><p>Monthly Sale Product</p><span>0</span></div>
+<div class="stat-box"><p>Monthly Purchase Product</p><span>0</span></div>
+<div class="stat-box"><p>Total Sale Amount</p><span>৳ 0</span></div>
+<div class="stat-box"><p>Total Sale Product</p><span>0</span></div>
+<div class="stat-box"><p>Total Purchase Product</p><span>0</span></div>
+<div class="stat-box"><p>Total EMI Amount</p><span>৳ 0</span></div>
+<div class="stat-box"><p>Total Product Amount</p><span>0</span></div>
 </div>
 
-<!-- Ager Box Gula 100% Thik -->
 <div class="grid">
-<div class="box" style="background:linear-gradient(135deg,#00ff88,#00cc6a);color:#000;" onclick="openPage('branch')">Total Branch<br><br><span style="font-size:28px" id="totalBranch">0</span></div>
-<div class="box" style="background:linear-gradient(135deg,#ff9a00,#ff6a00);" onclick="openPage('shop')">Total Shop<br><br><span style="font-size:28px" id="totalShop">0</span></div>
-<div class="box" style="background:linear-gradient(135deg,#ff00c6,#b400ff);" onclick="openPage('others')">Total Others<br><br><span style="font-size:28px" id="totalOthers">0</span></div>
-<div class="box" onclick="openPage('members')">Members<br><br><span style="font-size:28px" id="memberCount">0</span></div>
-<div class="box">Collection<br><br><span style="font-size:20px">৳ 0</span></div>
-<div class="box">Notice<br><br><span style="font-size:28px">0</span></div>
-<div class="box">Report<br><br><span>View</span></div>
+<div class="box" style="background:#00ff88" onclick="goPage('branch')">Total Branch<br><span id="totalBranch">0</span></div>
+<div class="box" style="background:#ff9a00" onclick="goPage('shop')">Total Shop<br><span id="totalShop">0</span></div>
+<div class="box" style="background:#ff00c6;color:#fff" onclick="goPage('others')">Total Others<br><span id="totalOthers" style="color:#fff">0</span></div>
+<div class="box" style="background:#00c6ff">Members<br><span>0</span></div>
+<div class="box" style="background:#00c6ff">Collection<br><span style="font-size:14px">৳ 0</span></div>
+<div class="box" style="background:#00c6ff">Notice<br><span>0</span></div>
+<div class="box" style="background:#00c6ff">Report<br><span style="font-size:12px">View</span></div>
 </div>
 
-<!-- Organization Info NISE NIBA - Ager Sob 100% Thik -->
-<div class="card" style="margin-top:20px;">
+<div class="card">
 <h3>Organization Info</h3>
 <div class="info">
-<p>Organization Name: <span id="dName"></span></p>
-<p>Organization User ID: <span id="dID"></span></p>
-<p>Branch Shop & Others: <span id="dBso"></span></p>
-<p>Mobile Number: <span id="dMobile"></span></p>
+<p>Organization Name: <span id="dName">JUS Official (Demo)</span></p>
+<p>Organization User ID: <span id="dID">DEMO123</span></p>
+<p>Branch Shop & Others: <span id="dBso">Main Branch Shop</span></p>
+<p>Mobile Number: <span id="dMobile">01700000000</span></p>
 <p>Login Time: <span id="dTime"></span></p>
 </div>
 </div>
-
 </div>
 </div>
 
-<!-- ID Select Modal -->
-<div id="idModal">
-<div class="modal-content">
-<h3 style="color:#ff9a00;margin-top:0;text-align:center;">Select ID - Open ID Page</h3>
-<p style="color:#aaa;font-size:11px;text-align:center;">ID Select করলে Open ID হয়ে Page এ যাবে</p>
-<div id="idList"></div>
-<button onclick="closeIDSelect()" style="width:100%;margin-top:12px;background:#00c6ff;border:none;padding:10px;border-radius:8px;color:#fff;font-weight:bold;cursor:pointer;">Close</button>
-</div>
-</div>
+<div id="idModal"><div class="modal-content"><h3 style="color:#ff9a00;text-align:center;margin-top:0;font-size:14px;">Select ID - Open Page</h3><div id="idList"></div><button onclick="closeIDSelect()" style="width:100%;background:#00c6ff;border:none;padding:8px;border-radius:6px;color:#fff;margin-top:10px;">Close</button></div></div>
 
 <script>
-// === AGERT CODE 100% SAME - Kisu Missing Hobe Na ===
-let currentOrg = localStorage.getItem("jus_currentOrg") || localStorage.getItem("jus_userID") || "DEMO123";
-let role = localStorage.getItem("jus_role") || "CLIENT";
-
-document.getElementById("dName").innerText = localStorage.getItem(`jus_${currentOrg}_orgName`) || localStorage.getItem("jus_orgName") || "JUS Official (Demo)";
-document.getElementById("dID").innerText = currentOrg;
-document.getElementById("dBso").innerText = localStorage.getItem(`jus_${currentOrg}_bso`) || localStorage.getItem("jus_bso") || "Main Branch Shop";
-document.getElementById("dMobile").innerText = localStorage.getItem("jus_mobile") || "01700000000";
-document.getElementById("dTime").innerText = new Date().toLocaleString();
-
-// New Stats Load
-document.getElementById("sOrgName").innerText = currentOrg;
-document.getElementById("totalBranch").innerText = localStorage.getItem(`jus_${currentOrg}_totalBranch`) || "0";
-document.getElementById("totalShop").innerText = localStorage.getItem(`jus_${currentOrg}_totalShop`) || "0";
-document.getElementById("totalOthers").innerText = localStorage.getItem(`jus_${currentOrg}_totalOthers`) || "0";
-document.getElementById("memberCount").innerText = localStorage.getItem(`jus_${currentOrg}_members`) || "0";
-let totalID = parseInt(localStorage.getItem(`jus_${currentOrg}_totalBranch`)||0) + parseInt(localStorage.getItem(`jus_${currentOrg}_totalShop`)||0) + parseInt(localStorage.getItem(`jus_${currentOrg}_totalOthers`)||0);
-document.getElementById("sTotalID").innerText = totalID + " ID";
-
-function toggleSub(id, el){
-  let sub=document.getElementById(id);
-  let isOpen=sub.style.display==="block";
-  document.querySelectorAll('.sub-options').forEach(s=>s.style.display="none");
-  document.querySelectorAll('.side-item').forEach(s=>s.classList.remove('active'));
-  if(!isOpen){sub.style.display="block";el.classList.add('active');}
-}
-function openPage(type){
-  if(type==='branch') window.location.href=`branch.html?org=${currentOrg}`;
-  if(type==='shop') window.location.href=`shop.html?org=${currentOrg}`;
-  if(type==='others') window.location.href=`others.html?org=${currentOrg}`;
-  if(type==='members') window.location.href=`members.html?org=${currentOrg}`;
-}
-function logout(){ window.location.href="index.html"; }
-
-// ID Select - Click korle ID Selete caibe, Selected korle Open ID hoye page jabe
-function openIDSelect(){
-  let branches=JSON.parse(localStorage.getItem(`jus_${currentOrg}_branches`)||"[]");
-  let shops=JSON.parse(localStorage.getItem(`jus_${currentOrg}_shops`)||"[]");
-  let others=JSON.parse(localStorage.getItem(`jus_${currentOrg}_others`)||"[]");
-  let all=[...branches.map(b=>`BRANCH: ${b}`),...shops.map(s=>`SHOP: ${s}`),...others.map(o=>`OTHERS: ${o}`)];
-  if(all.length===0) all=[`${currentOrg}-ID-001`, `${currentOrg}-ID-002`, `${currentOrg}-ID-003`];
-  document.getElementById("idList").innerHTML=all.map((id,i)=>`<div class="id-option" onclick="openID('${id}')">${i+1}. ${id} - Open</div>`).join('');
-  document.getElementById("idModal").style.display="flex";
-}
+let currentOrg=localStorage.getItem("jus_currentOrg")||"DEMO123";
+let orgType=localStorage.getItem(`jus_${currentOrg}_type`)||"ALL";
+document.getElementById("sOrgName").innerText=currentOrg;
+document.getElementById("dID").innerText=currentOrg;
+document.getElementById("dName").innerText=localStorage.getItem(`jus_${currentOrg}_orgName`)||"JUS Official (Demo)";
+document.getElementById("dBso").innerText=localStorage.getItem(`jus_${currentOrg}_bso`)||"Main Branch Shop";
+document.getElementById("dTime").innerText=new Date().toLocaleString();
+document.getElementById("totalBranch").innerText=localStorage.getItem(`jus_${currentOrg}_totalBranch`)||"0";
+document.getElementById("totalShop").innerText=localStorage.getItem(`jus_${currentOrg}_totalShop`)||"0";
+document.getElementById("totalOthers").innerText=localStorage.getItem(`jus_${currentOrg}_totalOthers`)||"0";
+let tID=parseInt(localStorage.getItem(`jus_${currentOrg}_totalBranch`)||0)+parseInt(localStorage.getItem(`jus_${currentOrg}_totalShop`)||0)+parseInt(localStorage.getItem(`jus_${currentOrg}_totalOthers`)||0);
+document.getElementById("sTotalID").innerText=tID+" ID";
+function toggleSub(id){let el=document.getElementById(id);el.style.display=el.style.display==="block"?"none":"block";}
+function goPage(t){location.href=t+".html?org="+currentOrg;}
+function openIDSelect(){let b=JSON.parse(localStorage.getItem(`jus_${currentOrg}_branches`)||"[]");let s=JSON.parse(localStorage.getItem(`jus_${currentOrg}_shops`)||"[]");let o=JSON.parse(localStorage.getItem(`jus_${currentOrg}_others`)||"[]");let all=[...b,...s,...o];if(all.length==0)all=[currentOrg+"-001",currentOrg+"-002"];document.getElementById("idList").innerHTML=all.map((id,i)=>`<div class="id-option" onclick="location.href='id-details.html?org=${currentOrg}&id=${id}'">${i+1}. ${id}</div>`).join('');document.getElementById("idModal").style.display="flex";}
 function closeIDSelect(){document.getElementById("idModal").style.display="none";}
-function openID(id){ closeIDSelect(); window.location.href=`id-details.html?org=${currentOrg}&id=${encodeURIComponent(id)}`; }
+// Type Filter - SHOP হলে শুধু Shop দেখবে
+if(orgType==="SHOP"){document.querySelectorAll('.side-item').forEach(e=>{if(e.innerText.includes("Branch")||e.innerText.includes("Others"))e.style.display="none";});}
+if(orgType==="BRANCH"){document.querySelectorAll('.side-item').forEach(e=>{if(e.innerText.includes("Shop")||e.innerText.includes("Others"))e.style.display="none";});}
+if(orgType==="OTHERS"){document.querySelectorAll('.side-item').forEach(e=>{if(e.innerText.includes("Shop")||e.innerText.includes("Branch"))e.style.display="none";});}
 </script>
 </body>
 </html>
