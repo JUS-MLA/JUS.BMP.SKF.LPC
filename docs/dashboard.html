@@ -1,122 +1,141 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JUS Dashboard</title>
-<style>
-body{margin:0;background:#020a18;color:#fff;font-family:Arial;min-height:100vh;}
-.header{background:#000;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00c6ff;position:sticky;top:0;z-index:10;}
-.header h2{margin:0;color:#00c6ff;font-size:11px;letter-spacing:1px;}
-.header button{background:#ff3b3b;border:none;color:#fff;padding:5px 12px;border-radius:6px;font-size:11px;font-weight:bold;cursor:pointer;}
-.main{display:flex;max-width:1400px;margin:auto;}
-.sidebar{width:160px;background:#000;border-right:1px solid #113355;min-height:calc(100vh - 40px);padding:8px;position:sticky;top:41px;}
-.side-title{color:#00c6ff;font-size:9px;margin:5px 0;}
-.side-item{background:#111;border:1px solid #222;padding:10px 8px;margin:5px 0;border-radius:6px;cursor:pointer;font-size:11px;}
-.side-item.active{background:#00c6ff;color:#000;font-weight:bold;box-shadow:0 0 10px #00c6ff;}
-.sub-options{margin-left:5px;margin-top:5px;}
-.sub-options div{background:#0a0a0a;border:1px solid #222;padding:6px 8px;margin:3px 0;border-radius:4px;font-size:10px;color:#aaa;cursor:pointer;}
-.container{flex:1;padding:10px;background:#020a18;}
-.edit-note{background:rgba(0,255,136,0.05);border:1px dashed #00ff88;color:#00ff88;padding:8px;border-radius:6px;text-align:center;font-size:10px;margin-bottom:10px;}
-.top-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
-.stat-box{background:#000;border:1px solid #1a3a5a;border-radius:8px;padding:10px 5px;text-align:center;}
-.stat-box p{margin:0;color:#888;font-size:8px;}
-.stat-box span{color:#00ff88;font-weight:bold;font-size:13px;display:block;margin-top:4px;}
-.stat-box.total-id{border-color:#ff9a00;}
-.stat-box.total-id span{color:#00ff88;}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
-.box{padding:18px 5px;border-radius:8px;text-align:center;font-weight:bold;cursor:pointer;font-size:11px;color:#000;}
-.box span{font-size:22px!important;display:block;margin-top:5px;color:#000;}
-.card{background:#000;border:1px solid #00c6ff;border-radius:10px;padding:12px;box-shadow:0 0 15px rgba(0,198,255,0.15);}
-.card h3{margin:0 0 10px 0;color:#00c6ff;font-size:12px;border-bottom:1px solid #222;padding-bottom:8px;}
-.info p{margin:0;color:#888;font-size:10px;display:flex;justify-content:space-between;border-bottom:1px solid #111;padding:8px 0;}
-.info span{color:#fff;font-weight:bold;}
-#idModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:100;justify-content:center;align-items:center;}
-.modal-content{background:#000;border:2px solid #ff9a00;border-radius:12px;padding:15px;width:85%;max-width:320px;}
-.id-option{background:#111;padding:10px;margin:5px 0;border-radius:6px;font-size:12px;cursor:pointer;}
-@media(max-width:700px){.top-stats{grid-template-columns:repeat(2,1fr);}.grid{grid-template-columns:repeat(2,1fr);}.main{flex-direction:column;}.sidebar{width:100%;min-height:auto;display:flex;overflow-x:auto;gap:5px;position:relative;top:0;}.side-title{display:none;}.side-item{white-space:nowrap;}}
-</style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUS Dashboard - 5 Category</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>body{background:#020617;color:white}.glass{background:rgba(15,23,42,0.8);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px)}</style>
 </head>
-<body>
-<div class="header"><h2>JUS OFFICIAL DASHBOARD</h2><button onclick="location.href='index.html'">LOGOUT</button></div>
-<div class="main">
-<div class="sidebar">
-<div class="side-title">Menu Serial</div>
-<div class="side-item active" onclick="toggleSub('branchSub')">1. Branch ►</div>
-<div id="branchSub" class="sub-options"><div onclick="goPage('branch')">Branch List</div><div>Add Branch</div><div>Branch Report</div></div>
-<div class="side-item" onclick="toggleSub('shopSub')">2. Shop ►</div>
-<div id="shopSub" class="sub-options"><div onclick="goPage('shop')">Shop List</div></div>
-<div class="side-item" onclick="toggleSub('othersSub')">3. Others ►</div>
-<div id="othersSub" class="sub-options"><div onclick="goPage('others')">Others List</div></div>
-<div class="side-item">4. Members</div>
-<div class="side-item">5. Collection</div>
-<div class="side-item">6. Notice</div>
-<div class="side-item">7. Report</div>
-</div>
-<div class="container">
-<div class="edit-note">✅ এই Dashboard এখন Index থেকে আলাদা! Index এ হাত না দিয়েই এখানে কাজ করতে পারবা!</div>
-
-<div class="top-stats">
-<div class="stat-box"><p>Organization Name</p><span id="sOrgName" style="color:#00ff88">DEMO123</span></div>
-<div class="stat-box total-id" onclick="openIDSelect()"><p>Organization Total ID - Click to Select ID</p><span id="sTotalID">0 ID</span></div>
-<div class="stat-box"><p>Daily Sale Amount</p><span>৳ 0</span></div>
-<div class="stat-box"><p>Daily Sale Product</p><span>0</span></div>
-<div class="stat-box"><p>Daily Purchase Product</p><span>0</span></div>
-<div class="stat-box"><p>Monthly Sale Amount</p><span>৳ 0</span></div>
-<div class="stat-box"><p>Monthly Sale Product</p><span>0</span></div>
-<div class="stat-box"><p>Monthly Purchase Product</p><span>0</span></div>
-<div class="stat-box"><p>Total Sale Amount</p><span>৳ 0</span></div>
-<div class="stat-box"><p>Total Sale Product</p><span>0</span></div>
-<div class="stat-box"><p>Total Purchase Product</p><span>0</span></div>
-<div class="stat-box"><p>Total EMI Amount</p><span>৳ 0</span></div>
-<div class="stat-box"><p>Total Product Amount</p><span>0</span></div>
+<body class="p-4">
+<div class="flex justify-between items-center mb-6">
+<div><h1 class="text-3xl font-black">JUS <span class="text-emerald-400">Dashboard</span></h1><p class="text-xs text-gray-400">Super Admin • jus-bmp-skf • 5 Category System</p></div>
+<div class="bg-emerald-500 text-black px-3 py-1 rounded-full text-xs font-bold">● Live Firebase</div>
 </div>
 
-<div class="grid">
-<div class="box" style="background:#00ff88" onclick="goPage('branch')">Total Branch<br><span id="totalBranch">0</span></div>
-<div class="box" style="background:#ff9a00" onclick="goPage('shop')">Total Shop<br><span id="totalShop">0</span></div>
-<div class="box" style="background:#ff00c6;color:#fff" onclick="goPage('others')">Total Others<br><span id="totalOthers" style="color:#fff">0</span></div>
-<div class="box" style="background:#00c6ff">Members<br><span>0</span></div>
-<div class="box" style="background:#00c6ff">Collection<br><span style="font-size:14px">৳ 0</span></div>
-<div class="box" style="background:#00c6ff">Notice<br><span>0</span></div>
-<div class="box" style="background:#00c6ff">Report<br><span style="font-size:12px">View</span></div>
+<!-- STATS TOP -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="glass p-3 rounded-xl"><p class="text-xs text-gray-400">Total Organization</p><h2 id="totalOrg" class="text-2xl font-black">0</h2></div>
+<div class="glass p-3 rounded-xl"><p class="text-xs text-gray-400">Today Sale</p><h2 id="todaySale" class="text-2xl font-black text-cyan-400">৳ 0</h2></div>
+<div class="glass p-3 rounded-xl"><p class="text-xs text-gray-400">Total Due</p><h2 id="totalDue" class="text-2xl font-black text-pink-400">৳ 0</h2></div>
+<div class="glass p-3 rounded-xl"><p class="text-xs text-gray-400">Total Collection</p><h2 id="totalColl" class="text-2xl font-black text-green-400">৳ 0</h2></div>
 </div>
 
-<div class="card">
-<h3>Organization Info</h3>
-<div class="info">
-<p>Organization Name: <span id="dName">JUS Official (Demo)</span></p>
-<p>Organization User ID: <span id="dID">DEMO123</span></p>
-<p>Branch Shop & Others: <span id="dBso">Main Branch Shop</span></p>
-<p>Mobile Number: <span id="dMobile">01700000000</span></p>
-<p>Login Time: <span id="dTime"></span></p>
+<h2 class="font-bold mb-3">Categories - Click to Manage</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+<!-- 1. FINANCE -->
+<div class="bg-gradient-to-br from-green-500 to-emerald-700 p-5 rounded-2xl text-black">
+<div class="flex justify-between"><span class="text-3xl">💰</span><span class="bg-black text-green-400 px-2 py-1 rounded-full text-xs" id="financeCount">0</span></div>
+<h3 class="text-2xl font-black mt-3">Finance</h3><p class="text-xs opacity-80">Loan, Collection, DPS, Savings</p>
+<input id="financeName" placeholder="Finance Org Name" class="w-full mt-3 p-2 rounded bg-black text-white text-sm">
+<button onclick="addCat('finance')" class="w-full bg-black text-white mt-2 p-2 rounded font-bold text-sm">+ Add Finance</button>
+<div id="financeList" class="mt-2 text-xs space-y-1 max-h-[100px] overflow-y-auto"></div>
 </div>
+
+<!-- 2. AGRICULTURE -->
+<div class="bg-gradient-to-br from-lime-400 to-green-600 p-5 rounded-2xl text-black">
+<div class="flex justify-between"><span class="text-3xl">🌾</span><span class="bg-black text-lime-400 px-2 py-1 rounded-full text-xs" id="agriCount">0</span></div>
+<h3 class="text-2xl font-black mt-3">Agriculture</h3><p class="text-xs opacity-80">Farm, Crop, Fertilizer, Seeds</p>
+<input id="agriName" placeholder="Agriculture Org Name" class="w-full mt-3 p-2 rounded bg-black text-white text-sm">
+<button onclick="addCat('agriculture')" class="w-full bg-black text-white mt-2 p-2 rounded font-bold text-sm">+ Add Agriculture</button>
+<div id="agriList" class="mt-2 text-xs space-y-1 max-h-[100px] overflow-y-auto"></div>
 </div>
+
+<!-- 3. SHOP -->
+<div class="bg-gradient-to-br from-orange-400 to-yellow-500 p-5 rounded-2xl text-black">
+<div class="flex justify-between"><span class="text-3xl">🛒</span><span class="bg-black text-orange-400 px-2 py-1 rounded-full text-xs" id="shopCount">0</span></div>
+<h3 class="text-2xl font-black mt-3">Shop</h3><p class="text-xs opacity-80">Grocery, Retail, POS, Super Shop</p>
+<input id="shopName" placeholder="Shop Name" class="w-full mt-3 p-2 rounded bg-black text-white text-sm">
+<button onclick="addCat('shop')" class="w-full bg-black text-white mt-2 p-2 rounded font-bold text-sm">+ Add Shop</button>
+<div id="shopList" class="mt-2 text-xs space-y-1 max-h-[100px] overflow-y-auto"></div>
+</div>
+
+<!-- 4. TRAVELS -->
+<div class="bg-gradient-to-br from-sky-400 to-blue-600 p-5 rounded-2xl text-black">
+<div class="flex justify-between"><span class="text-3xl">✈️</span><span class="bg-black text-sky-400 px-2 py-1 rounded-full text-xs" id="travelsCount">0</span></div>
+<h3 class="text-2xl font-black mt-3">Travels</h3><p class="text-xs opacity-80">Bus, Ticket, Tour, Hotel Booking</p>
+<input id="travelsName" placeholder="Travels Agency Name" class="w-full mt-3 p-2 rounded bg-black text-white text-sm">
+<button onclick="addCat('travels')" class="w-full bg-black text-white mt-2 p-2 rounded font-bold text-sm">+ Add Travels</button>
+<div id="travelsList" class="mt-2 text-xs space-y-1 max-h-[100px] overflow-y-auto"></div>
+</div>
+
+<!-- 5. OTHERS -->
+<div class="bg-gradient-to-br from-pink-500 to-purple-600 p-5 rounded-2xl text-white">
+<div class="flex justify-between"><span class="text-3xl">📦</span><span class="bg-white text-pink-600 px-2 py-1 rounded-full text-xs" id="othersCount">0</span></div>
+<h3 class="text-2xl font-black mt-3">Others</h3><p class="text-xs opacity-80">Any Other Business</p>
+<input id="othersName" placeholder="Other Business Name" class="w-full mt-3 p-2 rounded bg-black text-white text-sm">
+<button onclick="addCat('others')" class="w-full bg-white text-black mt-2 p-2 rounded font-bold text-sm">+ Add Others</button>
+<div id="othersList" class="mt-2 text-xs space-y-1 max-h-[100px] overflow-y-auto"></div>
+</div>
+
+</div>
+
+<!-- ADD SALE / DUE FOR ANY CATEGORY -->
+<div class="glass p-4 rounded-xl mt-6">
+<h3 class="font-bold">+ Add Sale / Due (Category Wise)</h3>
+<div class="grid grid-cols-2 gap-2 mt-2">
+<select id="catSelect" class="bg-black border border-gray-700 p-2 rounded text-sm"><option value="finance">Finance</option><option value="agriculture">Agriculture</option><option value="shop">Shop</option><option value="travels">Travels</option><option value="others">Others</option></select>
+<input id="saleAmt" type="number" placeholder="Sale ৳" class="bg-black border border-gray-700 p-2 rounded text-sm">
+<input id="dueAmt" type="number" placeholder="Due ৳" class="bg-black border border-gray-700 p-2 rounded text-sm">
+<input id="custName" placeholder="Customer Name" class="bg-black border border-gray-700 p-2 rounded text-sm">
+<button onclick="addSale()" class="col-span-2 bg-emerald-500 text-black font-bold p-2 rounded">Save to Firebase</button>
 </div>
 </div>
 
-<div id="idModal"><div class="modal-content"><h3 style="color:#ff9a00;text-align:center;margin-top:0;font-size:14px;">Select ID - Open Page</h3><div id="idList"></div><button onclick="closeIDSelect()" style="width:100%;background:#00c6ff;border:none;padding:8px;border-radius:6px;color:#fff;margin-top:10px;">Close</button></div></div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs",
+  authDomain: "jus-bmp-skf.firebaseapp.com",
+  databaseURL: "https://jus-bmp-skf-default-rtdb.firebaseio.com",
+  projectId: "jus-bmp-skf",
+  storageBucket: "jus-bmp-skf.firebasestorage.app",
+  messagingSenderId: "763512076096",
+  appId: "1:763512076096:web:3e5f79cc274b34d8106ca5"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-<script>
-let currentOrg=localStorage.getItem("jus_currentOrg")||"DEMO123";
-let orgType=localStorage.getItem(`jus_${currentOrg}_type`)||"ALL";
-document.getElementById("sOrgName").innerText=currentOrg;
-document.getElementById("dID").innerText=currentOrg;
-document.getElementById("dName").innerText=localStorage.getItem(`jus_${currentOrg}_orgName`)||"JUS Official (Demo)";
-document.getElementById("dBso").innerText=localStorage.getItem(`jus_${currentOrg}_bso`)||"Main Branch Shop";
-document.getElementById("dTime").innerText=new Date().toLocaleString();
-document.getElementById("totalBranch").innerText=localStorage.getItem(`jus_${currentOrg}_totalBranch`)||"0";
-document.getElementById("totalShop").innerText=localStorage.getItem(`jus_${currentOrg}_totalShop`)||"0";
-document.getElementById("totalOthers").innerText=localStorage.getItem(`jus_${currentOrg}_totalOthers`)||"0";
-let tID=parseInt(localStorage.getItem(`jus_${currentOrg}_totalBranch`)||0)+parseInt(localStorage.getItem(`jus_${currentOrg}_totalShop`)||0)+parseInt(localStorage.getItem(`jus_${currentOrg}_totalOthers`)||0);
-document.getElementById("sTotalID").innerText=tID+" ID";
-function toggleSub(id){let el=document.getElementById(id);el.style.display=el.style.display==="block"?"none":"block";}
-function goPage(t){location.href=t+".html?org="+currentOrg;}
-function openIDSelect(){let b=JSON.parse(localStorage.getItem(`jus_${currentOrg}_branches`)||"[]");let s=JSON.parse(localStorage.getItem(`jus_${currentOrg}_shops`)||"[]");let o=JSON.parse(localStorage.getItem(`jus_${currentOrg}_others`)||"[]");let all=[...b,...s,...o];if(all.length==0)all=[currentOrg+"-001",currentOrg+"-002"];document.getElementById("idList").innerHTML=all.map((id,i)=>`<div class="id-option" onclick="location.href='id-details.html?org=${currentOrg}&id=${id}'">${i+1}. ${id}</div>`).join('');document.getElementById("idModal").style.display="flex";}
-function closeIDSelect(){document.getElementById("idModal").style.display="none";}
-// Type Filter - SHOP হলে শুধু Shop দেখবে
-if(orgType==="SHOP"){document.querySelectorAll('.side-item').forEach(e=>{if(e.innerText.includes("Branch")||e.innerText.includes("Others"))e.style.display="none";});}
-if(orgType==="BRANCH"){document.querySelectorAll('.side-item').forEach(e=>{if(e.innerText.includes("Shop")||e.innerText.includes("Others"))e.style.display="none";});}
-if(orgType==="OTHERS"){document.querySelectorAll('.side-item').forEach(e=>{if(e.innerText.includes("Shop")||e.innerText.includes("Branch"))e.style.display="none";});}
+window.addCat = (cat)=>{
+  const map={finance:'financeName',agriculture:'agriName',shop:'shopName',travels:'travelsName',others:'othersName'};
+  const name=document.getElementById(map[cat]).value;
+  if(!name) return alert('Name দাও!');
+  push(ref(db,'jus/categories/'+cat),{name, created:Date.now()});
+  document.getElementById(map[cat]).value='';
+}
+window.addSale = ()=>{
+  const cat=document.getElementById('catSelect').value;
+  const sale=parseFloat(document.getElementById('saleAmt').value)||0;
+  const due=parseFloat(document.getElementById('dueAmt').value)||0;
+  const cust=document.getElementById('custName').value||'Walk-in';
+  if(sale==0&&due==0) return alert('Amount দাও!');
+  push(ref(db,'jus/allSales'),{cat,sale,due,cust,created:Date.now()});
+  document.getElementById('saleAmt').value='';document.getElementById('dueAmt').value='';document.getElementById('custName').value='';
+}
+
+onValue(ref(db,'jus/'), snap=>{
+  const data=snap.val()||{};
+  const cats=data.categories||{};
+  const sales=Object.values(data.allSales||{});
+
+  const counts={finance:0,agriculture:0,shop:0,travels:0,others:0};
+  ['finance','agriculture','shop','travels','others'].forEach(c=>{
+    const list=Object.values(cats[c]||{});
+    counts[c]=list.length;
+    const listEl=document.getElementById(c==='agriculture'?'agriList':c+'List');
+    if(listEl) listEl.innerHTML=list.map(l=>`<div class="bg-black/20 p-1 rounded">• ${l.name}</div>`).join('');
+    const countEl=document.getElementById(c==='agriculture'?'agriCount':c+'Count');
+    if(countEl) countEl.innerText=list.length;
+  });
+  document.getElementById('totalOrg').innerText=Object.values(counts).reduce((a,b)=>a+b,0);
+
+  let totalSale=0,totalDue=0;
+  sales.forEach(s=>{ totalSale+=s.sale||0; totalDue+=s.due||0; });
+  document.getElementById('todaySale').innerText='৳ '+totalSale.toLocaleString();
+  document.getElementById('totalDue').innerText='৳ '+totalDue.toLocaleString();
+  document.getElementById('totalColl').innerText='৳ '+(totalSale-totalDue).toLocaleString();
+});
 </script>
 </body>
 </html>
