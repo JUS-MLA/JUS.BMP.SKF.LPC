@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUS shop - POS System</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter',sans-serif;background:#f1f5f9}</style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="bg-[#101735] text-white px-6 py-4 flex justify-between items-center">
+  <div class="flex items-center gap-3">
+    <h1 class="text-5xl font-black tracking-tighter">JUS</h1>
+    <div class="leading-none"><p class="text-2xl font-light">shop</p></div>
+    <span class="ml-6 text-sm opacity-60">POS SYSTEM • Dashboard</span>
+  </div>
+  <div class="flex gap-2"><span class="bg-white/10 px-3 py-1 rounded-full text-sm">Admin • jus-bmp-skf</span><span id="sync" class="bg-green-500 px-3 py-1 rounded-full text-sm">● Connected</span></div>
+</header>
+
+<!-- MAIN -->
+<div class="p-6 max-w-[1400px] mx-auto">
+  <h2 class="text-4xl font-bold text-[#101735] mb-1">Dashboard</h2>
+  <p class="text-gray-500 mb-6">Welcome back — here's what's happening today • <span id="date"></span></p>
+
+  <!-- STATS -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white p-5 rounded-xl shadow"><p class="text-gray-500">Sales Today</p><h3 id="totalSales" class="text-4xl font-black">$0.00</h3><p class="text-green-600 text-sm mt-2">↗ +12.4% from yesterday</p></div>
+    <div class="bg-white p-5 rounded-xl shadow"><p class="text-gray-500">Orders</p><h3 id="totalOrders" class="text-4xl font-black">0</h3><p class="text-green-600 text-sm mt-2">+5 new orders</p></div>
+    <div class="bg-white p-5 rounded-xl shadow"><p class="text-gray-500">Average Order</p><h3 id="avgOrder" class="text-4xl font-black">$0.00</h3><p class="text-green-600 text-sm mt-2">↑ 3.2% vs avg</p></div>
+    <div class="bg-white p-5 rounded-xl shadow"><p class="text-gray-500">Products</p><h3 id="totalProducts" class="text-4xl font-black">0</h3><p class="text-green-600 text-sm mt-2">in inventory</p></div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- LEFT: Products & New Order -->
+    <div class="lg:col-span-2 bg-white rounded-xl shadow p-5">
+      <div class="flex justify-between mb-4"><h3 class="text-xl font-bold">New Sale</h3><button onclick="clearCart()" class="text-sm bg-gray-100 px-3 py-1 rounded">Clear Cart</button></div>
+
+      <div class="flex gap-2 mb-4">
+        <input id="prodName" placeholder="Product Name (e.g. Cold Brew)" class="flex-1 border p-2 rounded">
+        <input id="prodPrice" type="number" placeholder="Price" class="w-24 border p-2 rounded">
+        <button onclick="addProduct()" class="bg-[#101735] text-white px-4 rounded">Add</button>
+      </div>
+
+      <div id="productList" class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6 max-h-[250px] overflow-y-auto"></div>
+
+      <div class="border-t pt-4">
+        <h4 class="font-bold mb-2">Cart</h4>
+        <div id="cart" class="space-y-2 mb-4"></div>
+        <div class="flex justify-between font-black text-xl border-t pt-2"><span>Total:</span><span id="cartTotal">$0.00</span></div>
+        <div class="flex gap-2 mt-4">
+          <input id="custName" placeholder="Customer Name" class="flex-1 border p-3 rounded-lg">
+          <button onclick="checkout()" class="bg-[#101735] text-white px-8 py-3 rounded-lg font-bold">+ New Order • Pay</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Recent Transactions -->
+    <div class="bg-white rounded-xl shadow p-5">
+      <h3 class="text-xl font-bold mb-4">Recent Transactions</h3>
+      <div id="orders" class="space-y-3 max-h-[600px] overflow-y-auto"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs",
+  authDomain: "jus-bmp-skf.firebaseapp.com",
+  databaseURL: "https://jus-bmp-skf-default-rtdb.firebaseio.com",
+  projectId: "jus-bmp-skf",
+  storageBucket: "jus-bmp-skf.firebasestorage.app",
+  messagingSenderId: "763512076096",
+  appId: "1:763512076096:web:3e5f79cc274b34d8106ca5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+document.getElementById('date').innerText = new Date().toLocaleString();
+
+let products = [];
+let cart = [];
+
+window.addProduct = () => {
+  const name = document.getElementById('prodName').value;
+  const price = parseFloat(document.getElementById('prodPrice').value);
+  if(!name ||!price) return alert('Name & Price দাও!');
+  push(ref(db, 'jus/products'), { name, price, stock: 100, created: Date.now() });
+  document.getElementById('prodName').value=''; document.getElementById('prodPrice').value='';
+}
+
+onValue(ref(db, 'jus/products'), snap => {
+  products = []; document.getElementById('productList').innerHTML='';
+  snap.forEach(c=>{
+    const p={id:c.key,...c.val()}; products.push(p);
+    document.getElementById('productList').inner
