@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Shop</title>
+<style>body{margin:0;background:#020a18;color:#fff;font-family:Arial;padding:15px;} .card{background:#000;border:1px solid #ff9a00;border-radius:15px;padding:20px;box-shadow:0 0 15px rgba(255,154,0,0.3);} h3{color:#ff9a00;border-bottom:1px solid #333;padding-bottom:10px;} input,button{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #ff9a00;background:#111;color:#fff;box-sizing:border-box;} button{background:linear-gradient(135deg,#ff9a00,#ff6a00);color:#fff;font-weight:bold;cursor:pointer;} .list p{background:#111;padding:10px;border-radius:6px;display:flex;justify-content:space-between;margin:5px 0;font-size:13px;} .del{background:red!important;width:auto!important;padding:4px 10px!important;margin:0!important;}</style>
+</head><body>
+<div class="card">
+<h3>Shop Manage - <span id="org"></span></h3>
+<input id="name" placeholder="Shop Name লিখো">
+<button onclick="add()">Add Shop</button>
+<div class="list" id="list"></div>
+<button onclick="location.href='dashboard.html'" style="background:#00c6ff;border-color:#00c6ff;margin-top:15px;">⬅ Back to Dashboard</button>
+</div>
+<script>
+let org = new URLSearchParams(location.search).get('org') || localStorage.getItem("jus_currentOrg") || "DEMO123";
+document.getElementById("org").innerText = org;
+let data = JSON.parse(localStorage.getItem(`jus_${org}_shops`) || "[]");
+function show(){
+  document.getElementById("list").innerHTML = data.map((v,i)=>`<p>${i+1}. ${v} <button class="del" onclick="del(${i})">X</button></p>`).join('') || "<p style='color:#aaa;'>কোনো Shop নেই</p>";
+  localStorage.setItem(`jus_${org}_shops`, JSON.stringify(data));
+  localStorage.setItem(`jus_${org}_totalShop`, data.length);
+}
+function add(){ let v=document.getElementById("name").value.trim(); if(!v)return; data.push(v); document.getElementById("name").value=""; show(); }
+function del(i){ data.splice(i,1); show(); }
+show();
+</script>
+</body></html>
