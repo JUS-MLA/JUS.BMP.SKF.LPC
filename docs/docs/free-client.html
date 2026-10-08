@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Free Client Test</title>
+<style>body{background:#020a18;color:#fff;font-family:Arial;text-align:center;padding:20px;}button{width:100%;padding:18px;margin:10px 0;border-radius:12px;border:none;font-weight:bold;font-size:16px;cursor:pointer;} .shop{background:#00c6ff;color:#000;} .super{background:#ff9a00;color:#000;}</style></head><body>
+<h2>🔥 Free Test Login</h2>
+<p>Phone এর জন্য 1 Click Test</p>
+
+<button class="shop" onclick="loginClient()">🟢 CLIENT TEST - SHOP-001 / 1234</button>
+<button class="super" onclick="loginSuper()">🟠 SUPER ADMIN TEST</button>
+
+<script>
+function loginClient(){
+ localStorage.setItem("jus_currentOrg","SHOP-001");
+ localStorage.setItem("jus_SHOP-001_orgName","RAHIM STORE");
+ localStorage.setItem("jus_SHOP-001_type","SHOP");
+ localStorage.setItem("jus_SHOP-001_bso","SHOP - SHOP-001");
+ localStorage.setItem("jus_SHOP-001_pass","1234");
+ localStorage.setItem("jus_SHOP-001_totalShop","1");
+ localStorage.setItem("jus_role","CLIENT");
+ location.href="dashboard.html?org=SHOP-001";
+}
+function loginSuper(){
+ localStorage.setItem("jus_role","SUPER");
+ localStorage.setItem("jus_currentOrg","FREE-TEST");
+ localStorage.setItem("jus_FREE-TEST_orgName","FREE SUPER ADMIN");
+ localStorage.setItem("jus_FREE-TEST_type","SUPER");
+ location.href="dashboard.html?org=FREE-TEST";
+}
+</script>
+</body></html>
