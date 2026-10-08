@@ -4,17 +4,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JUS Official</title>
 <style>
-body{margin:0;min-height:100vh;background:#020a18;display:flex;align-items:center;justify-content:center;font-family:Arial;}
-.login-box{background:#000;padding:22px;border-radius:16px;border:1px solid #00c6ff;width:310px;text-align:center;box-shadow:0 0 25px rgba(0,198,255,0.5);}
+body{margin:0;min-height:100vh;background:#020a18;display:flex;align-items:center;justify-content:center;font-family:Arial;padding:15px 0;}
+.login-box{background:#000;padding:22px;border-radius:16px;border:1px solid #00c6ff;width:330px;text-align:center;box-shadow:0 0 25px rgba(0,198,255,0.5);}
 .login-box h2{color:#00c6ff;letter-spacing:2px;margin:0 0 15px;}
-.login-box input{width:90%;padding:11px;margin:6px 0;border-radius:8px;border:1px solid #00c6ff;background:#000;color:#fff;outline:none;box-sizing:border-box;}
-.pass-wrap{position:relative;width:90%;margin:6px auto;}
+.login-box input{width:90%;padding:11px;margin:5px 0;border-radius:8px;border:1px solid #00c6ff;background:#000;color:#fff;outline:none;box-sizing:border-box;}
+.row3{display:flex;gap:6px;width:90%;margin:5px auto;}
+.row3 input{flex:1;width:33%;padding:11px 6px;font-size:13px;text-align:center;}
+.pass-wrap{position:relative;width:90%;margin:5px auto;}
 .pass-wrap input{width:100%;margin:0;}
 .pass-wrap span{position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:#00c6ff;font-size:14px;}
-.login-box button{width:90%;padding:12px;margin-top:12px;border:none;border-radius:8px;background:linear-gradient(90deg,#00c6ff,#0072ff);color:#fff;font-weight:bold;cursor:pointer;font-size:15px;}
+.main-btn{width:90%;padding:12px;margin-top:12px;border:none;border-radius:8px;background:linear-gradient(90deg,#00c6ff,#0072ff);color:#fff;font-weight:bold;cursor:pointer;font-size:15px;}
 .save-box{margin-top:12px;text-align:left;width:90%;margin-left:auto;margin-right:auto;color:#aaa;font-size:13px;}
 .save-box input{width:auto;}
-#msg{font-size:12px;margin-top:10px;display:none;color:#ff4d4d;}
+.links{margin-top:12px;display:flex;justify-content:space-between;width:90%;margin-left:auto;margin-right:auto;font-size:12px;}
+.links a{color:#00c6ff;cursor:pointer;text-decoration:none;}
+#msg{font-size:12px;margin-top:10px;display:none;}
+.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:999;}
+.popup-box{background:#000;border:1px solid #00c6ff;padding:20px;border-radius:12px;width:300px;text-align:center;}
+.popup-box h3{color:#00c6ff;margin-top:0;}
+.popup-box input{width:90%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #00c6ff;background:#111;color:#fff;}
+.popup-box button{width:90%;padding:10px;margin-top:8px;border:none;border-radius:8px;background:#00c6ff;color:#fff;font-weight:bold;cursor:pointer;}
+.close{color:#aaa;cursor:pointer;font-size:12px;margin-top:10px;display:block;}
 </style>
 </head>
 <body>
@@ -23,8 +33,15 @@ body{margin:0;min-height:100vh;background:#020a18;display:flex;align-items:cente
 <h2>JUS LOGIN</h2>
 <input type="text" id="orgName" placeholder="Organization Name">
 <input type="text" id="userID" placeholder="Organization User ID">
+
+<!-- Branch Shop Others AKI LINE E -->
+<div class="row3">
+<input type="text" id="branch" placeholder="Branch">
+<input type="text" id="shop" placeholder="Shop">
+<input type="text" id="others" placeholder="Others">
+</div>
+
 <input type="text" id="mobile" placeholder="Mobile Number">
-<input type="text" id="branch" placeholder="Branch & Shop">
 
 <div class="pass-wrap">
 <input type="password" id="pass" placeholder="Password">
@@ -35,40 +52,111 @@ body{margin:0;min-height:100vh;background:#020a18;display:flex;align-items:cente
 <label><input type="checkbox" id="autoSave" checked> Auto Save Data</label>
 </div>
 
-<button onclick="login()">LOGIN</button>
+<button class="main-btn" onclick="login()">LOGIN</button>
+<button class="main-btn" onclick="adminFastLogin()" style="background:#111;border:1px solid #00ff88;color:#00ff88;margin-top:8px;">⚡ ADMIN FAST LOGIN</button>
+
+<div class="links">
+<a onclick="openPopup('forgot')">Forgot Password?</a>
+<a onclick="openPopup('change')">Change Password</a>
+</div>
 <p id="msg"></p>
 </div>
 
+<div class="popup" id="forgotPopup">
+<div class="popup-box">
+<h3>Forgot Password</h3>
+<input type="text" id="fMobile" placeholder="Mobile Number">
+<input type="text" id="fNewPass" placeholder="New Password">
+<button onclick="forgotPass()">Reset</button>
+<span class="close" onclick="closePopup()">Close</span>
+<p id="fMsg" style="font-size:12px;margin-top:8px;"></p>
+</div>
+</div>
+
+<div class="popup" id="changePopup">
+<div class="popup-box">
+<h3>Change Password</h3>
+<input type="password" id="oldPass" placeholder="Old Password">
+<input type="password" id="newPass" placeholder="New Password">
+<button onclick="changePass()">Update</button>
+<span class="close" onclick="closePopup()">Close</span>
+<p id="cMsg" style="font-size:12px;margin-top:8px;"></p>
+</div>
+</div>
+
 <script>
-window.onload = function(){
+window.onload=function(){
+  if(!localStorage.getItem("jus_password")){localStorage.setItem("jus_password","JUS123");}
   if(localStorage.getItem("jus_orgName")){
-    document.getElementById("orgName").value=localStorage.getItem("jus_orgName");
-    document.getElementById("userID").value=localStorage.getItem("jus_userID");
-    document.getElementById("mobile").value=localStorage.getItem("jus_mobile");
-    document.getElementById("branch").value=localStorage.getItem("jus_branch");
-    document.getElementById("pass").value=localStorage.getItem("jus_pass");
+    document.getElementById("orgName").value=localStorage.getItem("jus_orgName")||"";
+    document.getElementById("userID").value=localStorage.getItem("jus_userID")||"";
+    document.getElementById("branch").value=localStorage.getItem("jus_branch")||"";
+    document.getElementById("shop").value=localStorage.getItem("jus_shop")||"";
+    document.getElementById("others").value=localStorage.getItem("jus_others")||"";
+    document.getElementById("mobile").value=localStorage.getItem("jus_mobile")||"";
+    document.getElementById("pass").value=localStorage.getItem("jus_password")||"";
   }
 }
 function togglePass(){var p=document.getElementById("pass");p.type=p.type==="password"?"text":"password";}
+function openPopup(t){document.getElementById(t==='forgot'?"forgotPopup":"changePopup").style.display="flex";}
+function closePopup(){document.getElementById("forgotPopup").style.display="none";document.getElementById("changePopup").style.display="none";}
+function adminFastLogin(){
+  document.getElementById("orgName").value="JUS Official";
+  document.getElementById("userID").value="ADMIN";
+  document.getElementById("branch").value="Main";
+  document.getElementById("shop").value="Shop 1";
+  document.getElementById("others").value="Admin";
+  document.getElementById("mobile").value="01700000000";
+  document.getElementById("pass").value="ADMIN123";
+  login();
+}
 function login(){
   var name=document.getElementById("orgName").value;
   var uid=document.getElementById("userID").value;
-  var mobile=document.getElementById("mobile").value;
   var branch=document.getElementById("branch").value;
+  var shop=document.getElementById("shop").value;
+  var others=document.getElementById("others").value;
+  var mobile=document.getElementById("mobile").value;
   var pass=document.getElementById("pass").value;
-  var save=document.getElementById("autoSave").checked;
   var msg=document.getElementById("msg");
-  if(name==""||uid==""||mobile==""||branch==""||pass==""){msg.style.display="block";msg.innerText="Sob Field Fill Koro!";return;}
-  if(save){
+  var savedPass=localStorage.getItem("jus_password")||"JUS123";
+  if(name==""||uid==""||mobile==""||pass==""){msg.style.display="block";msg.style.color="#ff4d4d";msg.innerText="Sob Field Fill Koro!";return;}
+  if(uid==="ADMIN" && (pass==="ADMIN123"||pass===savedPass)){
+    localStorage.setItem("jus_login","true");
+    msg.style.display="block";msg.style.color="#00ff88";msg.innerText="Admin Login Success!";
+    setTimeout(()=>{window.location.href="dashboard.html";},500);return;
+  }
+  if(pass===savedPass){
     localStorage.setItem("jus_orgName",name);
     localStorage.setItem("jus_userID",uid);
-    localStorage.setItem("jus_mobile",mobile);
     localStorage.setItem("jus_branch",branch);
-    localStorage.setItem("jus_pass",pass);
+    localStorage.setItem("jus_shop",shop);
+    localStorage.setItem("jus_others",others);
+    localStorage.setItem("jus_mobile",mobile);
     localStorage.setItem("jus_login","true");
-  }
-  if(pass==="JUS123"){msg.style.display="block";msg.style.color="#00ff88";msg.innerText="Login Success!";setTimeout(()=>{window.location.href="dashboard.html";},700);}
-  else{msg.style.display="block";msg.style.color="#ff4d4d";msg.innerText="Wrong Password! (JUS123)";}
+    msg.style.display="block";msg.style.color="#00ff88";msg.innerText="Login Success!";
+    setTimeout(()=>{window.location.href="dashboard.html";},700);
+  }else{msg.style.display="block";msg.style.color="#ff4d4d";msg.innerText="Wrong Password!";}
+}
+function forgotPass(){
+  var fM=document.getElementById("fMobile").value;
+  var fP=document.getElementById("fNewPass").value;
+  var fMsg=document.getElementById("fMsg");
+  if(fM==""||fP==""){fMsg.style.color="#ff4d4d";fMsg.innerText="Fill all!";return;}
+  localStorage.setItem("jus_mobile",fM);localStorage.setItem("jus_password",fP);
+  fMsg.style.color="#00ff88";fMsg.innerText="Reset Done! Login Now";
+  setTimeout(closePopup,1500);
+}
+function changePass(){
+  var o=document.getElementById("oldPass").value;
+  var n=document.getElementById("newPass").value;
+  var cMsg=document.getElementById("cMsg");
+  var saved=localStorage.getItem("jus_password")||"JUS123";
+  if(o==""||n==""){cMsg.style.color="#ff4d4d";cMsg.innerText="Fill all!";return;}
+  if(o!==saved){cMsg.style.color="#ff4d4d";cMsg.innerText="Old Wrong!";return;}
+  localStorage.setItem("jus_password",n);
+  cMsg.style.color="#00ff88";cMsg.innerText="Changed!";
+  setTimeout(closePopup,1500);
 }
 </script>
 </body>
