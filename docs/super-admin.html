@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUS SUPER ADMIN</title>
+<style>
+body{margin:0;background:#020a18;color:#fff;font-family:Arial;min-height:100vh;}
+.header{background:#000;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00ff88;position:sticky;top:0;z-index:10;}
+.header h2{margin:0;color:#00ff88;font-size:13px;letter-spacing:1px;}
+.header button{background:#ff3b3b;border:none;color:#fff;padding:6px 12px;border-radius:6px;cursor:pointer;font-weight:bold;font-size:11px;}
+.container{padding:12px;max-width:1000px;margin:auto;}
+.card{background:#000;border:1px solid #00c6ff;border-radius:12px;padding:15px;margin-bottom:12px;box-shadow:0 0 12px rgba(0,198,255,0.25);}
+.card.super{border-color:#00ff88;box-shadow:0 0 12px rgba(0,255,136,0.25);}
+.card h3{margin-top:0;color:#00c6ff;border-bottom:1px solid #222;padding-bottom:8px;font-size:13px;}
+.card.super h3{color:#00ff88;}
+.info p{margin:8px 0;color:#aaa;font-size:12px;display:flex;justify-content:space-between;border-bottom:1px dashed #1a1a1a;padding-bottom:6px;}
+.info span{color:#fff;font-weight:bold;}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;}
+.box{background:linear-gradient(135deg,#00c6ff,#0072ff);padding:12px 5px;border-radius:10px;text-align:center;font-weight:bold;cursor:pointer;font-size:11px;transition:0.2s;}
+.box.super{background:linear-gradient(135deg,#00ff88,#00cc6a);color:#000;}
+.box span{font-size:18px !important;display:block;margin-top:4px;}
+.box:hover{transform:translateY(-2px);}
+.top-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.top-box{background:linear-gradient(135deg,#00ff88,#00c6ff);padding:12px 5px;border-radius:10px;text-align:center;font-weight:bold;font-size:11px;color:#000;}
+.top-box span{font-size:18px !important;display:block;margin-top:4px;}
+table{width:100%;border-collapse:collapse;font-size:11px;margin-top:10px;}
+th,td{border:1px solid #222;padding:8px;text-align:left;}
+th{background:#00ff88;color:#000;font-size:11px;}
+tr:nth-child(even){background:#0a0a0a;}
+.view-btn{background:#00c6ff;border:none;color:#000;padding:4px 10px;border-radius:5px;font-weight:bold;cursor:pointer;font-size:10px;}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);}.top-grid{grid-template-columns:repeat(3,1fr);}}
+</style>
+</head>
+<body>
+<div class="header">
+<h2>JUS SUPER ADMIN DASHBOARD</h2>
+<button onclick="logout()">LOGOUT</button>
+</div>
+
+<div class="container">
+
+<!-- Super Admin Info - Ager motoi -->
+<div class="card super">
+<h3>Super Admin Info</h3>
+<div class="info">
+<p>Role: <span style="color:#00ff88;">SUPER ADMIN (Owner)</span></p>
+<p>Admin ID: <span>JUSADMIN</span></p>
+<p>Total Companies: <span id="dTotalCompany">0</span></p>
+<p>Login Time: <span id="dTime"></span></p>
+</div>
+</div>
+
+<!-- Total Branch Shop Others - Members er moto Box -->
+<div class="top-grid">
+<div class="top-box">Total Branch<br><span id="totalBranch">0</span></div>
+<div class="top-box">Total Shop<br><span id="totalShop">0</span></div>
+<div class="top-box">Total Others<br><span id="totalOthers">0</span></div>
+</div>
+
+<div class="grid">
+<div class="box super">Total Companies<br><span id="boxCompany">0</span></div>
+<div class="box super">Total Members<br><span id="boxMembers">0</span></div>
+<div class="box super">Total Collection<br><span style="font-size:12px !important;" id="boxCollection">৳ 0</span></div>
+<div class="box super">Active<br><span style="font-size:12px !important;color:#000;">All OK</span></div>
+</div>
+
+<!-- Sob Company er List - Client ra eta dekhbe na -->
+<div class="card super">
+<h3>All Client Companies - Full Data (Only You Can See)</h3>
+<table>
+<tr><th>Company ID</th><th>Branch</th><th>Shop</th><th>Others</th><th>Members</th><th>Action</th></tr>
+<tbody id="companyTable"></tbody>
+</table>
+</div>
+
+</div>
+
+<script>
+// Login Time - Ager motoi
+document.getElementById("dTime").innerText = new Date().toLocaleString();
+
+// Demo Companies - Tumi pore Add korba
+// Index sara cholbe, localStorage theke asbe
+let companies = JSON.parse(localStorage.getItem("jus_all_companies") || '["RAHIM01","KARIM02","JUS-BRANCH-01","JUS-SHOP-02"]');
+
+let totalB = 0, totalS = 0, totalO = 0, totalM = 0;
+let tbody = document.getElementById("companyTable");
+
+companies.forEach(org => {
+  // Prottek Company er Data alada alada - jus_RAHIM01_totalBranch er moto
+  let b = parseInt(localStorage.getItem(`jus_${org}_totalBranch`) || Math.floor(Math.random()*5)+1);
+  let s = parseInt(localStorage.getItem(`jus_${org}_totalShop`) || Math.floor(Math.random()*8)+2);
+  let o = parseInt(localStorage.getItem(`jus_${org}_totalOthers`) || Math.floor(Math.random()*3)+1);
+  let m = parseInt(localStorage.getItem(`jus_${org}_members`) || Math.floor(Math.random()*20)+5);
+  
+  totalB += b; totalS += s; totalO += o; totalM += m;
+  
+  tbody.innerHTML += `<tr>
+    <td><b style="color:#00c6ff;">${org}</b></td>
+    <td>${b}</td>
+    <td>${s}</td>
+    <td>${o}</td>
+    <td>${m}</td>
+    <td><button class="view-btn" onclick="viewCompany('${org}')">VIEW</button></td>
+  </tr>`;
+});
+
+// Uporer Box e Total Show
+document.getElementById("totalBranch").innerText = totalB;
+document.getElementById("totalShop").innerText = totalS;
+document.getElementById("totalOthers").innerText = totalO;
+document.getElementById("boxCompany").innerText = companies.length;
+document.getElementById("boxMembers").innerText = totalM;
+document.getElementById("dTotalCompany").innerText = companies.length;
+
+function viewCompany(org){
+  // Client er Dashboard View korba - kintu Client onno company dekhte parbe na
+  localStorage.setItem("jus_currentOrg", org);
+  localStorage.setItem("jus_role", "CLIENT");
+  localStorage.setItem("jus_view_as_super", "true");
+  window.location.href = "dashboard.html";
+}
+
+function logout(){ 
+  localStorage.removeItem("jus_role");
+  window.location.href="index.html"; 
+}
+</script>
+</body>
+</html>
