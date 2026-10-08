@@ -5,7 +5,7 @@
 
 > Official Limited Private Company - JUS BMP.LPC Portal
 
-🌐 **Website:** https://jus-bmp-lpc.github.io  
+🌐 **Website:** https://jus-bmp-skf-lpc.github.io  
 📂 **Business Portal:** Multi-Business Management System  
 📍 **Location:** Bangladesh  
 
@@ -22,4 +22,4 @@
 For Business: Contact via Portal
 
 ---
-⭐ From [JUS-BMP.LPC](https://github.com/JUS-BMP-LPC)
+⭐ From [JUS-BMP.SKF.LPC](https://github.com/JUS-BMP-SKF-LPC)
