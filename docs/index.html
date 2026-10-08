@@ -4,50 +4,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JUS Official</title>
 <style>
-  body{
-    margin:0; 
-    min-height:100vh; 
-    background: url('received_17669851117943310.jpeg') no-repeat center center;
-    background-size: cover;
-    background-color:#020a18;
-    display:flex; 
-    align-items:center; 
-    justify-content:center; 
-    font-family:Arial;
-  }
-  .login-box{
-    background:rgba(0,0,0,0.8); 
-    padding:20px; 
-    border-radius:15px; 
-    border:1px solid #00c6ff; 
-    width:280px; 
-    text-align:center; 
-    box-shadow:0 0 25px rgba(0,198,255,0.5);
-  }
-  .login-box h2{color:#00c6ff; letter-spacing:2px; margin-top:0;}
-  .login-box input{width:90%; padding:11px; margin:6px; border-radius:8px; border:1px solid #00c6ff; background:rgba(0,0,0,0.6); color:#fff; outline:none;}
-  .login-box button{width:95%; padding:11px; margin-top:10px; border:none; border-radius:8px; background:linear-gradient(90deg,#00c6ff,#0072ff); color:#fff; font-weight:bold; cursor:pointer;}
-  #msg{color:#ff4d4d; font-size:12px; display:none; margin-top:10px;}
+body{margin:0;min-height:100vh;background:url('received_17669851117943310.jpeg') no-repeat center center;background-size:cover;background-color:#020a18;display:flex;align-items:center;justify-content:center;font-family:Arial;}
+.login-box{background:rgba(0,0,0,0.85);padding:22px;border-radius:16px;border:1px solid #00c6ff;width:300px;text-align:center;box-shadow:0 0 25px rgba(0,198,255,0.5);}
+.login-box h2{color:#00c6ff;letter-spacing:2px;margin:0 0 15px;}
+.login-box input{width:90%;padding:11px;margin:6px 0;border-radius:8px;border:1px solid #00c6ff;background:rgba(0,0,0,0.6);color:#fff;outline:none;box-sizing:border-box;}
+.pass-wrap{position:relative;width:90%;margin:6px auto;}
+.pass-wrap input{width:100%;margin:0;}
+.pass-wrap span{position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:#00c6ff;font-size:14px;user-select:none;}
+.login-box button{width:90%;padding:12px;margin-top:12px;border:none;border-radius:8px;background:linear-gradient(90deg,#00c6ff,#0072ff);color:#fff;font-weight:bold;cursor:pointer;font-size:15px;}
+.save-box{margin-top:12px;text-align:left;width:90%;margin-left:auto;margin-right:auto;color:#aaa;font-size:13px;}
+.save-box input{width:auto;}
+#msg{font-size:12px;margin-top:10px;display:none;}
 </style>
 </head>
 <body>
 
 <div class="login-box">
 <h2>JUS LOGIN</h2>
-<input type="text" id="user" placeholder="Username">
+<input type="text" id="orgName" placeholder="Organization Name">
+<input type="text" id="orgID" placeholder="Organization ID">
+<input type="text" id="mobile" placeholder="Mobile Number">
+
+<div class="pass-wrap">
 <input type="password" id="pass" placeholder="Password">
+<span onclick="togglePass()">👁️</span>
+</div>
+
+<div class="save-box">
+<label><input type="checkbox" id="autoSave" checked> Auto Save Data</label>
+</div>
+
 <button onclick="login()">LOGIN</button>
-<p id="msg">Wrong Username or Password!</p>
+<p id="msg"></p>
 </div>
 
 <script>
+// Auto Load Saved Data
+window.onload = function(){
+  if(localStorage.getItem("jus_orgName")){
+    document.getElementById("orgName").value = localStorage.getItem("jus_orgName");
+    document.getElementById("orgID").value = localStorage.getItem("jus_orgID");
+    document.getElementById("mobile").value = localStorage.getItem("jus_mobile");
+    document.getElementById("pass").value = localStorage.getItem("jus_pass");
+  }
+}
+
+function togglePass(){
+  var p = document.getElementById("pass");
+  p.type = (p.type === "password") ? "text" : "password";
+}
+
 function login(){
-  var u = document.getElementById("user").value;
-  var p = document.getElementById("pass").value;
-  if(u === "JUS" && p === "JUS123"){
-    alert("Login Success!");
+  var name = document.getElementById("orgName").value;
+  var id = document.getElementById("orgID").value;
+  var mobile = document.getElementById("mobile").value;
+  var pass = document.getElementById("pass").value;
+  var save = document.getElementById("autoSave").checked;
+  var msg = document.getElementById("msg");
+
+  if(name=="" || id=="" || mobile=="" || pass==""){
+    msg.style.display="block"; msg.style.color="#ff4d4d"; msg.innerText="Sob Field Fill Koro!";
+    return;
+  }
+
+  // Auto Save
+  if(save){
+    localStorage.setItem("jus_orgName", name);
+    localStorage.setItem("jus_orgID", id);
+    localStorage.setItem("jus_mobile", mobile);
+    localStorage.setItem("jus_pass", pass);
+  }
+
+  // Check Login
+  if(pass === "JUS123"){
+    msg.style.display="block"; msg.style.color="#00ff88"; msg.innerText="Login Success!";
+    setTimeout(()=>{ window.location.href="login.html"; }, 800);
   }else{
-    document.getElementById("msg").style.display="block";
+    msg.style.display="block"; msg.style.color="#ff4d4d"; msg.innerText="Wrong Password! (Pass: JUS123)";
   }
 }
 </script>
