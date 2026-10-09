@@ -1,4 +1,99 @@
-<!DOCTYPE html> <html> <head> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>JUS Official</title> <style> body{margin:0;min-height:100vh;background:#020a18;display:flex;align-items:center;justify-content:center;font-family:Arial;}.login-box{background:#000;padding:22px;border-radius:16px;border:1px solid #00c6ff;width:320px;text-align:center;box-shadow:0 0 25px rgba(0,198,255,0.5);}.login-box h2{color:#00c6ff;letter-spacing:2px;margin:0 0 15px;}.login-box input{width:90%;padding:11px;margin:6px 0;border-radius:8px;border:1px solid #00c6ff;background:#000;color:#fff;outline:none;box-sizing:border-box;}.pass-wrap{position:relative;width:90%;margin:6px auto;}.pass-wrap input{width:100%;margin:0;}.pass-wrap span{position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:#00c6ff;}.main-btn{width:90%;padding:12px;margin-top:12px;border:none;border-radius:8px;background:linear-gradient(90deg,#00c6ff,#0072ff);color:#fff;font-weight:bold;cursor:pointer;}.save-box{margin-top:12px;text-align:left;width:90%;margin:auto;color:#aaa;font-size:13px;}.save-box input{width:auto;}.links{margin-top:12px;display:flex;justify-content:space-between;width:90%;margin:auto;font-size:12px;}.links a{color:#00c6ff;cursor:pointer;} #msg{font-size:12px;margin-top:10px;display:none;}.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:999;}.popup-box{background:#000;border:1px solid #00c6ff;padding:20px;border-radius:12px;width:300px;text-align:center;}.popup-box h3{color:#00c6ff;margin-top:0;}.popup-box input{width:90%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #00c6ff;background:#111;color:#fff;}.popup-box button{width:90%;padding:10px;margin-top:8px;border:none;border-radius:8px;background:#00c6ff;color:#fff;font-weight:bold;cursor:pointer;}.close{color:#aaa;cursor:pointer;font-size:12px;margin-top:10px;display:block;} </style> </head> <body> <div class="login-box"> <h2>JUS LOGIN</h2> <input type="text" id="orgName" placeholder="Organization Name"> <input type="text" id="userID" placeholder="Organization User ID"> <input type="text" id="bso" placeholder="Branch Shop & Others"> <input type="text" id="mobile" placeholder="Mobile Number" oninput="autoFind()"> <div class="pass-wrap"> <input type="password" id="pass" placeholder="Password"> <span onclick="togglePass()">👁️</span> </div> <div class="save-box"> <label><input type="checkbox" id="autoSave" checked> Auto Save Data</label> </div> <button class="main-btn" onclick="login()">LOGIN</button> <button class="main-btn" onclick="adminFastLogin()" style="background:#111;border:1px solid #00ff88;color:#00ff88;margin-top:8px;">⚡ ADMIN FAST LOGIN</button> <div class="links"> <a onclick="openPopup('forgot')">Forgot Password?</a> <a onclick="openPopup('change')">Change Password</a> </div> <p id="msg"></p> <p id="autoMsg" style="font-size:10px;color:#00ff88;display:none;"></p> </div> <div class="popup" id="forgotPopup"> <div class="popup-box"> <h3>Forgot Password</h3> <input type="text" id="fMobile" placeholder="Mobile Number"> <input type="text" id="fNewPass" placeholder="New Password"> <button onclick="forgotPass()">Reset</button> <span class="close" onclick="closePopup()">Close</span> <p id="fMsg" style="font-size:12px;"></p> </div> </div> <div class="popup" id="changePopup"> <div class="popup-box"> <h3>Change Password</h3> <input type="password" id="oldPass" placeholder="Old Password"> <input type="password" id="newPass" placeholder="New Password"> <button onclick="changePass()">Update</button> <span class="close" onclick="closePopup()">Close</span> <p id="cMsg" style="font-size:12px;"></p> </div> </div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUS Official</title>
+<style>
+*{box-sizing:border-box;font-family:Arial}
+body{
+  margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:#0a0e2a;overflow:hidden;position:relative;padding:15px;
+}
+body::before{
+  content:'';position:absolute;width:500px;height:500px;
+  background:radial-gradient(circle,#5b4dff 0%,#2a1a8a 60%);border-radius:50%;
+  left:-80px;top:30%;opacity:0.6;filter:blur(10px);
+}
+body::after{
+  content:'';position:absolute;width:650px;height:650px;
+  background:radial-gradient(circle,#8b5cf6 0%,#4c1d95 70%);border-radius:50%;
+  right:-150px;top:15%;opacity:0.7;filter:blur(5px);
+}
+.login-box{
+  width:360px;position:relative;z-index:2;
+  background:rgba(255,255,255,0.13);backdrop-filter:blur(25px);
+  border:1px solid rgba(255,255,255,0.25);border-radius:28px;padding:22px;
+  box-shadow:0 0 50px rgba(100,80,255,0.5);text-align:center;
+}
+.login-box h2{color:#fff;letter-spacing:3px;margin:0 0 15px;font-size:26px;text-shadow:0 0 10px #a78bfa}
+.login-box input{
+  width:90%;padding:11px 12px;margin:6px 0;border-radius:30px;
+  border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.15);
+  color:#fff;outline:none;box-sizing:border-box;
+}
+.login-box input::placeholder{color:#ddd8ff}
+.pass-wrap{position:relative;width:90%;margin:6px auto;}
+.pass-wrap input{width:100%;margin:0;}
+.pass-wrap span{position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:#fff;}
+.main-btn{width:90%;padding:12px;margin-top:12px;border:none;border-radius:30px;background:linear-gradient(90deg,#5b7bff,#c084fc);color:#fff;font-weight:bold;cursor:pointer;box-shadow:0 5px 20px rgba(120,100,255,.6);font-size:15px}
+.save-box{margin-top:12px;text-align:left;width:90%;margin:10px auto;color:#e0d8ff;font-size:13px;}
+.save-box input{width:auto;}
+.links{margin-top:14px;display:flex;justify-content:space-between;width:90%;margin:12px auto 0;font-size:12px;}
+.links a{color:#7dd3fc;cursor:pointer;text-decoration:underline}
+#msg{font-size:12px;margin-top:10px;display:none;}
+.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;z-index:999;}
+.popup-box{background:#1e1b4b;border:1px solid #7c3aed;padding:20px;border-radius:16px;width:300px;text-align:center;box-shadow:0 0 30px rgba(124,58,237,0.6)}
+.popup-box h3{color:#fff;margin-top:0;}
+.popup-box input{width:90%;padding:10px;margin:6px 0;border-radius:20px;border:1px solid #555;background:#0f0a2a;color:#fff;}
+.popup-box button{width:90%;padding:10px;margin-top:8px;border:none;border-radius:20px;background:linear-gradient(90deg,#5b7bff,#c084fc);color:#fff;font-weight:bold;cursor:pointer;}
+.close{color:#aaa;cursor:pointer;font-size:12px;margin-top:10px;display:block;}
+</style>
+</head>
+<body>
+<div class="login-box">
+<h2>JUS</h2>
+<input type="text" id="orgName" placeholder="Organization Name">
+<input type="text" id="userID" placeholder="Organization User ID" value="01">
+<input type="text" id="bso" placeholder="Branch Shop & Others">
+<input type="text" id="mobile" placeholder="Mobile Number" oninput="autoFind()">
+<div class="pass-wrap">
+<input type="password" id="pass" placeholder="Password">
+<span onclick="togglePass()">👁️</span>
+</div>
+<div class="save-box">
+<label><input type="checkbox" id="autoSave" checked> Auto Save Data</label>
+</div>
+<button class="main-btn" onclick="login()">LOGIN</button>
+<button class="main-btn" onclick="adminFastLogin()" style="background:transparent;border:1px solid #00ff88;color:#00ff88;box-shadow:none;">⚡ ADMIN FAST LOGIN</button>
+<div class="links">
+<a onclick="openPopup('forgot')">Forgot Password?</a>
+<a onclick="openPopup('change')">Change Password</a>
+</div>
+<p id="msg"></p>
+<p id="autoMsg" style="font-size:10px;color:#00ff88;display:none;"></p>
+</div>
+
+<div class="popup" id="forgotPopup">
+<div class="popup-box">
+<h3>Forgot Password</h3>
+<input type="text" id="fMobile" placeholder="Mobile Number">
+<input type="text" id="fNewPass" placeholder="New Password">
+<button onclick="forgotPass()">Reset</button>
+<span class="close" onclick="closePopup()">Close</span>
+<p id="fMsg" style="font-size:12px;"></p>
+</div>
+</div>
+
+<div class="popup" id="changePopup">
+<div class="popup-box">
+<h3>Change Password</h3>
+<input type="password" id="oldPass" placeholder="Old Password">
+<input type="password" id="newPass" placeholder="New Password">
+<button onclick="changePass()">Update</button>
+<span class="close" onclick="closePopup()">Close</span>
+<p id="cMsg" style="font-size:12px;"></p>
+</div>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
@@ -8,36 +103,15 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 let allOrgs=[];
 onValue(ref(db,'jus/categories'), s=>{
-  const d=s.val()||{}; allOrgs=[];
-  Object.keys(d).forEach(cat=>{
-    Object.values(d[cat]||{}).forEach(org=>{
-      allOrgs.push({...org, _cat:cat});
-    });
+ const d=s.val()||{}; allOrgs=[];
+ Object.keys(d).forEach(cat=>{
+  Object.values(d[cat]||{}).forEach(org=>{
+   allOrgs.push({...org, _cat:cat});
   });
+ });
 });
 window.autoFind=()=>{
-  const m=document.getElementById('mobile').value.trim();
-  const autoMsg=document.getElementById('autoMsg');
-  if(m.length<5) { autoMsg.style.display="none"; return; }
-  const f=allOrgs.find(o=>o.mobile && o.mobile.includes(m));
-  if(f){
-    document.getElementById('orgName').value=f.orgName||"";
-    document.getElementById('userID').value=f.orgID||"";
-    document.getElementById('bso').value=(f.branchName||"")+" "+(f.branchTitle||"")+" - "+f._cat;
-    document.getElementById('pass').value=f.password||"";
-    autoMsg.style.display="block";
-    autoMsg.innerText="✅ Online Found: "+f.orgID+" | Auto Filled";
-  }
-}
-</script>
-
-<script>
-window.onload=function(){ if(!localStorage.getItem("jus_password"))localStorage.setItem("jus_password","JUS123"); if(localStorage.getItem("jus_orgName")){ orgName.value=localStorage.getItem("jus_orgName")||""; userID.value=localStorage.getItem("jus_userID")||""; bso.value=localStorage.getItem("jus_bso")||""; mobile.value=localStorage.getItem("jus_mobile")||""; pass.value=localStorage.getItem("jus_password")||""; } }
-function togglePass(){pass.type=pass.type==="password"?"text":"password";}
-function openPopup(t){document.getElementById(t==='forgot'?'forgotPopup':'changePopup').style.display="flex";}
-function closePopup(){forgotPopup.style.display="none";changePopup.style.display="none";}
-function adminFastLogin(){orgName.value="JUS Official";userID.value="ADMIN";bso.value="Main Branch Shop";mobile.value="01700000000";pass.value="ADMIN123";login();}
-function login(){ var saved=localStorage.getItem("jus_password")||"JUS123"; if(orgName.value==""||userID.value==""||bso.value==""||mobile.value==""||pass.value==""){msg.style.display="block";msg.style.color="#ff4d4d";msg.innerText="Sob Field Fill Koro!";return;} if(userID.value==="ADMIN" && (pass.value==="ADMIN123"||pass.value===saved)){ localStorage.setItem("jus_login","true");msg.style.display="block";msg.style.color="#00ff88";msg.innerText="Admin Login!"; setTimeout(()=>{location.href="dashboard.html";},500);return; } if(pass.value===saved){ localStorage.setItem("jus_orgName",orgName.value); localStorage.setItem("jus_userID",userID.value); localStorage.setItem("jus_bso",bso.value); localStorage.setItem("jus_mobile",mobile.value); localStorage.setItem("jus_login","true"); msg.style.display="block";msg.style.color="#00ff88";msg.innerText="Login Success!"; setTimeout(()=>{location.href="dashboard.html";},700); }else{msg.style.display="block";msg.style.color="#ff4d4d";msg.innerText="Wrong Password!";} }
-function forgotPass(){ if(fMobile.value==""||fNewPass.value==""){fMsg.style.color="#ff4d4d";fMsg.innerText="Fill all!";return;} localStorage.setItem("jus_mobile",fMobile.value);localStorage.setItem("jus_password",fNewPass.value); fMsg.style.color="#00ff88";fMsg.innerText="Reset Done!";setTimeout(closePopup,1500); }
-function changePass(){ var saved=localStorage.getItem("jus_password")||"JUS123"; if(oldPass.value==""||newPass.value==""){cMsg.style.color="#ff4d4d";cMsg.innerText="Fill all!";return;} if(oldPass.value!==saved){cMsg.style.color="#ff4d4d";cMsg.innerText="Old Wrong!";return;} localStorage.setItem("jus_password",newPass.value); cMsg.style.color="#00ff88";cMsg.innerText="Changed!";setTimeout(closePopup,1500); }
-</
+ const m=document.getElementById('mobile').value.trim();
+ const autoMsg=document.getElementById('autoMsg');
+ if(m.length<5) { autoMsg.style.display="none"; return; }
+ const f=allOrgs.find(o=>o.mobile &&
