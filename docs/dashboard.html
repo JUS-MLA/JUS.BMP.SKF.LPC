@@ -1,96 +1,124 @@
 <!DOCTYPE html>
 <html><head><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>JUS Dashboard</title>
 <style>
-body{margin:0;background:#f2f3f8;font-family:Arial;padding:8px;padding-bottom:90px}
-.top{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px}
-.top-box{background:#fff;border-radius:12px;padding:8px 4px;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,.05)}
-.top-box div{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;font-size:16px}
-.top-box b{font-size:13px;display:block}.top-box span{font-size:10px;color:#666}
-.form{background:#fff;border-radius:14px;padding:12px;margin-top:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.form label{font-size:11px;font-weight:bold;color:#0a1a6a;display:block;margin:10px 0 4px 2px}
-.form input,.form select{width:100%;padding:11px;margin:4px 0;border-radius:8px;border:none;background:#f0f1f5;outline:none;box-sizing:border-box;font-size:12px}
-.id-row{display:flex;gap:6px;align-items:center}.id-row input{flex:1}.id-badge{background:#0b2ea8;color:#fff;padding:11px 16px;border-radius:8px;font-weight:bold;font-size:14px}
-.pass{position:relative}.pass span{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer}
-.save{width:100%;background:#2f5bff;color:#fff;padding:12px;border:none;border-radius:10px;font-weight:bold;margin-top:10px;cursor:pointer;font-size:13px}
-.row2{display:flex;gap:8px;margin-top:8px}.btn-f{flex:1;background:#f59e0b;color:#fff;padding:11px;border:none;border-radius:10px;font-weight:bold}.btn-c{flex:1;background:#10b981;color:#fff;padding:11px;border:none;border-radius:10px;font-weight:bold}
-.gen{color:#16a34a;font-size:11px;text-align:center;margin-top:8px;font-weight:bold}
-.nav{position:fixed;bottom:10px;left:10px;right:10px;background:#fff;border-radius:20px;display:flex;justify-content:space-around;align-items:center;padding:10px;box-shadow:0 5px 15px rgba(0,0,0,.15)}
-.nav .plus{width:36px;height:36px;background:#2f5bff;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;align-items:center;justify-content:center;padding:14px}.modal.show{display:flex}.m-box{background:#fff;border-radius:14px;padding:14px;width:100%;max-width:340px}
+body{margin:0;background:#f0f2f8;font-family:Arial;padding:0 0 80px 0}
+.top{padding:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.card{background:#fff;border-radius:14px;padding:10px 4px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card b{display:block;font-size:18px;margin-top:4px}
+.card span{font-size:12px;color:#555}
+.formBox{margin:10px;background:#fff;border-radius:18px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.formBox h3{margin:0 0 10px}
+label{font-size:12px;color:#1e3a8a;font-weight:bold;margin:10px 0 4px;display:block}
+input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #e5e7eb;background:#f3f4f6;outline:none;box-sizing:border-box}
+.idRow{display:flex;gap:8px;align-items:center}
+.idRow input{flex:1}
+.badge{background:#1e40af;color:#fff;padding:12px 18px;border-radius:12px;font-weight:bold}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;background:#1e40af;color:#fff;font-weight:bold;margin-top:12px;font-size:15px}
+.botNav{position:fixed;bottom:10px;left:10px;right:10px;background:#fff;border-radius:20px;display:flex;justify-content:space-around;padding:10px;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.botNav span{font-size:13px}
+.botNav .plus{background:#2563eb;color:#fff;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
 </style></head><body>
 
 <div class="top">
-<div class="top-box"><div style="background:#fef3c7">🏢</div><span>Total Org</span><b id="totalOrg">0</b></div>
-<div class="top-box"><div style="background:#dcfce7">✅</div><span>Active Org</span><b id="activeOrg">0</b></div>
-<div class="top-box"><div style="background:#e0e7ff">🏬</div><span>Total Bra</span><b id="totalBra">0</b></div>
-<div class="top-box"><div style="background:#dbeafe">✔️</div><span>Active Bra</span><b id="activeBra">0</b></div>
-<div class="top-box"><div style="background:#fee2e2">❌</div><span>Reject Bra</span><b id="rejectBra">0</b></div>
-<div class="top-box"><div style="background:#fef3c7">🏪</div><span>Total Shop</span><b id="totalShop">0</b></div>
-<div class="top-box"><div style="background:#dcfce7">🛍️</div><span>Active Shop</span><b id="activeShop">0</b></div>
-<div class="top-box"><div style="background:#fee2e2">🗑️</div><span>Reject Shop</span><b id="rejectShop">0</b></div>
-<div class="top-box"><div style="background:#e0e7ff">👥</div><span>All Member</span><b id="allMember">0</b></div>
-<div class="top-box"><div style="background:#dcfce7">👤</div><span>Active Member</span><b id="activeMember">0</b></div>
-<div class="top-box"><div style="background:#fee2e2">⬇️</div><span>Drop Member</span><b id="dropMember">0</b></div>
-<div class="top-box"><div style="background:#fef3c7">💰</div><span>Amount</span><b id="totalAmount">৳0</b></div>
+<div class="card">🏢<br><span>Total Org</span><b id="totalOrg">0</b></div>
+<div class="card">✅<br><span>Active Org</span><b id="activeOrg">0</b></div>
+<div class="card">🏬<br><span>Total Bra</span><b id="totalBra">0</b></div>
+<div class="card">✔️<br><span>Active Bra</span><b id="activeBra">0</b></div>
+
+<div class="card">❌<br><span>Reject Bra</span><b id="rejectBra">0</b></div>
+<div class="card">🏪<br><span>Total Shop</span><b id="totalShop">0</b></div>
+<div class="card">🛍️<br><span>Active Shop</span><b id="activeShop">0</b></div>
+<div class="card">🗑️<br><span>Reject Shop</span><b id="rejectShop">0</b></div>
+
+<div class="card">👥<br><span>All Member</span><b id="allMember">0</b></div>
+<div class="card">👤<br><span>Active Member</span><b id="activeMember">0</b></div>
+<div class="card">⬇️<br><span>Drop Member</span><b id="dropMember">0</b></div>
+<div class="card">💰<br><span>Amount</span><b id="totalAmount">৳0</b></div>
 </div>
 
-<div class="form">
-<b>➕ Add New Organization</b>
+<div class="formBox">
+<h3>➕ Add New Organization</h3>
 <label>Organization Name</label><input id="orgName" placeholder="Enter organization name">
 <label>Branch Name</label><input id="branchName" placeholder="Enter branch name">
-<label>Branch ID Auto Generate - 01</label><div class="id-row"><input disabled placeholder="Auto-generated ID"><div class="id-badge" id="branchID">01</div></div>
-<label> Branch Category</label><select id="cat"><option>Branch Finance</option><option selected>Branch Agriculture</option><option>Branch Shop</option><option>Branch Travels</option><option>Branch Others</option></select>
+<label>Branch ID Auto Generate - 01</label>
+<div class="idRow"><input id="orgUserID" placeholder="Auto-generated ID" readonly><div class="badge" id="branchID">01</div></div>
+<div style="font-size:11px;color:#666;margin:4px 0" id="genText">Auto: 01 (0 ডেটা)</div>
+
+<label>Branch Category</label>
+<select id="cat"><option selected>Branch Agriculture</option><option>Branch Finance</option><option>Branch Shop</option><option>Branch Travels</option><option>Branch Others</option></select>
+
 <label>Mobile Number</label><input id="mob" placeholder="+880 1XXX-XXXXXX">
-<label>Password</label><div class="pass"><input id="pass" type="password" placeholder="••••••••"><span onclick="pass.type=pass.type=='password'?'text':'password'">👁️</span></div>
-<label style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="autoSave" checked style="width:auto"> Auto Save</label>
-<button class="save" onclick="saveData()">💾 Save to Firebase</button>
-<div class="row2"><button class="btn-f" onclick="forgetM.classList.add('show')">🔑 Forget Password</button><button class="btn-c" onclick="changeM.classList.add('show')">🔒 Change Password</button></div>
-<div class="gen" id="genText">Auto: 01 (0 ডেটা সংরক্ষণ রয়েছে)</div>
+<label>Password</label><input id="pass" type="password" placeholder="••••••••">
+
+<div style="display:flex;gap:8px;margin-top:8px;font-size:12px"><label><input type="checkbox" id="autoSave" checked> Auto Save Data</label><label><input type="checkbox" id="saveFirebase" checked> Save to Firebase</label></div>
+
+<button class="btn" onclick="saveData()">Save Organization</button>
 </div>
 
-<div class="modal" id="changeM"><div class="m-box"><b>Change Password <span style="float:right;cursor:pointer" onclick="changeM.classList.remove('show')">✕</span></b><input id="cBid" placeholder="Branch ID"><input id="cOld" type="password" placeholder="Old Password"><input id="cNew" type="password" placeholder="New Password"><input id="cCon" type="password" placeholder="Confirm Password"><button class="save" onclick="changePass()">Update</button></div></div>
-<div class="modal" id="forgetM"><div class="m-box"><b>Forget Password <span style="float:right;cursor:pointer" onclick="forgetM.classList.remove('show')">✕</span></b><input id="fMob" placeholder="Mobile Number"><input id="fBid" placeholder="Branch ID"><select id="fCat"><option>Branch Agriculture</option><option>Branch Finance</option><option>Branch Shop</option></select><input id="fNew" type="password" placeholder="New Password"><button class="save" style="background:#f59e0b" onclick="forgetPass()">Reset</button></div></div>
-
-<div class="nav"><span>🏠 Home</span><span>📊 Analytics</span><div class="plus">+</div><span>👤</span></div>
+<div class="botNav"><span>🏠 Home</span><span>📊 Analytics</span><div class="plus">+</div><span>👤</span></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getDatabase, ref, set, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 const firebaseConfig={apiKey:"AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs",authDomain:"jus-bmp-skf.firebaseapp.com",databaseURL:"https://jus-bmp-skf-default-rtdb.firebaseio.com",projectId:"jus-bmp-skf",storageBucket:"jus-bmp-skf.firebasestorage.app",messagingSenderId:"763512076096",appId:"1:763512076096:web:3e5f79cc274b34d8106ca5"};
-const app=initializeApp(firebaseConfig);const db=getDatabase(app);
+const app=initializeApp(firebaseConfig); const db=getDatabase(app);
+
+let totalCount=0;
+
+// FIXED COUNTER - তুমি Drop করো নাই তাই Drop 0, Reject 0 থাকবে
 onValue(ref(db,'jus/categories'), s=>{
-  const data=s.val()||{}; let t=0;
-  Object.values(data).forEach(c=>{ Object.values(c||{}).forEach(()=>t++) });
-  document.querySelectorAll('.top-box b').forEach(b=>{ if(b.id!=='totalAmount') b.innerText=t; });
-  totalAmount.innerText="৳0";
-  let id=t+1; id=id<10?"0"+id:id+""; branchID.innerText=id; genText.innerText=`Auto: ${id} (${t} ডেটা সংরক্ষণ রয়েছে)`;
+  const data=s.val()||{};
+  let total=0, active=0, reject=0, drop=0, shopTotal=0, shopActive=0, shopReject=0;
+  
+  Object.values(data).forEach((catObj, idx)=>{
+    Object.values(catObj||{}).forEach(item=>{
+      total++;
+      const st=(item.status||'active').toLowerCase();
+      const cat=(item.category||'').toLowerCase();
+      if(st==='reject'){ reject++; if(cat.includes('shop')) shopReject++; }
+      else if(st==='drop'){ drop++; }
+      else { active++; if(cat.includes('shop')) shopActive++; }
+      if(cat.includes('shop')) shopTotal++;
+    });
+  });
+
+  totalCount=total;
+  document.getElementById('totalOrg').innerText=total;
+  document.getElementById('activeOrg').innerText=active;
+  document.getElementById('totalBra').innerText=total;
+  document.getElementById('activeBra').innerText=active;
+  document.getElementById('rejectBra').innerText=reject;
+  
+  document.getElementById('totalShop').innerText=shopTotal;
+  document.getElementById('activeShop').innerText=shopActive;
+  document.getElementById('rejectShop').innerText=shopReject;
+  
+  document.getElementById('allMember').innerText=total;
+  document.getElementById('activeMember').innerText=active;
+  document.getElementById('dropMember').innerText=drop;
+  document.getElementById('totalAmount').innerText="৳0";
+
+  let id=total+1; id=id<10?"0"+id:id+"";
+  document.getElementById('branchID').innerText=id;
+  document.getElementById('orgUserID').value=id;
+  document.getElementById('genText').innerText=`Auto: ${id} (${total} ডেটা সংরক্ষণ রয়েছে)`;
 });
+
 window.saveData=async()=>{
-  const org=orgName.value.trim(), bName=branchName.value.trim(), m=mob.value.trim(), p=pass.value.trim(), catV=cat.value, bID=branchID.innerText;
-  if(!org||!bName||!m||!p) return alert("সব পূরণ করো!");
-  const d={orgName:org,branchName:bName,mobile:m,password:p,branchPassword:p,orgID:bID,category:catV,status:"active",createdAt:Date.now()};
-  if(autoSave.checked) localStorage.setItem("jus_last_"+bID, JSON.stringify(d));
-  await set(ref(db,'jus/categories/'+catV+'/'+bID), d);
-  alert("✅ Saved! ID: "+bID); orgName.value="";branchName.value="";mob.value="";pass.value="";
-}
-window.changePass=async()=>{
-  const bid=cBid.value.trim(), oldP=cOld.value.trim(), newP=cNew.value.trim(), conP=cCon.value.trim();
-  if(!bid||!oldP||!newP) return alert("সব লাগবে!"); if(newP!==conP) return alert("Confirm মিলছে না!");
-  for(let catV of ["Branch Finance","Branch Agriculture","Branch Shop","Branch Travels","Branch Others"]){
-    const snap=await get(ref(db,'jus/categories/'+catV+'/'+bid));
-    if(snap.exists() && (snap.val().password===oldP)){
-      await update(ref(db,'jus/categories/'+catV+'/'+bid), {password:newP,branchPassword:newP});
-      alert("✅ Changed!"); changeM.classList.remove('show'); return;
-    }
-  }
-  alert("❌ Old Password ভুল!");
-}
-window.forgetPass=async()=>{
-  const mobN=fMob.value.trim(), bid=fBid.value.trim(), catV=fCat.value, newP=fNew.value.trim();
-  if(!mobN||!bid||!newP) return alert("সব লাগবে!");
-  const snap=await get(ref(db,'jus/categories/'+catV+'/'+bid));
-  if(!snap.exists()) return alert("ID নেই!"); if(snap.val().mobile!==mobN) return alert("Mobile মিলছে না!");
-  await update(ref(db,'jus/categories/'+catV+'/'+bid), {password:newP,branchPassword:newP});
-  alert("✅ Reset Done!"); forgetM.classList.remove('show');
+  const org=document.getElementById('orgName').value.trim();
+  const bra=document.getElementById('branchName').value.trim();
+  const cat=document.getElementById('cat').value;
+  const mob=document.getElementById('mob').value.trim();
+  const pas=document.getElementById('pass').value.trim();
+  const id=document.getElementById('orgUserID').value.trim();
+  if(!org||!bra||!mob||!pas) return alert("সব Field লাগবে!");
+  
+  const data={orgName:org, organizationName:org, branchName:bra, branchID:id, orgUserID:id, orgID:id, mobile:mob, mobileNumber:mob, password:pas, branchPassword:pas, category:cat, status:"active", createdAt:Date.now()};
+  
+  await set(ref(db,'jus/categories/'+cat+'/'+id), data);
+  await set(ref(db,'jus/users/'+id), data);
+  
+  alert("✅ Save Done! ID: "+id);
+  orgName.value=""; branchName.value=""; mob.value=""; pass.value="";
 }
 </script></body></html>
