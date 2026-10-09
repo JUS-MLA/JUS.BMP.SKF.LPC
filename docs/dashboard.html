@@ -1,59 +1,63 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JUS Dashboard - Full Stats</title><script src="https://cdn.tailwindcss.com"></script></head>
+<title>JUS Dashboard</title><script src="https://cdn.tailwindcss.com"></script></head>
 <body class="bg-[#f5f6fa] p-3">
-<div class="max-w-[420px] mx-auto bg-[#eef0f5] rounded-[25px] p-4 shadow-xl">
+<div class="max-w-[420px] mx-auto bg-[#eef0f5] rounded-[30px] p-4 shadow-xl">
+<div class="flex justify-between items-center mb-3"><h1 class="text-[16px] font-black text-gray-800">JUS Dashboard</h1><div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">A</div></div>
 
-<div class="flex justify-between items-center mb-3"><h1 class="text-xl font-black text-gray-800">JUS Dashboard</h1><div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">A</div></div>
-
-<!-- NEW ADDED STATS - Total Org, ID, Branch, Shop, Others -->
 <div class="bg-white rounded-xl p-3 shadow-sm mb-4">
-<p class="font-bold text-sm text-gray-800 mb-2">🏢 Organization Summary</p>
+<p class="font-bold text-[11px] text-gray-800 mb-2">🏢 Organization Summary</p>
 <div class="grid grid-cols-3 gap-2 text-center">
-<div class="bg-blue-50 p-2 rounded-lg"><p class="text-[9px] text-gray-500">Total Org Name</p><h3 id="totalOrgName" class="font-black text-[14px] text-blue-600">0</h3></div>
-<div class="bg-green-50 p-2 rounded-lg"><p class="text-[9px] text-gray-500">Total Org ID</p><h3 id="totalOrgID" class="font-black text-[14px] text-green-600">0</h3></div>
-<div class="bg-orange-50 p-2 rounded-lg"><p class="text-[9px] text-gray-500">Total Branch</p><h3 id="totalBranch" class="font-black text-[14px] text-orange-600">0</h3></div>
+<div class="bg-blue-50 p-2 rounded-lg"><p class="text-[8px] text-gray-500">Total Org Name</p><h3 id="totalOrgName" class="font-black text-[13px] text-blue-600">0</h3></div>
+<div class="bg-green-50 p-2 rounded-lg"><p class="text-[8px] text-gray-500">Total Org ID</p><h3 id="totalOrgID" class="font-black text-[13px] text-green-600">0</h3></div>
+<div class="bg-orange-50 p-2 rounded-lg"><p class="text-[8px] text-gray-500">Total Branch</p><h3 id="totalBranch" class="font-black text-[13px] text-orange-600">0</h3></div>
 </div>
 <div class="grid grid-cols-2 gap-2 text-center mt-2">
-<div class="bg-purple-50 p-2 rounded-lg"><p class="text-[9px] text-gray-500">Total Shop</p><h3 id="totalShopMain" class="font-black text-[14px] text-purple-600">0</h3><p class="text-[8px] text-gray-400" id="shopList"></p></div>
-<div class="bg-pink-50 p-2 rounded-lg"><p class="text-[9px] text-gray-500">Total Others</p><h3 id="totalOthersMain" class="font-black text-[14px] text-pink-600">0</h3><p class="text-[8px] text-gray-400" id="othersList"></p></div>
+<div class="bg-purple-50 p-2 rounded-lg"><p class="text-[8px] text-gray-500">Total Shop</p><h3 id="totalShopMain" class="font-black text-[13px] text-purple-600">0</h3></div>
+<div class="bg-pink-50 p-2 rounded-lg"><p class="text-[8px] text-gray-500">Total Others</p><h3 id="totalOthersMain" class="font-black text-[13px] text-pink-600">0</h3></div>
 </div>
 </div>
 
-<!-- Overall Overview -->
 <div class="bg-white rounded-xl p-3 shadow-sm mb-4">
-<div class="flex justify-between"><p class="font-bold text-sm text-gray-800">Overall Overview</p><span class="text-[10px] bg-blue-50 text-blue-500 px-2 py-1 rounded-full">Live Firebase</span></div>
+<div class="flex justify-between"><p class="font-bold text-[11px] text-gray-800">Overall Overview</p><span class="text-[9px] bg-blue-50 text-blue-500 px-2 py-1 rounded-full">Live Firebase</span></div>
 <div class="grid grid-cols-3 gap-2 mt-3 text-center">
-<div><div class="w-10 h-10 bg-green-100 rounded-full mx-auto flex items-center justify-center">💰</div><p class="text-[10px] mt-1">Org</p><h3 id="totalOrg" class="font-black text-sm">0</h3></div>
-<div><div class="w-10 h-10 bg-blue-100 rounded-full mx-auto flex items-center justify-center">📦</div><p class="text-[10px] mt-1">Sale</p><h3 id="todaySale" class="font-black text-sm">৳0</h3></div>
-<div><div class="w-10 h-10 bg-purple-100 rounded-full mx-auto flex items-center justify-center">👥</div><p class="text-[10px] mt-1">Due</p><h3 id="totalDue" class="font-black text-sm">৳0</h3></div>
+<div><div class="w-10 h-10 bg-green-100 rounded-full mx-auto flex items-center justify-center">💰</div><p class="text-[9px] mt-1">Org</p><h3 id="totalOrg" class="font-black text-[12px]">0</h3></div>
+<div><div class="w-10 h-10 bg-blue-100 rounded-full mx-auto flex items-center justify-center">📦</div><p class="text-[9px] mt-1">Sale</p><h3 id="todaySale" class="font-black text-[12px]">৳0</h3></div>
+<div><div class="w-10 h-10 bg-purple-100 rounded-full mx-auto flex items-center justify-center">👥</div><p class="text-[9px] mt-1">Due</p><h3 id="totalDue" class="font-black text-[12px]">৳0</h3></div>
 </div>
 </div>
 
-<p class="font-bold mb-2 text-gray-800">Categories</p>
+<p class="font-bold mb-2 text-[12px] text-gray-800">Categories</p>
 <div class="grid grid-cols-3 gap-2 mb-4">
-<button onclick="showCat('finance')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-blue-100 rounded-full mx-auto flex items-center justify-center text-xl">💲</div><p class="text-[11px] font-bold mt-2">Finance <span id="financeCount" class="bg-gray-100 text-[9px] px-1 rounded-full">0</span></p></button>
-<button onclick="showCat('agriculture')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-green-100 rounded-full mx-auto flex items-center justify-center text-xl">🌱</div><p class="text-[11px] font-bold mt-2">Agriculture <span id="agriCount" class="bg-gray-100 text-[9px] px-1 rounded-full">0</span></p></button>
-<button onclick="showCat('shop')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-orange-100 rounded-full mx-auto flex items-center justify-center text-xl">🛍️</div><p class="text-[11px] font-bold mt-2">Shop <span id="shopCount" class="bg-gray-100 text-[9px] px-1 rounded-full">0</span></p></button>
-<button onclick="showCat('travels')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-purple-100 rounded-full mx-auto flex items-center justify-center text-xl">✈️</div><p class="text-[11px] font-bold mt-2">Travels <span id="travelsCount" class="bg-gray-100 text-[9px] px-1 rounded-full">0</span></p></button>
-<button onclick="showCat('others')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-gray-200 rounded-full mx-auto flex items-center justify-center text-xl">•••</div><p class="text-[11px] font-bold mt-2">Others <span id="othersCount" class="bg-gray-100 text-[9px] px-1 rounded-full">0</span></p></button>
+<button onclick="selectCat('finance')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-blue-100 rounded-full mx-auto flex items-center justify-center text-xl">$</div><p class="text-[9px] font-bold mt-2">Branch Finance <span id="financeCount" class="bg-gray-100 text-[8px] px-1 rounded-full">0</span></p></button>
+<button onclick="selectCat('agriculture')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-green-100 rounded-full mx-auto flex items-center justify-center text-xl">🌱</div><p class="text-[9px] font-bold mt-2">Branch Agriculture <span id="agriCount" class="bg-gray-100 text-[8px] px-1 rounded-full">0</span></p></button>
+<button onclick="selectCat('shop')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-orange-100 rounded-full mx-auto flex items-center justify-center text-xl">🛍️</div><p class="text-[9px] font-bold mt-2">Branch Shop <span id="shopCount" class="bg-gray-100 text-[8px] px-1 rounded-full">0</span></p></button>
+<button onclick="selectCat('travels')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-purple-100 rounded-full mx-auto flex items-center justify-center text-xl">✈️</div><p class="text-[9px] font-bold mt-2">Branch Travels <span id="travelsCount" class="bg-gray-100 text-[8px] px-1 rounded-full">0</span></p></button>
+<button onclick="selectCat('others')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-gray-200 rounded-full mx-auto flex items-center justify-center text-xl">•••</div><p class="text-[9px] font-bold mt-2">Branch Others <span id="othersCount" class="bg-gray-100 text-[8px] px-1 rounded-full">0</span></p></button>
 </div>
 
-<div id="addBox" class="bg-white p-3 rounded-xl shadow-sm">
-<p class="font-bold text-xs mb-2">+ Add New Organization</p>
-<input id="orgName" placeholder="Organization Name" class="w-full p-2 rounded-lg bg-gray-100 text-xs mb-2">
-<input id="orgID" placeholder="Organization ID (ex: JUS-001)" class="w-full p-2 rounded-lg bg-gray-100 text-xs mb-2">
-<select id="catSelect" class="w-full p-2 rounded-lg bg-gray-100 text-xs mb-2">
-<option value="finance">Finance - Branch</option>
-<option value="agriculture">Agriculture - Branch</option>
-<option value="shop">Shop</option>
-<option value="travels">Travels - Branch</option>
-<option value="others">Others</option>
+<!-- Add New Org Form Updated -->
+<div class="bg-white p-3 rounded-xl shadow-sm">
+<p class="font-bold text-[11px] mb-2">+ Add New Organization</p>
+<input id="orgName" oninput="autoGenID()" placeholder="Organization Name" class="w-full p-2.5 rounded-lg bg-gray-100 text-[11px] mb-2 outline-none">
+<input id="branchTitle" oninput="autoGenID()" placeholder="Branch Title (ex: Rajshahi Branch)" class="w-full p-2.5 rounded-lg bg-gray-100 text-[11px] mb-2 outline-none">
+<input id="mobile" placeholder="Mobile Number" type="tel" class="w-full p-2.5 rounded-lg bg-gray-100 text-[11px] mb-2 outline-none">
+<input id="password" placeholder="Password" type="password" class="w-full p-2.5 rounded-lg bg-gray-100 text-[11px] mb-2 outline-none">
+<div class="flex gap-2 mb-2">
+<select id="catSelect" onchange="autoGenID()" class="w-[60%] p-2.5 rounded-lg bg-gray-100 text-[11px] outline-none">
+<option value="finance">Branch Finance</option>
+<option value="agriculture">Branch Agriculture</option>
+<option value="shop">Branch Shop</option>
+<option value="travels">Branch Travels</option>
+<option value="others">Branch Others</option>
 </select>
-<button onclick="addCat()" class="w-full bg-blue-600 text-white p-2 rounded-lg text-xs font-bold">Save to Firebase</button>
+<input id="orgID" placeholder="Auto ID" readonly class="w-[40%] p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-[11px] font-bold text-blue-600 outline-none">
+</div>
+<button onclick="addOrg()" class="w-full bg-blue-600 text-white p-2.5 rounded-lg text-[11px] font-bold">Save to Firebase</button>
+<p id="genText" class="text-[9px] text-green-600 mt-1 text-center"></p>
 </div>
 
-<div class="bg-white rounded-full p-2 flex justify-around mt-4 shadow-md">
+<div class="bg-white rounded-full p-2 flex justify-around mt-4 shadow-md items-center">
 <span class="text-blue-600 font-bold text-[10px]">🏠 Home</span><span class="text-gray-400 text-[10px]">Analytics</span><span class="w-8 h-8 bg-blue-600 rounded-xl text-white flex items-center justify-center">+</span><span class="text-gray-400 text-[10px]">🔔</span><span class="text-gray-400 text-[10px]">👤</span>
 </div>
 </div>
@@ -64,41 +68,44 @@ import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebas
 const firebaseConfig = { apiKey: "AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs", authDomain: "jus-bmp-skf.firebaseapp.com", databaseURL: "https://jus-bmp-skf-default-rtdb.firebaseio.com", projectId: "jus-bmp-skf", storageBucket: "jus-bmp-skf.firebasestorage.app", messagingSenderId: "763512076096", appId: "1:763512076096:web:3e5f79cc274b34d8106ca5" };
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 
-window.addCat=()=>{
-  const name=orgName.value, oid=orgID.value, cat=catSelect.value;
-  if(!name ||!oid) return alert('Name & ID দাও!');
-  push(ref(db,'jus/categories/'+cat),{name, orgID:oid, time:Date.now()});
-  orgName.value=''; orgID.value='';
-  alert('✅ '+name+' Added!');
+window.autoGenID=()=>{
+  const name=document.getElementById('orgName').value.trim();
+  const branch=document.getElementById('branchTitle').value.trim();
+  const cat=document.getElementById('catSelect').value;
+  if(!name) { document.getElementById('orgID').value=''; return; }
+  const prefix = {finance:'FIN', agriculture:'AGRI', shop:'SHOP', travels:'TRV', others:'OTH'}[cat];
+  const orgCode = name.substring(0,3).toUpperCase().replace(/[^A-Z]/g,'') || 'JUS';
+  const branchCode = branch.substring(0,2).toUpperCase().replace(/[^A-Z]/g,'') || 'BR';
+  const rand = Math.floor(1000 + Math.random()*9000);
+  const id = `JUS-${prefix}-${orgCode}${branchCode}-${rand}`;
+  document.getElementById('orgID').value=id;
+  document.getElementById('genText').innerText='✅ Auto Generated: '+id;
 }
-window.showCat=(c)=>{ catSelect.value=c; window.scrollTo(0,document.body.scrollHeight); }
+window.selectCat=(c)=>{ document.getElementById('catSelect').value=c; autoGenID(); window.scrollTo(0,document.body.scrollHeight); }
+window.addOrg=()=>{
+  const orgName=document.getElementById('orgName').value;
+  const branchTitle=document.getElementById('branchTitle').value;
+  const mobile=document.getElementById('mobile').value;
+  const password=document.getElementById('password').value;
+  const orgID=document.getElementById('orgID').value;
+  const cat=document.getElementById('catSelect').value;
+  if(!orgName ||!branchTitle ||!mobile ||!password) return alert('সব ফিল্ড পূরণ করো ভাই!');
+  push(ref(db,'jus/categories/'+cat),{orgName, branchTitle, mobile, password, orgID, category:cat, time:Date.now()});
+  // clear
+  document.getElementById('orgName').value=''; document.getElementById('branchTitle').value=''; document.getElementById('mobile').value=''; document.getElementById('password').value=''; document.getElementById('orgID').value=''; document.getElementById('genText').innerText='';
+  alert('✅ '+orgName+' - '+branchTitle+' Added! ID: '+orgID);
+}
 
 onValue(ref(db,'jus/categories'), s=>{
   const d=s.val()||{};
-  const finance = Object.keys(d.finance||{}).length;
-  const agri = Object.keys(d.agriculture||{}).length;
-  const shop = Object.keys(d.shop||{}).length;
-  const travels = Object.keys(d.travels||{}).length;
-  const others = Object.keys(d.others||{}).length;
-  const total = finance+agri+shop+travels+others;
-
-  // New Stats
-  document.getElementById('totalOrgName').innerText = total;
-  document.getElementById('totalOrgID').innerText = total; // ID count same as Org
-  document.getElementById('totalBranch').innerText = finance+agri+travels; // Branch = Finance+Agri+Travels
-  document.getElementById('totalShopMain').innerText = shop;
-  document.getElementById('totalOthersMain').innerText = others;
-
-  document.getElementById('totalOrg').innerText = total;
-  document.getElementById('financeCount').innerText = finance;
-  document.getElementById('agriCount').innerText = agri;
-  document.getElementById('shopCount').innerText = shop;
-  document.getElementById('travelsCount').innerText = travels;
-  document.getElementById('othersCount').innerText = others;
+  const f=Object.keys(d.finance||{}).length, a=Object.keys(d.agriculture||{}).length, sh=Object.keys(d.shop||{}).length, t=Object.keys(d.travels||{}).length, o=Object.keys(d.others||{}).length;
+  const total=f+a+sh+t+o;
+  document.getElementById('totalOrgName').innerText=total; document.getElementById('totalOrgID').innerText=total;
+  document.getElementById('totalBranch').innerText=f+a+t+sh+o; document.getElementById('totalShopMain').innerText=sh; document.getElementById('totalOthersMain').innerText=o;
+  document.getElementById('totalOrg').innerText=total; document.getElementById('financeCount').innerText=f; document.getElementById('agriCount').innerText=a; document.getElementById('shopCount').innerText=sh; document.getElementById('travelsCount').innerText=t; document.getElementById('othersCount').innerText=o;
 });
 onValue(ref(db,'jus/allSales'), s=>{
   const sales=Object.values(s.val()||{}); let ts=0,td=0; sales.forEach(x=>{ts+=x.sale||0;td+=x.due||0;});
-  document.getElementById('todaySale').innerText='৳'+ts;
-  document.getElementById('totalDue').innerText='৳'+td;
+  document.getElementById('todaySale').innerText='৳'+ts; document.getElementById('totalDue').innerText='৳'+td;
 });
 </script></body></html>
