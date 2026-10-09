@@ -1,51 +1,59 @@
 <!DOCTYPE html>
-<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>JUS Dashboard</title>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUS Dashboard</title>
 <style>
-body{margin:0;background:#f4f5f9;font-family:Arial;padding:12px;padding-bottom:90px;}
-.top-card{background:#fff;border-radius:18px;padding:16px;display:flex;justify-content:space-around;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.06);margin-bottom:15px;}
-.icon-circle{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:auto;margin-bottom:5px;}
-.cat-title{font-weight:bold;margin:8px 2px 10px;font-size:15px;}
-.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
-.cat-box{background:#fff;border-radius:16px;padding:18px;text-align:center;box-shadow:0 3px 10px rgba(0,0,0,0.05);}
-.cat-box.icon-circle{width:52px;height:52px;font-size:26px;}
-.add-card{background:#fff;border-radius:18px;padding:16px;box-shadow:0 4px 15px rgba(0,0,0,0.06);}
-.add-card b{font-size:14px;}
-.add-card input,.add-card select{width:100%;padding:13px;margin:8px 0;border-radius:12px;border:none;background:#f1f2f6;outline:none;box-sizing:border-box;font-size:13px;}
-.id-row{display:flex;gap:10px;}
-.id-row select{flex:1.2;}
-.id-row div{flex:0.8;background:#eaf0ff;border:1px solid #3b82f6;color:#2563eb;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;letter-spacing:2px;}
-.save-btn{width:100%;background:#2f5bff;color:#fff;padding:14px;border:none;border-radius:12px;font-weight:bold;font-size:14px;margin-top:10px;cursor:pointer;}
-#genText{color:#16a34a;font-size:12px;text-align:center;margin-top:8px;font-weight:bold;}
-.bottom-nav{position:fixed;bottom:12px;left:12px;right:12px;background:#fff;border-radius:25px;padding:12px;display:flex;justify-content:space-around;align-items:center;box-shadow:0 6px 25px rgba(0,0,0,0.1);}
-.plus{width:42px;height:42px;background:#2f5bff;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;}
+body{margin:0;background:#f2f3f8;font-family:Arial;padding:12px;padding-bottom:90px;}
+.top{background:#fff;border-radius:20px;padding:16px 10px;display:flex;justify-content:space-around;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);margin-bottom:15px;}
+.top.ic{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 6px;}
+.org-ic{background:#fef3c7;}.sale-ic{background:#e0eaff;}.due-ic{background:#f3e8ff;}
+.top b{display:block;font-size:16px;margin-top:2px;}
+.top span{font-size:12px;color:#555;}
+.cat-head{font-weight:bold;font-size:15px;margin:10px 4px;}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+.cbox{background:#fff;border-radius:16px;padding:20px 10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.cbox.ic{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;}
+.cbox span{font-size:12px;display:block;}
+.cbox b{font-size:12px;}
+.form{background:#fff;border-radius:18px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+.form b{font-size:14px;}
+.form input,.form select{width:100%;padding:13px;margin:7px 0;border-radius:10px;border:none;background:#f0f1f5;outline:none;box-sizing:border-box;font-size:13px;}
+.id-row{display:flex;gap:8px;margin-top:7px;}
+.id-row select{flex:1.3;}
+.id-row div{flex:0.7;background:#eaf1ff;border:1px solid #5b8cff;color:#2f5bff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;letter-spacing:1px;}
+.save{width:100%;background:#2f5bff;color:#fff;padding:14px;border:none;border-radius:12px;font-weight:bold;margin-top:10px;cursor:pointer;font-size:14px;}
+.gen{color:#16a34a;font-size:11px;text-align:center;margin-top:8px;font-weight:bold;}
+.nav{position:fixed;bottom:15px;left:12px;right:12px;background:#fff;border-radius:30px;display:flex;justify-content:space-around;align-items:center;padding:12px 10px;box-shadow:0 5px 20px rgba(0,0,0,0.1);}
+.nav.plus{width:40px;height:40px;background:#2f5bff;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;}
 </style>
 </head>
 <body>
 
-<div class="top-card">
-<div><div class="icon-circle" style="background:#fff4d6;">💰</div>Org<br><b id="totalOrg">0</b></div>
-<div><div class="icon-circle" style="background:#e6f0ff;">📦</div>Sale<br><b>৳0</b></div>
-<div><div class="icon-circle" style="background:#f3e6ff;">👥</div>Due<br><b>৳0</b></div>
+<div class="top">
+<div><div class="ic org-ic">💰</div><span>Org</span><b id="totalOrg">0</b></div>
+<div><div class="ic sale-ic">📦</div><span>Sale</span><b>৳0</b></div>
+<div><div class="ic due-ic">👥</div><span>Due</span><b>৳0</b></div>
 </div>
 
-<div class="cat-title">Categories</div>
-<div class="cat-grid">
-<div class="cat-box"><div class="icon-circle" style="background:#e6f0ff;">$</div>Branch Finance <b id="c1">0</b></div>
-<div class="cat-box"><div class="icon-circle" style="background:#e0f8e0;">🌱</div>Branch Agriculture <b id="c2">0</b></div>
-<div class="cat-box"><div class="icon-circle" style="background:#fff1e0;">🛍️</div>Branch Shop <b id="c3">0</b></div>
-<div class="cat-box"><div class="icon-circle" style="background:#e6f0ff;">✈️</div>Branch Travels <b id="c4">0</b></div>
-<div class="cat-box"><div class="icon-circle" style="background:#f0f0f0;">•••</div>Branch Others <b id="c5">0</b></div>
+<div class="cat-head">Categories</div>
+<div class="cats">
+<div class="cbox"><div class="ic" style="background:#e6f0ff;">$</div><span>Branch Finance <b id="c1">0</b></span></div>
+<div class="cbox"><div class="ic" style="background:#e3f8e3;">🌱</div><span>Branch Agriculture <b id="c2">0</b></span></div>
+<div class="cbox"><div class="ic" style="background:#fff1dc;">🛍️</div><span>Branch Shop <b id="c3">0</b></span></div>
+<div class="cbox"><div class="ic" style="background:#eef0ff;">✈️</div><span>Branch Travels <b id="c4">0</b></span></div>
+<div class="cbox"><div class="ic" style="background:#f0f0f0;">•••</div><span>Branch Others <b id="c5">0</b></span></div>
 </div>
 
-<div class="add-card">
+<div class="form">
 <b>+ Add New Organization</b>
-<input id="orgName" placeholder="AFROJA AGRO" oninput="autoGenID()">
-<input id="branchName" placeholder="Branch Name (ex: Rajshahi Sadar)">
-<input id="branchTitle" placeholder="Branch Title (ex: Main Branch)">
-<input id="mobile" placeholder="Mobile Number">
-<input id="password" placeholder="Branch Login Password">
+<input id="orgName" placeholder="AFROJA AGRO" oninput="makeID()">
+<input id="bName" placeholder="Branch Name (ex: Rajshahi Sadar)">
+<input id="bTitle" placeholder="Branch Title (ex: Main Branch)">
+<input id="mob" placeholder="Mobile Number">
+<input id="pass" placeholder="Branch Login Password">
 <div class="id-row">
-<select id="category">
+<select id="cat">
 <option value="Branch Finance">Branch Finance</option>
 <option value="Branch Agriculture" selected>Branch Agriculture</option>
 <option value="Branch Shop">Branch Shop</option>
@@ -54,12 +62,12 @@ body{margin:0;background:#f4f5f9;font-family:Arial;padding:12px;padding-bottom:9
 </select>
 <div id="orgID">01</div>
 </div>
-<button class="save-btn" onclick="saveToFirebase()">Save to Firebase</button>
-<div id="genText">✅ Auto ID: 01 (শুধু সংখ্যা)</div>
+<button class="save" onclick="save()">Save to Firebase</button>
+<div class="gen" id="genText">✅ Auto: 01 (শুধু সংখ্যা)</div>
 </div>
 
-<div class="bottom-nav">
-<div style="color:#2f5bff;font-weight:bold;font-size:12px;">🏠 Home</div>
+<div class="nav">
+<div style="color:#2f5bff;font-size:12px;font-weight:bold;">🏠 Home</div>
 <div style="font-size:12px;color:#888;">Analytics</div>
 <div class="plus">+</div>
 <div>🔔</div>
@@ -73,50 +81,50 @@ const firebaseConfig = { apiKey: "AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs", authD
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-let totalCount=0;
-onValue(ref(db,'jus/categories'), snap=>{
-  const data=snap.val()||{};
-  let total=0;
-  let c={ "Branch Finance":0,"Branch Agriculture":0,"Branch Shop":0,"Branch Travels":0,"Branch Others":0 };
+let total=0;
+onValue(ref(db,'jus/categories'), s=>{
+  const data=s.val()||{};
+  let t=0;
+  let counts={"Branch Finance":0,"Branch Agriculture":0,"Branch Shop":0,"Branch Travels":0,"Branch Others":0};
   Object.keys(data).forEach(cat=>{
-    const count = Object.keys(data[cat]||{}).length;
-    if(c[cat]!==undefined) c[cat]=count;
-    total+=count;
+    const len=Object.keys(data[cat]||{}).length;
+    if(counts[cat]!==undefined) counts[cat]=len;
+    t+=len;
   });
-  totalCount=total;
-  document.getElementById('totalOrg').innerText=total;
-  document.getElementById('c1').innerText=c["Branch Finance"];
-  document.getElementById('c2').innerText=c["Branch Agriculture"];
-  document.getElementById('c3').innerText=c["Branch Shop"];
-  document.getElementById('c4').innerText=c["Branch Travels"];
-  document.getElementById('c5').innerText=c["Branch Others"];
-  autoGenID();
+  total=t;
+  document.getElementById('totalOrg').innerText=t;
+  document.getElementById('c1').innerText=counts["Branch Finance"];
+  document.getElementById('c2').innerText=counts["Branch Agriculture"];
+  document.getElementById('c3').innerText=counts["Branch Shop"];
+  document.getElementById('c4').innerText=counts["Branch Travels"];
+  document.getElementById('c5').innerText=counts["Branch Others"];
+  makeID();
 });
 
-window.autoGenID=()=>{
-  let next = totalCount + 1;
-  if(next<1) next=1;
-  let id;
-  if(next<10) id="0"+next;
-  else id=String(next);
-  document.getElementById('orgID').innerText=id;
-  document.getElementById('genText').innerText="✅ Auto ID: "+id+" (শুধু সংখ্যা 01 থেকে)";
+// শুধু 01 থেকে সংখ্যা
+window.makeID=()=>{
+  let next = total + 1;
+  if(next < 1) next = 1;
+  let id = next < 10? "0"+next : String(next);
+  document.getElementById('orgID').innerText = id;
+  document.getElementById('genText').innerText = "✅ Auto: "+id+" (01 থেকে শুধু সংখ্যা)";
 }
 
-window.saveToFirebase=()=>{
+window.save=()=>{
   const orgName=document.getElementById('orgName').value.trim();
-  const branchName=document.getElementById('branchName').value.trim();
-  const branchTitle=document.getElementById('branchTitle').value.trim();
-  const mobile=document.getElementById('mobile').value.trim();
-  const password=document.getElementById('password').value.trim();
-  const category=document.getElementById('category').value;
+  const bName=document.getElementById('bName').value.trim();
+  const bTitle=document.getElementById('bTitle').value.trim();
+  const mob=document.getElementById('mob').value.trim();
+  const pass=document.getElementById('pass').value.trim();
+  const cat=document.getElementById('cat').value;
   const orgID=document.getElementById('orgID').innerText;
-  if(!orgName||!branchName||!branchTitle||!mobile||!password) return alert("Sob Fill Koro!");
-  const data={orgName,branchName,branchTitle,mobile,password,orgID,category,createdAt:Date.now()};
-  set(ref(db,'jus/categories/'+category+'/'+orgID), data).then(()=>{
+  if(!orgName||!bName||!bTitle||!mob||!pass) return alert("Sob Field Fill Koro!");
+  const data={orgName,branchName:bName,branchTitle:bTitle,mobile:mob,password:pass,orgID,category:cat,createdAt:Date.now()};
+  set(ref(db,'jus/categories/'+cat+'/'+orgID), data).then(()=>{
     alert("✅ Saved! ID: "+orgID);
-    document.getElementById('orgName').value="";document.getElementById('branchName').value="";document.getElementById('branchTitle').value="";document.getElementById('mobile').value="";document.getElementById('password').value="";
+    document.getElementById('orgName').value="";document.getElementById('bName').value="";document.getElementById('bTitle').value="";document.getElementById('mob').value="";document.getElementById('pass').value="";
   });
 }
 </script>
-</body></html>
+</body>
+</html>
