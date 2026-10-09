@@ -7,6 +7,7 @@ h1{margin:0;text-align:center;color:#fff;font-size:34px;letter-spacing:3px}
 .sub{text-align:center;color:#d0c6ff;font-size:13px;margin:4px 0 14px}
 input,select{width:100%;padding:13px 16px;margin:6px 0;border-radius:28px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;outline:none;box-sizing:border-box;font-size:13px}
 input::placeholder{color:#c9c0ff}
+select option{color:#000}
 .id-row{display:flex;gap:8px;align-items:center;margin:6px 0}
 .id-row input{flex:1}
 .id-badge{background:#0b2ea8;color:#fff;padding:12px 18px;border-radius:12px;font-weight:bold;min-width:45px;text-align:center}
@@ -19,41 +20,101 @@ input::placeholder{color:#c9c0ff}
 .links{display:flex;justify-content:space-between;margin-top:12px;font-size:12px}
 .links a{color:#7cc8ff;text-decoration:underline;cursor:pointer}
 .bot{text-align:center;color:#ffdd88;font-size:12px;margin-top:10px}
+.note{font-size:10px;color:#ffcc66;text-align:center;margin-top:4px}
 </style></head><body>
 <div class="card">
 <h1>JUS</h1><div class="sub">Welcome your Organization</div>
-<input id="orgName" placeholder="Organization Name">
-<div class="id-row"><input id="orgUserID" placeholder="Organization User ID"><div class="id-badge" id="showID">01</div></div>
-<input id="branchName" placeholder="Branch Name">
-<select id="cat"><option>Branch Shop & Others</option><option>Branch Finance</option><option selected>Branch Agriculture</option><option>Branch Shop</option><option>Branch Travels</option><option>Branch Others</option></select>
-<input id="mob" placeholder="Mobile Number">
+
+<input id="orgName" list="orgList" placeholder="Organization Name">
+<datalist id="orgList"></datalist>
+
+<div class="id-row"><input id="orgUserID" placeholder="Organization User ID - Mobile দিলে আসবে"><div class="id-badge" id="showID">--</div></div>
+<div class="note" id="idNote">Mobile Number Entry করলে Auto ID আসবে</div>
+
+<input id="branchName" list="branchList" placeholder="Branch Name">
+<datalist id="branchList"></datalist>
+
+<select id="cat">
+<option>Branch Agriculture</option>
+<option>Branch Finance</option>
+<option>Branch Shop</option>
+<option>Branch Travels</option>
+<option>Branch Others</option>
+</select>
+
+<input id="mob" placeholder="Mobile Number" oninput="checkForID()">
 <div class="pass"><input id="pass" type="password" placeholder="Password"><span onclick="pass.type=pass.type=='password'?'text':'password'">👁️</span></div>
+
 <div class="check"><input type="checkbox" id="autoSave" checked> Auto Save Data</div>
+
 <button class="btn login" onclick="doLogin()">LOGIN</button>
 <button class="btn admin" onclick="adminLogin()">⚡ ADMIN FAST LOGIN</button>
+
 <div class="links"><a onclick="document.getElementById('forgetM').style.display='flex'">Forgot Password?</a><a onclick="document.getElementById('changeM').style.display='flex'">Change Password</a></div>
 <div class="bot">ID & Password দাও</div>
 </div>
 
 <div id="changeM" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:14px;z-index:99"><div style="background:#fff;border-radius:14px;padding:14px;width:100%;max-width:340px"><b>Change Password <span style="float:right;cursor:pointer" onclick="changeM.style.display='none'">✕</span></b><input id="cBid" placeholder="Organization User ID" style="background:#f0f1f5;color:#000"><input id="cOld" type="password" placeholder="Old Password" style="background:#f0f1f5;color:#000"><input id="cNew" type="password" placeholder="New Password" style="background:#f0f1f5;color:#000"><input id="cCon" type="password" placeholder="Confirm" style="background:#f0f1f5;color:#000"><button class="btn login" onclick="changePass()">Update</button></div></div>
-<div id="forgetM" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:14px;z-index:99"><div style="background:#fff;border-radius:14px;padding:14px;width:100%;max-width:340px"><b>Forget Password <span style="float:right;cursor:pointer" onclick="forgetM.style.display='none'">✕</span></b><input id="fMob" placeholder="Mobile Number" style="background:#f0f1f5;color:#000"><input id="fBid" placeholder="Organization User ID" style="background:#f0f1f5;color:#000"><select id="fCat" style="background:#f0f1f5;color:#000"><option>Branch Agriculture</option><option>Branch Shop & Others</option><option>Branch Finance</option></select><input id="fNew" type="password" placeholder="New Password" style="background:#f0f1f5;color:#000"><button class="btn login" style="background:#f59e0b" onclick="forgetPass()">Reset</button></div></div>
+<div id="forgetM" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:14px;z-index:99"><div style="background:#fff;border-radius:14px;padding:14px;width:100%;max-width:340px"><b>Forget Password <span style="float:right;cursor:pointer" onclick="forgetM.style.display='none'">✕</span></b><input id="fMob" placeholder="Mobile Number" style="background:#f0f1f5;color:#000"><input id="fBid" placeholder="Organization User ID" style="background:#f0f1f5;color:#000"><select id="fCat" style="background:#f0f1f5;color:#000"><option>Branch Agriculture</option><option>Branch Finance</option><option>Branch Shop</option></select><input id="fNew" type="password" placeholder="New Password" style="background:#f0f1f5;color:#000"><button class="btn login" style="background:#f59e0b" onclick="forgetPass()">Reset</button></div></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 const firebaseConfig={apiKey:"AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs",authDomain:"jus-bmp-skf.firebaseapp.com",databaseURL:"https://jus-bmp-skf-default-rtdb.firebaseio.com",projectId:"jus-bmp-skf",storageBucket:"jus-bmp-skf.firebasestorage.app",messagingSenderId:"763512076096",appId:"1:763512076096:web:3e5f79cc274b34d8106ca5"};
-const app=initializeApp(firebaseConfig); const db=getDatabase(app);
+const app=initializeApp(firebaseConfig); 
+const db=getDatabase(app);
+
+let totalCount=0;
+let orgNames=new Set();
+let branchNames=new Set();
+
+// Firebase থেকে Data নিয়ে Name Option Add + Total Count
 onValue(ref(db,'jus/categories'), s=>{
-  const data=s.val()||{}; let total=0;
-  Object.values(data).forEach(c=>{ Object.values(c||{}).forEach(()=>total++) });
-  let id=total+1; id=id<10?"0"+id:id+""; showID.innerText=id; if(!orgUserID.value) orgUserID.value=id;
+  const data=s.val()||{};
+  totalCount=0;
+  orgNames.clear(); branchNames.clear();
+  Object.values(data).forEach(cat=>{
+    Object.values(cat||{}).forEach(item=>{
+      totalCount++;
+      if(item.orgName) orgNames.add(item.orgName);
+      if(item.organizationName) orgNames.add(item.organizationName);
+      if(item.branchName) branchNames.add(item.branchName);
+    });
+  });
+  // Organization Name + Branch Name Option Add
+  const orgList=document.getElementById('orgList');
+  const brList=document.getElementById('branchList');
+  orgList.innerHTML=""; brList.innerHTML="";
+  orgNames.forEach(n=>{ let o=document.createElement('option'); o.value=n; orgList.appendChild(o); });
+  branchNames.forEach(n=>{ let o=document.createElement('option'); o.value=n; brList.appendChild(o); });
 });
+
+// Branch ID যে Number দিয়ে খোলা ওই Number Entry না করা পর্যন্ত Auto ID আসবে না
+window.checkForID=()=>{
+  const mobV=document.getElementById('mob').value.trim();
+  const badge=document.getElementById('showID');
+  const input=document.getElementById('orgUserID');
+  const note=document.getElementById('idNote');
+  if(mobV.length>=6){
+    let id=totalCount+1; id=id<10?"0"+id:id+"";
+    badge.innerText=id;
+    input.value=id;
+    note.innerText="Auto ID: "+id+" (Ready)";
+    note.style.color="#00ff88";
+  }else{
+    badge.innerText="--";
+    input.value="";
+    note.innerText="Mobile Number Entry করলে Auto ID আসবে";
+    note.style.color="#ffcc66";
+  }
+}
+
 window.doLogin=async()=>{
   const uid=orgUserID.value.trim(), p=pass.value.trim();
-  if(!uid||!p) return alert("ID & Password দাও!");
+  if(!uid||!p) return alert("ID & Password দাও! Mobile Number দাও, Auto ID আসবে!");
   let snap=await get(ref(db,'jus/users/'+uid));
   if(!snap.exists()){
-    for(let c of ["Branch Finance","Branch Agriculture","Branch Shop","Branch Travels","Branch Others","Branch Shop & Others"]){
+    for(let c of ["Branch Finance","Branch Agriculture","Branch Shop","Branch Travels","Branch Others"]){
       const s2=await get(ref(db,'jus/categories/'+c+'/'+uid));
       if(s2.exists()){ snap=s2; break; }
     }
@@ -64,11 +125,18 @@ window.doLogin=async()=>{
   localStorage.setItem("jus_login","true"); localStorage.setItem("jus_uid",uid);
   alert("✅ Login Success!"); location.href="dashboard.html";
 }
-window.adminLogin=()=>{ orgUserID.value="01"; pass.value="admin123"; doLogin(); }
+
+window.adminLogin=()=>{
+  const mobV=document.getElementById('mob');
+  mobV.value="01700000000";
+  checkForID();
+  setTimeout(()=>{ pass.value="admin123"; doLogin(); },200);
+}
+
 window.changePass=async()=>{
   const bid=cBid.value.trim(), oldP=cOld.value.trim(), newP=cNew.value.trim(), conP=cCon.value.trim();
   if(!bid||!oldP||!newP) return alert("সব লাগবে!"); if(newP!==conP) return alert("Confirm মিলছে না!");
-  for(let c of ["Branch Finance","Branch Agriculture","Branch Shop","Branch Travels","Branch Others","Branch Shop & Others"]){
+  for(let c of ["Branch Finance","Branch Agriculture","Branch Shop","Branch Travels","Branch Others"]){
     const snap=await get(ref(db,'jus/categories/'+c+'/'+bid));
     if(snap.exists() && snap.val().password===oldP){
       await update(ref(db,'jus/categories/'+c+'/'+bid), {password:newP,branchPassword:newP});
@@ -77,11 +145,13 @@ window.changePass=async()=>{
     }
   } alert("❌ Old ভুল!");
 }
+
 window.forgetPass=async()=>{
   const mobN=fMob.value.trim(), bid=fBid.value.trim(), catV=fCat.value, newP=fNew.value.trim();
   if(!mobN||!bid||!newP) return alert("সব লাগবে!");
   const snap=await get(ref(db,'jus/categories/'+catV+'/'+bid));
-  if(!snap.exists()) return alert("ID নেই!"); if(snap.val().mobile!==mobN && snap.val().mobileNumber!==mobN) return alert("Mobile মিলছে না!");
+  if(!snap.exists()) return alert("ID নেই!"); 
+  if(snap.val().mobile!==mobN && snap.val().mobileNumber!==mobN) return alert("Mobile মিলছে না!");
   await update(ref(db,'jus/categories/'+catV+'/'+bid), {password:newP,branchPassword:newP});
   try{ await update(ref(db,'jus/users/'+bid), {password:newP,branchPassword:newP}); }catch(e){}
   alert("✅ Reset Done!"); forgetM.style.display='none';
