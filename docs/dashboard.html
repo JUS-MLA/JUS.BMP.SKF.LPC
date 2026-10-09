@@ -1,141 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JUS Dashboard - 5 Category</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>JUS Dashboard - Compact</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<style>body{background:#020617;color:white}.glass{background:rgba(15,23,42,0.8);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px)}</style>
+<style>
+body{background:#020617;color:white;margin:0;padding:0}
+.compact-card{padding:8px!important;border-radius:8px!important}
+.compact-card h3{font-size:13px!important}
+.compact-card p{font-size:9px!important}
+input,select,button{font-size:11px!important;padding:5px!important;height:28px!important}
+</style>
 </head>
-<body class="p-4">
-<div class="flex justify-between items-center mb-6">
-<div><h1 class="text-3xl font-black">JUS <span class="text-emerald-400">Dashboard</span></h1><p class="text-xs text-gray-400">Super Admin • jus-bmp-skf • 5 Category System</p></div>
-<div class="bg-emerald-500 text-black px-3 py-1 rounded-full text-xs font-bold">● Live Firebase</div>
+<body class="p-2">
+<div class="flex justify-between items-center mb-2">
+<h1 class="text-[14px] font-black">JUS <span class="text-emerald-400">Dashboard</span></h1>
+<span class="text-[8px] bg-emerald-500 text-black px-2 py-0.5 rounded-full font-bold">Live</span>
 </div>
 
-<!-- STATS TOP -->
-<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-<div class="glass p-3 rounded-xl"><p class="text-xs text-gray-400">Total Organization</p><h2 id="totalOrg" class="text-2xl font-black">0</h2></div>
-<div class="glass p-3 rounded-xl"><p class="text-xs text-gray-400">Today Sale</p><h2 id="todaySale" class="text-2xl font-black text-cyan-400">৳ 0</h2></div>
-<div class="glass p-3 rounded-xl"><p class="text-xs text-gray-400">Total Due</p><h2 id="totalDue" class="text-2xl font-black text-pink-400">৳ 0</h2></div>
-<div class="glass p-3 rounded-xl"><p class="text-xs text-gray-400">Total Collection</p><h2 id="totalColl" class="text-2xl font-black text-green-400">৳ 0</h2></div>
+<!-- Top 4 Stats - Extra Small -->
+<div class="grid grid-cols-4 gap-1 mb-2">
+<div class="bg-[#0f172a] p-1.5 rounded-lg border border-white/10 text-center"><p class="text-[7px] text-gray-400">Org</p><h2 id="totalOrg" class="text-[11px] font-black">0</h2></div>
+<div class="bg-[#0f172a] p-1.5 rounded-lg border border-white/10 text-center"><p class="text-[7px] text-gray-400">Sale</p><h2 id="todaySale" class="text-[11px] font-black text-cyan-400">৳0</h2></div>
+<div class="bg-[#0f172a] p-1.5 rounded-lg border border-white/10 text-center"><p class="text-[7px] text-gray-400">Due</p><h2 id="totalDue" class="text-[11px] font-black text-pink-400">৳0</h2></div>
+<div class="bg-[#0f172a] p-1.5 rounded-lg border border-white/10 text-center"><p class="text-[7px] text-gray-400">Coll</p><h2 id="totalColl" class="text-[11px] font-black text-green-400">৳0</h2></div>
 </div>
 
-<h2 class="font-bold mb-3">Categories - Click to Manage</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<!-- 5 Categories - 2 Column Grid Compact -->
+<div class="grid grid-cols-2 gap-1.5">
 
-<!-- 1. FINANCE -->
-<div class="bg-gradient-to-br from-green-500 to-emerald-700 p-5 rounded-2xl text-black">
-<div class="flex justify-between"><span class="text-3xl">💰</span><span class="bg-black text-green-400 px-2 py-1 rounded-full text-xs" id="financeCount">0</span></div>
-<h3 class="text-2xl font-black mt-3">Finance</h3><p class="text-xs opacity-80">Loan, Collection, DPS, Savings</p>
-<input id="financeName" placeholder="Finance Org Name" class="w-full mt-3 p-2 rounded bg-black text-white text-sm">
-<button onclick="addCat('finance')" class="w-full bg-black text-white mt-2 p-2 rounded font-bold text-sm">+ Add Finance</button>
-<div id="financeList" class="mt-2 text-xs space-y-1 max-h-[100px] overflow-y-auto"></div>
+<div class="compact-card bg-gradient-to-br from-green-500 to-emerald-700 text-black">
+<div class="flex justify-between items-center"><h3 class="font-black">💰 Finance</h3><span id="financeCount" class="bg-black text-white text-[8px] px-1.5 py-0.5 rounded-full">0</span></div>
+<input id="financeName" placeholder="Name" class="w-full mt-1 rounded bg-black text-white text-[10px]"><button onclick="addCat('finance')" class="w-full bg-black text-white mt-1 rounded font-bold">+ Add</button>
 </div>
 
-<!-- 2. AGRICULTURE -->
-<div class="bg-gradient-to-br from-lime-400 to-green-600 p-5 rounded-2xl text-black">
-<div class="flex justify-between"><span class="text-3xl">🌾</span><span class="bg-black text-lime-400 px-2 py-1 rounded-full text-xs" id="agriCount">0</span></div>
-<h3 class="text-2xl font-black mt-3">Agriculture</h3><p class="text-xs opacity-80">Farm, Crop, Fertilizer, Seeds</p>
-<input id="agriName" placeholder="Agriculture Org Name" class="w-full mt-3 p-2 rounded bg-black text-white text-sm">
-<button onclick="addCat('agriculture')" class="w-full bg-black text-white mt-2 p-2 rounded font-bold text-sm">+ Add Agriculture</button>
-<div id="agriList" class="mt-2 text-xs space-y-1 max-h-[100px] overflow-y-auto"></div>
+<div class="compact-card bg-gradient-to-br from-lime-400 to-green-600 text-black">
+<div class="flex justify-between items-center"><h3 class="font-black">🌾 Agriculture</h3><span id="agriCount" class="bg-black text-white text-[8px] px-1.5 py-0.5 rounded-full">0</span></div>
+<input id="agriName" placeholder="Name" class="w-full mt-1 rounded bg-black text-white text-[10px]"><button onclick="addCat('agriculture')" class="w-full bg-black text-white mt-1 rounded font-bold">+ Add</button>
 </div>
 
-<!-- 3. SHOP -->
-<div class="bg-gradient-to-br from-orange-400 to-yellow-500 p-5 rounded-2xl text-black">
-<div class="flex justify-between"><span class="text-3xl">🛒</span><span class="bg-black text-orange-400 px-2 py-1 rounded-full text-xs" id="shopCount">0</span></div>
-<h3 class="text-2xl font-black mt-3">Shop</h3><p class="text-xs opacity-80">Grocery, Retail, POS, Super Shop</p>
-<input id="shopName" placeholder="Shop Name" class="w-full mt-3 p-2 rounded bg-black text-white text-sm">
-<button onclick="addCat('shop')" class="w-full bg-black text-white mt-2 p-2 rounded font-bold text-sm">+ Add Shop</button>
-<div id="shopList" class="mt-2 text-xs space-y-1 max-h-[100px] overflow-y-auto"></div>
+<div class="compact-card bg-gradient-to-br from-orange-400 to-yellow-500 text-black">
+<div class="flex justify-between items-center"><h3 class="font-black">🛒 Shop</h3><span id="shopCount" class="bg-black text-white text-[8px] px-1.5 py-0.5 rounded-full">0</span></div>
+<input id="shopName" placeholder="Name" class="w-full mt-1 rounded bg-black text-white text-[10px]"><button onclick="addCat('shop')" class="w-full bg-black text-white mt-1 rounded font-bold">+ Add</button>
 </div>
 
-<!-- 4. TRAVELS -->
-<div class="bg-gradient-to-br from-sky-400 to-blue-600 p-5 rounded-2xl text-black">
-<div class="flex justify-between"><span class="text-3xl">✈️</span><span class="bg-black text-sky-400 px-2 py-1 rounded-full text-xs" id="travelsCount">0</span></div>
-<h3 class="text-2xl font-black mt-3">Travels</h3><p class="text-xs opacity-80">Bus, Ticket, Tour, Hotel Booking</p>
-<input id="travelsName" placeholder="Travels Agency Name" class="w-full mt-3 p-2 rounded bg-black text-white text-sm">
-<button onclick="addCat('travels')" class="w-full bg-black text-white mt-2 p-2 rounded font-bold text-sm">+ Add Travels</button>
-<div id="travelsList" class="mt-2 text-xs space-y-1 max-h-[100px] overflow-y-auto"></div>
+<div class="compact-card bg-gradient-to-br from-sky-400 to-blue-600 text-black">
+<div class="flex justify-between items-center"><h3 class="font-black">✈️ Travels</h3><span id="travelsCount" class="bg-black text-white text-[8px] px-1.5 py-0.5 rounded-full">0</span></div>
+<input id="travelsName" placeholder="Name" class="w-full mt-1 rounded bg-black text-white text-[10px]"><button onclick="addCat('travels')" class="w-full bg-black text-white mt-1 rounded font-bold">+ Add</button>
 </div>
 
-<!-- 5. OTHERS -->
-<div class="bg-gradient-to-br from-pink-500 to-purple-600 p-5 rounded-2xl text-white">
-<div class="flex justify-between"><span class="text-3xl">📦</span><span class="bg-white text-pink-600 px-2 py-1 rounded-full text-xs" id="othersCount">0</span></div>
-<h3 class="text-2xl font-black mt-3">Others</h3><p class="text-xs opacity-80">Any Other Business</p>
-<input id="othersName" placeholder="Other Business Name" class="w-full mt-3 p-2 rounded bg-black text-white text-sm">
-<button onclick="addCat('others')" class="w-full bg-white text-black mt-2 p-2 rounded font-bold text-sm">+ Add Others</button>
-<div id="othersList" class="mt-2 text-xs space-y-1 max-h-[100px] overflow-y-auto"></div>
+<div class="compact-card bg-gradient-to-br from-pink-500 to-purple-600 text-white col-span-2">
+<div class="flex justify-between items-center"><h3 class="font-black">📦 Others</h3><span id="othersCount" class="bg-white text-black text-[8px] px-1.5 py-0.5 rounded-full">0</span></div>
+<div class="flex gap-1 mt-1"><input id="othersName" placeholder="Other Business Name" class="flex-1 rounded bg-black text-white text-[10px]"><button onclick="addCat('others')" class="bg-white text-black px-3 rounded font-bold">+ Add</button></div>
 </div>
 
 </div>
 
-<!-- ADD SALE / DUE FOR ANY CATEGORY -->
-<div class="glass p-4 rounded-xl mt-6">
-<h3 class="font-bold">+ Add Sale / Due (Category Wise)</h3>
-<div class="grid grid-cols-2 gap-2 mt-2">
-<select id="catSelect" class="bg-black border border-gray-700 p-2 rounded text-sm"><option value="finance">Finance</option><option value="agriculture">Agriculture</option><option value="shop">Shop</option><option value="travels">Travels</option><option value="others">Others</option></select>
-<input id="saleAmt" type="number" placeholder="Sale ৳" class="bg-black border border-gray-700 p-2 rounded text-sm">
-<input id="dueAmt" type="number" placeholder="Due ৳" class="bg-black border border-gray-700 p-2 rounded text-sm">
-<input id="custName" placeholder="Customer Name" class="bg-black border border-gray-700 p-2 rounded text-sm">
-<button onclick="addSale()" class="col-span-2 bg-emerald-500 text-black font-bold p-2 rounded">Save to Firebase</button>
+<!-- Sale Form Compact -->
+<div class="bg-[#0f172a] p-2 rounded-lg mt-2 border border-white/10">
+<p class="text-[10px] font-bold mb-1">+ Add Sale / Due</p>
+<div class="grid grid-cols-4 gap-1">
+<select id="catSelect" class="bg-black border border-white/10 rounded col-span-2"><option value="finance">Finance</option><option value="agriculture">Agriculture</option><option value="shop">Shop</option><option value="travels">Travels</option><option value="others">Others</option></select>
+<input id="saleAmt" type="number" placeholder="Sale" class="bg-black border border-white/10 rounded">
+<input id="dueAmt" type="number" placeholder="Due" class="bg-black border border-white/10 rounded">
+<input id="custName" placeholder="Customer" class="bg-black border border-white/10 rounded col-span-3">
+<button onclick="addSale()" class="bg-emerald-500 text-black font-bold rounded">Save</button>
 </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs",
-  authDomain: "jus-bmp-skf.firebaseapp.com",
-  databaseURL: "https://jus-bmp-skf-default-rtdb.firebaseio.com",
-  projectId: "jus-bmp-skf",
-  storageBucket: "jus-bmp-skf.firebasestorage.app",
-  messagingSenderId: "763512076096",
-  appId: "1:763512076096:web:3e5f79cc274b34d8106ca5"
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
+const firebaseConfig = { apiKey: "AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs", authDomain: "jus-bmp-skf.firebaseapp.com", databaseURL: "https://jus-bmp-skf-default-rtdb.firebaseio.com", projectId: "jus-bmp-skf", storageBucket: "jus-bmp-skf.firebasestorage.app", messagingSenderId: "763512076096", appId: "1:763512076096:web:3e5f79cc274b34d8106ca5" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 window.addCat = (cat)=>{
   const map={finance:'financeName',agriculture:'agriName',shop:'shopName',travels:'travelsName',others:'othersName'};
-  const name=document.getElementById(map[cat]).value;
-  if(!name) return alert('Name দাও!');
-  push(ref(db,'jus/categories/'+cat),{name, created:Date.now()});
-  document.getElementById(map[cat]).value='';
+  const name=document.getElementById(map[cat]).value; if(!name) return;
+  push(ref(db,'jus/categories/'+cat),{name,created:Date.now()}); document.getElementById(map[cat]).value='';
 }
-window.addSale = ()=>{
-  const cat=document.getElementById('catSelect').value;
-  const sale=parseFloat(document.getElementById('saleAmt').value)||0;
-  const due=parseFloat(document.getElementById('dueAmt').value)||0;
-  const cust=document.getElementById('custName').value||'Walk-in';
-  if(sale==0&&due==0) return alert('Amount দাও!');
-  push(ref(db,'jus/allSales'),{cat,sale,due,cust,created:Date.now()});
-  document.getElementById('saleAmt').value='';document.getElementById('dueAmt').value='';document.getElementById('custName').value='';
-}
-
+window.addSale = ()=>{ const cat=catSelect.value,sale=parseFloat(saleAmt.value)||0,due=parseFloat(dueAmt.value)||0,cust=custName.value||'Walk-in'; if(!sale&&!due) return; push(ref(db,'jus/allSales'),{cat,sale,due,cust,created:Date.now()}); saleAmt.value='';dueAmt.value='';custName.value=''; }
 onValue(ref(db,'jus/'), snap=>{
-  const data=snap.val()||{};
-  const cats=data.categories||{};
-  const sales=Object.values(data.allSales||{});
-
-  const counts={finance:0,agriculture:0,shop:0,travels:0,others:0};
-  ['finance','agriculture','shop','travels','others'].forEach(c=>{
-    const list=Object.values(cats[c]||{});
-    counts[c]=list.length;
-    const listEl=document.getElementById(c==='agriculture'?'agriList':c+'List');
-    if(listEl) listEl.innerHTML=list.map(l=>`<div class="bg-black/20 p-1 rounded">• ${l.name}</div>`).join('');
-    const countEl=document.getElementById(c==='agriculture'?'agriCount':c+'Count');
-    if(countEl) countEl.innerText=list.length;
-  });
-  document.getElementById('totalOrg').innerText=Object.values(counts).reduce((a,b)=>a+b,0);
-
-  let totalSale=0,totalDue=0;
-  sales.forEach(s=>{ totalSale+=s.sale||0; totalDue+=s.due||0; });
-  document.getElementById('todaySale').innerText='৳ '+totalSale.toLocaleString();
-  document.getElementById('totalDue').innerText='৳ '+totalDue.toLocaleString();
-  document.getElementById('totalColl').innerText='৳ '+(totalSale-totalDue).toLocaleString();
+  const data=snap.val()||{},cats=data.categories||{},sales=Object.values(data.allSales||{});
+  document.getElementById('financeCount').innerText=Object.keys(cats.finance||{}).length;
+  document.getElementById('agriCount').innerText=Object.keys(cats.agriculture||{}).length;
+  document.getElementById('shopCount').innerText=Object.keys(cats.shop||{}).length;
+  document.getElementById('travelsCount').innerText=Object.keys(cats.travels||{}).length;
+  document.getElementById('othersCount').innerText=Object.keys(cats.others||{}).length;
+  document.getElementById('totalOrg').innerText=Object.values(cats).reduce((a,c)=>a+Object.keys(c||{}).length,0);
+  let ts=0,td=0; sales.forEach(s=>{ts+=s.sale||0;td+=s.due||0;});
+  todaySale.innerText='৳'+ts; totalDue.innerText='৳'+td; totalColl.innerText='৳'+(ts-td);
 });
-</script>
-</body>
-</html>
+</script></body></html>
