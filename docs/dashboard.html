@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 <html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>JUS Dashboard</title>
 <style>
-body{margin:0;background:#f5f5f7;font-family:Arial;padding:10px;padding-bottom:90px;}
-.top{display:flex;justify-content:space-between;background:#fff;padding:12px;border-radius:15px;margin-bottom:12px;}
-.top div{text-align:center;font-size:13px;font-weight:bold;}
-.cat{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
-.cbox{background:#fff;padding:18px;border-radius:15px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
-.cbox span{font-size:28px;display:block;}
-.addbox{background:#fff;padding:15px;border-radius:15px;}
-.addbox input,.addbox select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:none;background:#f1f1f3;outline:none;box-sizing:border-box;}
-.id-row{display:flex;gap:8px;align-items:center;}
-.id-row select{flex:1;}
-.id-row div{flex:0.7;background:#e8f0ff;border:1px solid #3b82f6;color:#3b82f6;padding:10px;border-radius:10px;font-weight:bold;font-size:15px;text-align:center;letter-spacing:2px;}
-.saveBtn{width:100%;background:#2563eb;color:#fff;padding:13px;border:none;border-radius:12px;font-weight:bold;margin-top:8px;cursor:pointer;}
-#genText{font-size:12px;color:#16a34a;text-align:center;margin-top:6px;font-weight:bold;}
-.bottom{position:fixed;bottom:15px;left:10px;right:10px;background:#fff;display:flex;justify-content:space-around;padding:12px;border-radius:25px;box-shadow:0 5px 20px rgba(0,0,0,0.1);}
+body{margin:0;background:#f4f5f9;font-family:Arial;padding:12px;padding-bottom:90px;}
+.top-card{background:#fff;border-radius:18px;padding:16px;display:flex;justify-content:space-around;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.06);margin-bottom:15px;}
+.icon-circle{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:auto;margin-bottom:5px;}
+.cat-title{font-weight:bold;margin:8px 2px 10px;font-size:15px;}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+.cat-box{background:#fff;border-radius:16px;padding:18px;text-align:center;box-shadow:0 3px 10px rgba(0,0,0,0.05);}
+.cat-box.icon-circle{width:52px;height:52px;font-size:26px;}
+.add-card{background:#fff;border-radius:18px;padding:16px;box-shadow:0 4px 15px rgba(0,0,0,0.06);}
+.add-card b{font-size:14px;}
+.add-card input,.add-card select{width:100%;padding:13px;margin:8px 0;border-radius:12px;border:none;background:#f1f2f6;outline:none;box-sizing:border-box;font-size:13px;}
+.id-row{display:flex;gap:10px;}
+.id-row select{flex:1.2;}
+.id-row div{flex:0.8;background:#eaf0ff;border:1px solid #3b82f6;color:#2563eb;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;letter-spacing:2px;}
+.save-btn{width:100%;background:#2f5bff;color:#fff;padding:14px;border:none;border-radius:12px;font-weight:bold;font-size:14px;margin-top:10px;cursor:pointer;}
+#genText{color:#16a34a;font-size:12px;text-align:center;margin-top:8px;font-weight:bold;}
+.bottom-nav{position:fixed;bottom:12px;left:12px;right:12px;background:#fff;border-radius:25px;padding:12px;display:flex;justify-content:space-around;align-items:center;box-shadow:0 6px 25px rgba(0,0,0,0.1);}
+.plus{width:42px;height:42px;background:#2f5bff;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;}
 </style>
 </head>
 <body>
 
-<div class="top">
-<div>💰<br>Org<br><span id="totalOrg">0</span></div>
-<div>📦<br>Sale<br>৳0</div>
-<div>👥<br>Due<br>৳0</div>
+<div class="top-card">
+<div><div class="icon-circle" style="background:#fff4d6;">💰</div>Org<br><b id="totalOrg">0</b></div>
+<div><div class="icon-circle" style="background:#e6f0ff;">📦</div>Sale<br><b>৳0</b></div>
+<div><div class="icon-circle" style="background:#f3e6ff;">👥</div>Due<br><b>৳0</b></div>
 </div>
 
-<div style="font-weight:bold;margin:10px 5px;">Categories</div>
-<div class="cat">
-<div class="cbox"><span>💲</span>Branch Finance <b id="c1">0</b></div>
-<div class="cbox"><span>🌱</span>Branch Agriculture <b id="c2">0</b></div>
-<div class="cbox"><span>🛍️</span>Branch Shop <b id="c3">0</b></div>
-<div class="cbox"><span>✈️</span>Branch Travels <b id="c4">0</b></div>
-<div class="cbox"><span>...</span>Branch Others <b id="c5">0</b></div>
+<div class="cat-title">Categories</div>
+<div class="cat-grid">
+<div class="cat-box"><div class="icon-circle" style="background:#e6f0ff;">$</div>Branch Finance <b id="c1">0</b></div>
+<div class="cat-box"><div class="icon-circle" style="background:#e0f8e0;">🌱</div>Branch Agriculture <b id="c2">0</b></div>
+<div class="cat-box"><div class="icon-circle" style="background:#fff1e0;">🛍️</div>Branch Shop <b id="c3">0</b></div>
+<div class="cat-box"><div class="icon-circle" style="background:#e6f0ff;">✈️</div>Branch Travels <b id="c4">0</b></div>
+<div class="cat-box"><div class="icon-circle" style="background:#f0f0f0;">•••</div>Branch Others <b id="c5">0</b></div>
 </div>
 
-<div class="addbox">
-<div style="font-weight:bold;margin-bottom:8px;">+ Add New Organization</div>
-<input id="orgName" placeholder="Organization Name (ex: AFROJA AGRO)" oninput="autoGenID()">
+<div class="add-card">
+<b>+ Add New Organization</b>
+<input id="orgName" placeholder="AFROJA AGRO" oninput="autoGenID()">
 <input id="branchName" placeholder="Branch Name (ex: Rajshahi Sadar)">
 <input id="branchTitle" placeholder="Branch Title (ex: Main Branch)">
 <input id="mobile" placeholder="Mobile Number">
 <input id="password" placeholder="Branch Login Password">
-
 <div class="id-row">
 <select id="category">
 <option value="Branch Finance">Branch Finance</option>
@@ -52,13 +54,16 @@ body{margin:0;background:#f5f5f7;font-family:Arial;padding:10px;padding-bottom:9
 </select>
 <div id="orgID">01</div>
 </div>
-
-<button class="saveBtn" onclick="saveToFirebase()">Save to Firebase</button>
-<div id="genText">✅ Auto Start From 01</div>
+<button class="save-btn" onclick="saveToFirebase()">Save to Firebase</button>
+<div id="genText">✅ Auto ID: 01 (শুধু সংখ্যা)</div>
 </div>
 
-<div class="bottom">
-<div>🏠 Home</div><div>Analytics</div><div style="background:#2563eb;color:#fff;width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;">+</div><div>🔔</div><div>👤</div>
+<div class="bottom-nav">
+<div style="color:#2f5bff;font-weight:bold;font-size:12px;">🏠 Home</div>
+<div style="font-size:12px;color:#888;">Analytics</div>
+<div class="plus">+</div>
+<div>🔔</div>
+<div>👤</div>
 </div>
 
 <script type="module">
@@ -68,52 +73,34 @@ const firebaseConfig = { apiKey: "AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs", authD
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-let totalCount = 0;
-let allIDs=[];
-
+let totalCount=0;
 onValue(ref(db,'jus/categories'), snap=>{
   const data=snap.val()||{};
   let total=0;
   let c={ "Branch Finance":0,"Branch Agriculture":0,"Branch Shop":0,"Branch Travels":0,"Branch Others":0 };
-  allIDs=[];
   Object.keys(data).forEach(cat=>{
     const count = Object.keys(data[cat]||{}).length;
     if(c[cat]!==undefined) c[cat]=count;
     total+=count;
-    Object.values(data[cat]||{}).forEach(v=>{ if(v.orgID) allIDs.push(v.orgID); });
   });
-  totalCount = total;
+  totalCount=total;
   document.getElementById('totalOrg').innerText=total;
   document.getElementById('c1').innerText=c["Branch Finance"];
   document.getElementById('c2').innerText=c["Branch Agriculture"];
   document.getElementById('c3').innerText=c["Branch Shop"];
   document.getElementById('c4').innerText=c["Branch Travels"];
   document.getElementById('c5').innerText=c["Branch Others"];
-
-  // Page load এ 01 থেকে Auto দেখাবে
   autoGenID();
 });
 
-// 01 থেকে Serial Digit - শুধু সংখ্যা
 window.autoGenID=()=>{
-  const org=document.getElementById('orgName').value.trim();
-  // Org Name না লিখলেও 01 থেকে দেখাবে
-  let nextID = totalCount + 1;
-  if(nextID < 1) nextID = 1;
-
-  let formattedID;
-  if(nextID < 10){
-    formattedID = "0" + nextID; // 01, 02, 03...
-  } else if(nextID < 100){
-    formattedID = String(nextID); // 10, 11...
-  } else if(nextID < 1000){
-    formattedID = String(nextID).padStart(3,'0'); // 100, 101...
-  } else {
-    formattedID = String(nextID).padStart(4,'0'); // 1000, 1001...
-  }
-
-  document.getElementById('orgID').innerText = formattedID;
-  document.getElementById('genText').innerText = "✅ Auto ID: " + formattedID + " (01 থেকে শুরু)";
+  let next = totalCount + 1;
+  if(next<1) next=1;
+  let id;
+  if(next<10) id="0"+next;
+  else id=String(next);
+  document.getElementById('orgID').innerText=id;
+  document.getElementById('genText').innerText="✅ Auto ID: "+id+" (শুধু সংখ্যা 01 থেকে)";
 }
 
 window.saveToFirebase=()=>{
@@ -124,7 +111,7 @@ window.saveToFirebase=()=>{
   const password=document.getElementById('password').value.trim();
   const category=document.getElementById('category').value;
   const orgID=document.getElementById('orgID').innerText;
-  if(!orgName||!branchName||!branchTitle||!mobile||!password) return alert("Sob Field Fill Koro!");
+  if(!orgName||!branchName||!branchTitle||!mobile||!password) return alert("Sob Fill Koro!");
   const data={orgName,branchName,branchTitle,mobile,password,orgID,category,createdAt:Date.now()};
   set(ref(db,'jus/categories/'+category+'/'+orgID), data).then(()=>{
     alert("✅ Saved! ID: "+orgID);
