@@ -1,70 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>JUS Dashboard - Compact</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body{background:#020617;color:white;margin:0;padding:0}
-.compact-card{padding:8px!important;border-radius:8px!important}
-.compact-card h3{font-size:13px!important}
-.compact-card p{font-size:9px!important}
-input,select,button{font-size:11px!important;padding:5px!important;height:28px!important}
-</style>
-</head>
-<body class="p-2">
-<div class="flex justify-between items-center mb-2">
-<h1 class="text-[14px] font-black">JUS <span class="text-emerald-400">Dashboard</span></h1>
-<span class="text-[8px] bg-emerald-500 text-black px-2 py-0.5 rounded-full font-bold">Live</span>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUS Dashboard - Full Stats</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-[#f5f6fa] p-3">
+<div class="max-w-[420px] mx-auto bg-[#eef0f5] rounded-[25px] p-4 shadow-xl">
+
+<div class="flex justify-between items-center mb-3"><h1 class="text-xl font-black text-gray-800">JUS Dashboard</h1><div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">A</div></div>
+
+<!-- NEW ADDED STATS - Total Org, ID, Branch, Shop, Others -->
+<div class="bg-white rounded-xl p-3 shadow-sm mb-4">
+<p class="font-bold text-sm text-gray-800 mb-2">🏢 Organization Summary</p>
+<div class="grid grid-cols-3 gap-2 text-center">
+<div class="bg-blue-50 p-2 rounded-lg"><p class="text-[9px] text-gray-500">Total Org Name</p><h3 id="totalOrgName" class="font-black text-[14px] text-blue-600">0</h3></div>
+<div class="bg-green-50 p-2 rounded-lg"><p class="text-[9px] text-gray-500">Total Org ID</p><h3 id="totalOrgID" class="font-black text-[14px] text-green-600">0</h3></div>
+<div class="bg-orange-50 p-2 rounded-lg"><p class="text-[9px] text-gray-500">Total Branch</p><h3 id="totalBranch" class="font-black text-[14px] text-orange-600">0</h3></div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-center mt-2">
+<div class="bg-purple-50 p-2 rounded-lg"><p class="text-[9px] text-gray-500">Total Shop</p><h3 id="totalShopMain" class="font-black text-[14px] text-purple-600">0</h3><p class="text-[8px] text-gray-400" id="shopList"></p></div>
+<div class="bg-pink-50 p-2 rounded-lg"><p class="text-[9px] text-gray-500">Total Others</p><h3 id="totalOthersMain" class="font-black text-[14px] text-pink-600">0</h3><p class="text-[8px] text-gray-400" id="othersList"></p></div>
+</div>
 </div>
 
-<!-- Top 4 Stats - Extra Small -->
-<div class="grid grid-cols-4 gap-1 mb-2">
-<div class="bg-[#0f172a] p-1.5 rounded-lg border border-white/10 text-center"><p class="text-[7px] text-gray-400">Org</p><h2 id="totalOrg" class="text-[11px] font-black">0</h2></div>
-<div class="bg-[#0f172a] p-1.5 rounded-lg border border-white/10 text-center"><p class="text-[7px] text-gray-400">Sale</p><h2 id="todaySale" class="text-[11px] font-black text-cyan-400">৳0</h2></div>
-<div class="bg-[#0f172a] p-1.5 rounded-lg border border-white/10 text-center"><p class="text-[7px] text-gray-400">Due</p><h2 id="totalDue" class="text-[11px] font-black text-pink-400">৳0</h2></div>
-<div class="bg-[#0f172a] p-1.5 rounded-lg border border-white/10 text-center"><p class="text-[7px] text-gray-400">Coll</p><h2 id="totalColl" class="text-[11px] font-black text-green-400">৳0</h2></div>
+<!-- Overall Overview -->
+<div class="bg-white rounded-xl p-3 shadow-sm mb-4">
+<div class="flex justify-between"><p class="font-bold text-sm text-gray-800">Overall Overview</p><span class="text-[10px] bg-blue-50 text-blue-500 px-2 py-1 rounded-full">Live Firebase</span></div>
+<div class="grid grid-cols-3 gap-2 mt-3 text-center">
+<div><div class="w-10 h-10 bg-green-100 rounded-full mx-auto flex items-center justify-center">💰</div><p class="text-[10px] mt-1">Org</p><h3 id="totalOrg" class="font-black text-sm">0</h3></div>
+<div><div class="w-10 h-10 bg-blue-100 rounded-full mx-auto flex items-center justify-center">📦</div><p class="text-[10px] mt-1">Sale</p><h3 id="todaySale" class="font-black text-sm">৳0</h3></div>
+<div><div class="w-10 h-10 bg-purple-100 rounded-full mx-auto flex items-center justify-center">👥</div><p class="text-[10px] mt-1">Due</p><h3 id="totalDue" class="font-black text-sm">৳0</h3></div>
+</div>
 </div>
 
-<!-- 5 Categories - 2 Column Grid Compact -->
-<div class="grid grid-cols-2 gap-1.5">
-
-<div class="compact-card bg-gradient-to-br from-green-500 to-emerald-700 text-black">
-<div class="flex justify-between items-center"><h3 class="font-black">💰 Finance</h3><span id="financeCount" class="bg-black text-white text-[8px] px-1.5 py-0.5 rounded-full">0</span></div>
-<input id="financeName" placeholder="Name" class="w-full mt-1 rounded bg-black text-white text-[10px]"><button onclick="addCat('finance')" class="w-full bg-black text-white mt-1 rounded font-bold">+ Add</button>
+<p class="font-bold mb-2 text-gray-800">Categories</p>
+<div class="grid grid-cols-3 gap-2 mb-4">
+<button onclick="showCat('finance')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-blue-100 rounded-full mx-auto flex items-center justify-center text-xl">💲</div><p class="text-[11px] font-bold mt-2">Finance <span id="financeCount" class="bg-gray-100 text-[9px] px-1 rounded-full">0</span></p></button>
+<button onclick="showCat('agriculture')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-green-100 rounded-full mx-auto flex items-center justify-center text-xl">🌱</div><p class="text-[11px] font-bold mt-2">Agriculture <span id="agriCount" class="bg-gray-100 text-[9px] px-1 rounded-full">0</span></p></button>
+<button onclick="showCat('shop')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-orange-100 rounded-full mx-auto flex items-center justify-center text-xl">🛍️</div><p class="text-[11px] font-bold mt-2">Shop <span id="shopCount" class="bg-gray-100 text-[9px] px-1 rounded-full">0</span></p></button>
+<button onclick="showCat('travels')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-purple-100 rounded-full mx-auto flex items-center justify-center text-xl">✈️</div><p class="text-[11px] font-bold mt-2">Travels <span id="travelsCount" class="bg-gray-100 text-[9px] px-1 rounded-full">0</span></p></button>
+<button onclick="showCat('others')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-gray-200 rounded-full mx-auto flex items-center justify-center text-xl">•••</div><p class="text-[11px] font-bold mt-2">Others <span id="othersCount" class="bg-gray-100 text-[9px] px-1 rounded-full">0</span></p></button>
 </div>
 
-<div class="compact-card bg-gradient-to-br from-lime-400 to-green-600 text-black">
-<div class="flex justify-between items-center"><h3 class="font-black">🌾 Agriculture</h3><span id="agriCount" class="bg-black text-white text-[8px] px-1.5 py-0.5 rounded-full">0</span></div>
-<input id="agriName" placeholder="Name" class="w-full mt-1 rounded bg-black text-white text-[10px]"><button onclick="addCat('agriculture')" class="w-full bg-black text-white mt-1 rounded font-bold">+ Add</button>
+<div id="addBox" class="bg-white p-3 rounded-xl shadow-sm">
+<p class="font-bold text-xs mb-2">+ Add New Organization</p>
+<input id="orgName" placeholder="Organization Name" class="w-full p-2 rounded-lg bg-gray-100 text-xs mb-2">
+<input id="orgID" placeholder="Organization ID (ex: JUS-001)" class="w-full p-2 rounded-lg bg-gray-100 text-xs mb-2">
+<select id="catSelect" class="w-full p-2 rounded-lg bg-gray-100 text-xs mb-2">
+<option value="finance">Finance - Branch</option>
+<option value="agriculture">Agriculture - Branch</option>
+<option value="shop">Shop</option>
+<option value="travels">Travels - Branch</option>
+<option value="others">Others</option>
+</select>
+<button onclick="addCat()" class="w-full bg-blue-600 text-white p-2 rounded-lg text-xs font-bold">Save to Firebase</button>
 </div>
 
-<div class="compact-card bg-gradient-to-br from-orange-400 to-yellow-500 text-black">
-<div class="flex justify-between items-center"><h3 class="font-black">🛒 Shop</h3><span id="shopCount" class="bg-black text-white text-[8px] px-1.5 py-0.5 rounded-full">0</span></div>
-<input id="shopName" placeholder="Name" class="w-full mt-1 rounded bg-black text-white text-[10px]"><button onclick="addCat('shop')" class="w-full bg-black text-white mt-1 rounded font-bold">+ Add</button>
-</div>
-
-<div class="compact-card bg-gradient-to-br from-sky-400 to-blue-600 text-black">
-<div class="flex justify-between items-center"><h3 class="font-black">✈️ Travels</h3><span id="travelsCount" class="bg-black text-white text-[8px] px-1.5 py-0.5 rounded-full">0</span></div>
-<input id="travelsName" placeholder="Name" class="w-full mt-1 rounded bg-black text-white text-[10px]"><button onclick="addCat('travels')" class="w-full bg-black text-white mt-1 rounded font-bold">+ Add</button>
-</div>
-
-<div class="compact-card bg-gradient-to-br from-pink-500 to-purple-600 text-white col-span-2">
-<div class="flex justify-between items-center"><h3 class="font-black">📦 Others</h3><span id="othersCount" class="bg-white text-black text-[8px] px-1.5 py-0.5 rounded-full">0</span></div>
-<div class="flex gap-1 mt-1"><input id="othersName" placeholder="Other Business Name" class="flex-1 rounded bg-black text-white text-[10px]"><button onclick="addCat('others')" class="bg-white text-black px-3 rounded font-bold">+ Add</button></div>
-</div>
-
-</div>
-
-<!-- Sale Form Compact -->
-<div class="bg-[#0f172a] p-2 rounded-lg mt-2 border border-white/10">
-<p class="text-[10px] font-bold mb-1">+ Add Sale / Due</p>
-<div class="grid grid-cols-4 gap-1">
-<select id="catSelect" class="bg-black border border-white/10 rounded col-span-2"><option value="finance">Finance</option><option value="agriculture">Agriculture</option><option value="shop">Shop</option><option value="travels">Travels</option><option value="others">Others</option></select>
-<input id="saleAmt" type="number" placeholder="Sale" class="bg-black border border-white/10 rounded">
-<input id="dueAmt" type="number" placeholder="Due" class="bg-black border border-white/10 rounded">
-<input id="custName" placeholder="Customer" class="bg-black border border-white/10 rounded col-span-3">
-<button onclick="addSale()" class="bg-emerald-500 text-black font-bold rounded">Save</button>
+<div class="bg-white rounded-full p-2 flex justify-around mt-4 shadow-md">
+<span class="text-blue-600 font-bold text-[10px]">🏠 Home</span><span class="text-gray-400 text-[10px]">Analytics</span><span class="w-8 h-8 bg-blue-600 rounded-xl text-white flex items-center justify-center">+</span><span class="text-gray-400 text-[10px]">🔔</span><span class="text-gray-400 text-[10px]">👤</span>
 </div>
 </div>
 
@@ -73,21 +63,42 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebas
 import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 const firebaseConfig = { apiKey: "AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs", authDomain: "jus-bmp-skf.firebaseapp.com", databaseURL: "https://jus-bmp-skf-default-rtdb.firebaseio.com", projectId: "jus-bmp-skf", storageBucket: "jus-bmp-skf.firebasestorage.app", messagingSenderId: "763512076096", appId: "1:763512076096:web:3e5f79cc274b34d8106ca5" };
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
-window.addCat = (cat)=>{
-  const map={finance:'financeName',agriculture:'agriName',shop:'shopName',travels:'travelsName',others:'othersName'};
-  const name=document.getElementById(map[cat]).value; if(!name) return;
-  push(ref(db,'jus/categories/'+cat),{name,created:Date.now()}); document.getElementById(map[cat]).value='';
+
+window.addCat=()=>{
+  const name=orgName.value, oid=orgID.value, cat=catSelect.value;
+  if(!name ||!oid) return alert('Name & ID দাও!');
+  push(ref(db,'jus/categories/'+cat),{name, orgID:oid, time:Date.now()});
+  orgName.value=''; orgID.value='';
+  alert('✅ '+name+' Added!');
 }
-window.addSale = ()=>{ const cat=catSelect.value,sale=parseFloat(saleAmt.value)||0,due=parseFloat(dueAmt.value)||0,cust=custName.value||'Walk-in'; if(!sale&&!due) return; push(ref(db,'jus/allSales'),{cat,sale,due,cust,created:Date.now()}); saleAmt.value='';dueAmt.value='';custName.value=''; }
-onValue(ref(db,'jus/'), snap=>{
-  const data=snap.val()||{},cats=data.categories||{},sales=Object.values(data.allSales||{});
-  document.getElementById('financeCount').innerText=Object.keys(cats.finance||{}).length;
-  document.getElementById('agriCount').innerText=Object.keys(cats.agriculture||{}).length;
-  document.getElementById('shopCount').innerText=Object.keys(cats.shop||{}).length;
-  document.getElementById('travelsCount').innerText=Object.keys(cats.travels||{}).length;
-  document.getElementById('othersCount').innerText=Object.keys(cats.others||{}).length;
-  document.getElementById('totalOrg').innerText=Object.values(cats).reduce((a,c)=>a+Object.keys(c||{}).length,0);
-  let ts=0,td=0; sales.forEach(s=>{ts+=s.sale||0;td+=s.due||0;});
-  todaySale.innerText='৳'+ts; totalDue.innerText='৳'+td; totalColl.innerText='৳'+(ts-td);
+window.showCat=(c)=>{ catSelect.value=c; window.scrollTo(0,document.body.scrollHeight); }
+
+onValue(ref(db,'jus/categories'), s=>{
+  const d=s.val()||{};
+  const finance = Object.keys(d.finance||{}).length;
+  const agri = Object.keys(d.agriculture||{}).length;
+  const shop = Object.keys(d.shop||{}).length;
+  const travels = Object.keys(d.travels||{}).length;
+  const others = Object.keys(d.others||{}).length;
+  const total = finance+agri+shop+travels+others;
+
+  // New Stats
+  document.getElementById('totalOrgName').innerText = total;
+  document.getElementById('totalOrgID').innerText = total; // ID count same as Org
+  document.getElementById('totalBranch').innerText = finance+agri+travels; // Branch = Finance+Agri+Travels
+  document.getElementById('totalShopMain').innerText = shop;
+  document.getElementById('totalOthersMain').innerText = others;
+
+  document.getElementById('totalOrg').innerText = total;
+  document.getElementById('financeCount').innerText = finance;
+  document.getElementById('agriCount').innerText = agri;
+  document.getElementById('shopCount').innerText = shop;
+  document.getElementById('travelsCount').innerText = travels;
+  document.getElementById('othersCount').innerText = others;
+});
+onValue(ref(db,'jus/allSales'), s=>{
+  const sales=Object.values(s.val()||{}); let ts=0,td=0; sales.forEach(x=>{ts+=x.sale||0;td+=x.due||0;});
+  document.getElementById('todaySale').innerText='৳'+ts;
+  document.getElementById('totalDue').innerText='৳'+td;
 });
 </script></body></html>
