@@ -12,9 +12,10 @@ input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #e
 .badge{background:#1e40af;color:#fff;padding:12px 18px;border-radius:12px;font-weight:bold}
 .btn{width:100%;padding:14px;border:none;border-radius:12px;background:#1e40af;color:#fff;font-weight:bold;margin-top:12px;font-size:15px}
 .listItem{background:#fff;border-radius:14px;padding:12px;margin:8px 10px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.07)}
-.listItem b{font-size:14px}.listItem small{color:#666;font-size:11px}
+.listItem b{font-size:14px}.listItem small{color:#666;font-size:11px;display:block;line-height:1.4}
 .actBtn{padding:6px 10px;border:none;border-radius:8px;font-size:12px;margin-left:4px;cursor:pointer}
 .edit{background:#2563eb;color:#fff}.del{background:#ef4444;color:#fff}
+.row2{display:flex;gap:8px}.row2 div{flex:1}
 .botNav{position:fixed;bottom:10px;left:10px;right:10px;background:#fff;border-radius:20px;display:flex;justify-content:space-around;padding:10px;box-shadow:0 4px 20px rgba(0,0,0,.15)}
 </style></head><body>
 
@@ -39,8 +40,11 @@ input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #e
 <label>Branch Name</label><input id="branchName" list="branchList" placeholder="Enter branch name"><datalist id="branchList"></datalist>
 <label>Branch ID Auto Generate - 01</label><div class="idRow"><input id="orgUserID" readonly><div class="badge" id="branchID">01</div></div><div style="font-size:11px;color:#666" id="genText">Auto: 01</div>
 <label>Branch Category</label><select id="cat"><option selected>Branch Agriculture</option><option>Branch Finance</option><option>Branch Shop</option><option>Branch Travels</option><option>Branch Others</option></select>
+
 <label>Mobile Number</label><input id="mob" placeholder="+880 1XXX">
-<label>Password</label><input id="pass" type="password" placeholder="••••">
+<label>Address</label><input id="address" placeholder="Enter full address - গ্রাম, থানা, জেলা">
+<div class="row2"><div><label>Filter Charge (৳)</label><input id="filterCharge" type="number" placeholder="Ex: 500"></div><div><label>Password</label><input id="pass" type="password" placeholder="••••"></div></div>
+
 <button class="btn" id="saveBtn" onclick="saveData()">Save Organization</button>
 </div>
 
@@ -50,7 +54,7 @@ input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #e
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 const firebaseConfig={apiKey:"AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs",authDomain:"jus-bmp-skf.firebaseapp.com",databaseURL:"https://jus-bmp-skf-default-rtdb.firebaseio.com",projectId:"jus-bmp-skf",storageBucket:"jus-bmp-skf.firebasestorage.app",messagingSenderId:"763512076096",appId:"1:763512076096:web:3e5f79cc274b34d8106ca5"};
 const app=initializeApp(firebaseConfig); const db=getDatabase(app);
 let totalCount=0, editId=null, editCat=null;
@@ -65,7 +69,7 @@ onValue(ref(db,'jus/categories'), s=>{
       if(catL.includes('shop')) shopTotal++;
       orgSet.add(item.orgName); branchSet.add(item.branchName);
       if(!orgMap[item.orgName]) orgMap[item.orgName]=[]; if(!orgMap[item.orgName].includes(item.branchName)) orgMap[item.orgName].push(item.branchName);
-      listHTML+=`<div class="listItem"><div><b>${item.orgName} - ${item.branchName}</b><br><small>ID:${id} | ${item.category} | ${item.mobile}</small></div><div><button class="actBtn edit" onclick="editData('${catName}','${id}')">Edit</button><button class="actBtn del" onclick="delData('${catName}','${id}')">Del</button></div></div>`;
+      listHTML+=`<div class="listItem"><div><b>${item.orgName} - ${item.branchName}</b><small>ID:${id} | ${item.category} | ${item.mobile}<br>📍 ${item.address||'No Address'} | Filter: ৳${item.filterCharge||0}</small></div><div><button class="actBtn edit" onclick="editData('${catName}','${id}')">Edit</button><button class="actBtn del" onclick="delData('${catName}','${id}')">Del</button></div></div>`;
     });
   });
   totalCount=total;
@@ -80,20 +84,17 @@ onValue(ref(db,'jus/categories'), s=>{
 });
 
 window.saveData=async()=>{
-  const org=orgName.value.trim(), bra=branchName.value.trim(), catV=cat.value, mobV=mob.value.trim(), pas=pass.value.trim();
+  const org=orgName.value.trim(), bra=branchName.value.trim(), catV=cat.value, mobV=mob.value.trim(), pas=pass.value.trim(), addr=address.value.trim(), fCharge=filterCharge.value.trim();
   let id=orgUserID.value.trim(); if(!org||!bra||!mobV||!pas) return alert("সব লাগবে!");
-  const data={orgName:org, organizationName:org, branchName:bra, branchID:id, orgUserID:id, orgID:id, mobile:mobV, mobileNumber:mobV, password:pas, branchPassword:pas, category:catV, status:"active", createdAt:Date.now()};
+  const data={orgName:org, organizationName:org, branchName:bra, branchID:id, orgUserID:id, orgID:id, mobile:mobV, mobileNumber:mobV, password:pas, branchPassword:pas, category:catV, address:addr, filterCharge:fCharge, status:"active", createdAt:Date.now()};
   if(editId){ await set(ref(db,'jus/categories/'+editCat+'/'+editId), data); await set(ref(db,'jus/users/'+editId), data); editId=null; editCat=null; saveBtn.innerText="Save Organization"; }
   else{ await set(ref(db,'jus/categories/'+catV+'/'+id), data); await set(ref(db,'jus/users/'+id), data); }
-  alert("✅ Saved! ID:"+id); orgName.value=""; branchName.value=""; mob.value=""; pass.value="";
+  alert("✅ Saved! ID:"+id); orgName.value=""; branchName.value=""; mob.value=""; pass.value=""; address.value=""; filterCharge.value="";
 }
-
 window.editData=async(c,id)=>{
   const snap=await get(ref(db,'jus/categories/'+c+'/'+id)); if(!snap.exists()) return;
-  const d=snap.val(); orgName.value=d.orgName; branchName.value=d.branchName; cat.value=d.category; mob.value=d.mobile; pass.value=d.password; orgUserID.value=id; branchID.innerText=id; editId=id; editCat=c; saveBtn.innerText="Update Organization"; window.scrollTo(0,0);
+  const d=snap.val(); orgName.value=d.orgName; branchName.value=d.branchName; cat.value=d.category; mob.value=d.mobile; pass.value=d.password; address.value=d.address||""; filterCharge.value=d.filterCharge||""; orgUserID.value=id; branchID.innerText=id; editId=id; editCat=c; saveBtn.innerText="Update Organization"; window.scrollTo(0,0);
 }
 window.delData=async(c,id)=>{ if(!confirm("Delete ID "+id+"?")) return; await remove(ref(db,'jus/categories/'+c+'/'+id)); await remove(ref(db,'jus/users/'+id)); alert("Deleted!"); }
-
-// Org select -> Branch auto
 orgName.addEventListener('change', ()=>{ const sel=orgName.value; const list=window.orgMapData?.[sel]||[]; branchList.innerHTML=""; list.forEach(b=>{ let o=document.createElement('option'); o.value=b; branchList.appendChild(o); }); if(list[0]) branchName.value=list[0]; });
 </script></body></html>
