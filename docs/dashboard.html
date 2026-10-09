@@ -1,9 +1,26 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JUS Dashboard</title><script src="https://cdn.tailwindcss.com"></script></head>
+<title>JUS Dashboard - Locked</title><script src="https://cdn.tailwindcss.com"></script></head>
 <body class="bg-[#f5f6fa] p-3">
-<div class="max-w-[420px] mx-auto bg-[#eef0f5] rounded-[30px] p-4 shadow-xl">
-<div class="flex justify-between items-center mb-3"><h1 class="text-[16px] font-black text-gray-800">JUS Dashboard</h1><div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">A</div></div>
+
+<!-- 🔐 LOCK SCREEN -->
+<div id="lockScreen" class="fixed inset-0 bg-[#eef0f5] z-[9999] flex items-center justify-center p-4">
+<div class="bg-white rounded-[20px] p-6 w-full max-w-[320px] shadow-2xl text-center">
+<div class="w-16 h-16 bg-blue-100 rounded-full mx-auto flex items-center justify-center text-2xl mb-3">🔒</div>
+<h2 class="font-black text-[16px] mb-1">JUS Dashboard Locked</h2>
+<p class="text-[11px] text-gray-500 mb-4">Super Admin Password দাও</p>
+<input id="lockPass" type="password" placeholder="Enter Admin Password" class="w-full p-3 rounded-xl bg-gray-100 text-[12px] mb-3 outline-none text-center font-bold">
+<button onclick="unlock()" class="w-full bg-blue-600 text-white p-3 rounded-xl text-[12px] font-bold">🔓 Unlock Dashboard</button>
+<p class="text-[9px] text-gray-400 mt-3">Default: JUS@2025</p>
+<p id="lockError" class="text-[10px] text-red-500 mt-2 hidden">❌ ভুল Password!</p>
+</div>
+</div>
+
+<div id="mainDashboard" class="hidden max-w-[420px] mx-auto bg-[#eef0f5] rounded-[30px] p-4 shadow-xl">
+<div class="flex justify-between items-center mb-3">
+<h1 class="text-[16px] font-black text-gray-800">JUS Dashboard</h1>
+<div class="flex gap-2 items-center"><div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">A</div><button onclick="lockAgain()" class="text-[10px] bg-red-50 text-red-500 px-2 py-1 rounded-full">🔒 Lock</button></div>
+</div>
 
 <div class="bg-white rounded-xl p-3 shadow-sm mb-4">
 <p class="font-bold text-[11px] text-gray-800 mb-2">🏢 Organization Summary</p>
@@ -19,15 +36,15 @@
 </div>
 
 <div class="bg-white rounded-xl p-3 shadow-sm mb-4">
-<div class="flex justify-between"><p class="font-bold text-[11px] text-gray-800">Overall Overview</p><span class="text-[9px] bg-blue-50 text-blue-500 px-2 py-1 rounded-full">Live Firebase</span></div>
+<div class="flex justify-between"><p class="font-bold text-[11px]">Overall Overview</p><span class="text-[9px] bg-blue-50 text-blue-500 px-2 py-1 rounded-full">Live Firebase</span></div>
 <div class="grid grid-cols-3 gap-2 mt-3 text-center">
-<div><div class="w-10 h-10 bg-green-100 rounded-full mx-auto flex items-center justify-center">💰</div><p class="text-[9px] mt-1">Org</p><h3 id="totalOrg" class="font-black text-[12px]">0</h3></div>
-<div><div class="w-10 h-10 bg-blue-100 rounded-full mx-auto flex items-center justify-center">📦</div><p class="text-[9px] mt-1">Sale</p><h3 id="todaySale" class="font-black text-[12px]">৳0</h3></div>
-<div><div class="w-10 h-10 bg-purple-100 rounded-full mx-auto flex items-center justify-center">👥</div><p class="text-[9px] mt-1">Due</p><h3 id="totalDue" class="font-black text-[12px]">৳0</h3></div>
+<div><div class="w-10 h-10 bg-green-100 rounded-full mx-auto flex items-center justify-center">💰</div><p class="text-[9px]">Org</p><h3 id="totalOrg" class="font-black text-[12px]">0</h3></div>
+<div><div class="w-10 h-10 bg-blue-100 rounded-full mx-auto flex items-center justify-center">📦</div><p class="text-[9px]">Sale</p><h3 id="todaySale" class="font-black text-[12px]">৳0</h3></div>
+<div><div class="w-10 h-10 bg-purple-100 rounded-full mx-auto flex items-center justify-center">👥</div><p class="text-[9px]">Due</p><h3 id="totalDue" class="font-black text-[12px]">৳0</h3></div>
 </div>
 </div>
 
-<p class="font-bold mb-2 text-[12px] text-gray-800">Categories</p>
+<p class="font-bold mb-2 text-[12px]">Categories</p>
 <div class="grid grid-cols-3 gap-2 mb-4">
 <button onclick="selectCat('finance')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-blue-100 rounded-full mx-auto flex items-center justify-center text-xl">$</div><p class="text-[9px] font-bold mt-2">Branch Finance <span id="financeCount" class="bg-gray-100 text-[8px] px-1 rounded-full">0</span></p></button>
 <button onclick="selectCat('agriculture')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-green-100 rounded-full mx-auto flex items-center justify-center text-xl">🌱</div><p class="text-[9px] font-bold mt-2">Branch Agriculture <span id="agriCount" class="bg-gray-100 text-[8px] px-1 rounded-full">0</span></p></button>
@@ -36,22 +53,22 @@
 <button onclick="selectCat('others')" class="bg-white p-3 rounded-xl shadow-sm text-center"><div class="w-12 h-12 bg-gray-200 rounded-full mx-auto flex items-center justify-center text-xl">•••</div><p class="text-[9px] font-bold mt-2">Branch Others <span id="othersCount" class="bg-gray-100 text-[8px] px-1 rounded-full">0</span></p></button>
 </div>
 
-<!-- Add New Org Form Updated -->
 <div class="bg-white p-3 rounded-xl shadow-sm">
 <p class="font-bold text-[11px] mb-2">+ Add New Organization</p>
 <input id="orgName" oninput="autoGenID()" placeholder="Organization Name" class="w-full p-2.5 rounded-lg bg-gray-100 text-[11px] mb-2 outline-none">
-<input id="branchTitle" oninput="autoGenID()" placeholder="Branch Title (ex: Rajshahi Branch)" class="w-full p-2.5 rounded-lg bg-gray-100 text-[11px] mb-2 outline-none">
+<input id="branchName" oninput="autoGenID()" placeholder="Branch Name (ex: Rajshahi Sadar)" class="w-full p-2.5 rounded-lg bg-gray-100 text-[11px] mb-2 outline-none">
+<input id="branchTitle" oninput="autoGenID()" placeholder="Branch Title (ex: Main Branch)" class="w-full p-2.5 rounded-lg bg-gray-100 text-[11px] mb-2 outline-none">
 <input id="mobile" placeholder="Mobile Number" type="tel" class="w-full p-2.5 rounded-lg bg-gray-100 text-[11px] mb-2 outline-none">
-<input id="password" placeholder="Password" type="password" class="w-full p-2.5 rounded-lg bg-gray-100 text-[11px] mb-2 outline-none">
+<input id="password" placeholder="Branch Login Password" type="password" class="w-full p-2.5 rounded-lg bg-gray-100 text-[11px] mb-2 outline-none">
 <div class="flex gap-2 mb-2">
-<select id="catSelect" onchange="autoGenID()" class="w-[60%] p-2.5 rounded-lg bg-gray-100 text-[11px] outline-none">
+<select id="catSelect" onchange="autoGenID()" class="w-[55%] p-2.5 rounded-lg bg-gray-100 text-[11px] outline-none">
 <option value="finance">Branch Finance</option>
 <option value="agriculture">Branch Agriculture</option>
 <option value="shop">Branch Shop</option>
 <option value="travels">Branch Travels</option>
 <option value="others">Branch Others</option>
 </select>
-<input id="orgID" placeholder="Auto ID" readonly class="w-[40%] p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-[11px] font-bold text-blue-600 outline-none">
+<input id="orgID" readonly placeholder="Auto ID" class="w-[45%] p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-[11px] font-bold text-blue-600 outline-none">
 </div>
 <button onclick="addOrg()" class="w-full bg-blue-600 text-white p-2.5 rounded-lg text-[11px] font-bold">Save to Firebase</button>
 <p id="genText" class="text-[9px] text-green-600 mt-1 text-center"></p>
@@ -68,40 +85,54 @@ import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebas
 const firebaseConfig = { apiKey: "AIzaSyD2lEhqt_90knN7xERpQN9GZ4U_uuUnJs", authDomain: "jus-bmp-skf.firebaseapp.com", databaseURL: "https://jus-bmp-skf-default-rtdb.firebaseio.com", projectId: "jus-bmp-skf", storageBucket: "jus-bmp-skf.firebasestorage.app", messagingSenderId: "763512076096", appId: "1:763512076096:web:3e5f79cc274b34d8106ca5" };
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 
-window.autoGenID=()=>{
-  const name=document.getElementById('orgName').value.trim();
-  const branch=document.getElementById('branchTitle').value.trim();
-  const cat=document.getElementById('catSelect').value;
-  if(!name) { document.getElementById('orgID').value=''; return; }
-  const prefix = {finance:'FIN', agriculture:'AGRI', shop:'SHOP', travels:'TRV', others:'OTH'}[cat];
-  const orgCode = name.substring(0,3).toUpperCase().replace(/[^A-Z]/g,'') || 'JUS';
-  const branchCode = branch.substring(0,2).toUpperCase().replace(/[^A-Z]/g,'') || 'BR';
-  const rand = Math.floor(1000 + Math.random()*9000);
-  const id = `JUS-${prefix}-${orgCode}${branchCode}-${rand}`;
-  document.getElementById('orgID').value=id;
-  document.getElementById('genText').innerText='✅ Auto Generated: '+id;
+// 🔐 LOCK SYSTEM
+const ADMIN_PASS = "JUS@2025";
+window.unlock=()=>{
+  if(document.getElementById('lockPass').value===ADMIN_PASS){
+    localStorage.setItem('jus_unlock','true');
+    document.getElementById('lockScreen').classList.add('hidden');
+    document.getElementById('mainDashboard').classList.remove('hidden');
+  } else {
+    document.getElementById('lockError').classList.remove('hidden');
+  }
 }
-window.selectCat=(c)=>{ document.getElementById('catSelect').value=c; autoGenID(); window.scrollTo(0,document.body.scrollHeight); }
+window.lockAgain=()=>{ localStorage.removeItem('jus_unlock'); location.reload(); }
+if(localStorage.getItem('jus_unlock')==='true'){
+  document.getElementById('lockScreen').classList.add('hidden');
+  document.getElementById('mainDashboard').classList.remove('hidden');
+}
+
+window.autoGenID=()=>{
+  const org=document.getElementById('orgName').value.trim();
+  const brName=document.getElementById('branchName').value.trim();
+  const brTitle=document.getElementById('branchTitle').value.trim();
+  const cat=document.getElementById('catSelect').value;
+  if(!org) return;
+  const prefix = {finance:'FIN', agriculture:'AGRI', shop:'SHOP', travels:'TRV', others:'OTH'}[cat];
+  const orgC = org.substring(0,3).toUpperCase().replace(/[^A-Z]/g,'')||'JUS';
+  const brC = (brName.substring(0,2)+brTitle.substring(0,1)).toUpperCase().replace(/[^A-Z]/g,'')||'BR';
+  const rand = Math.floor(1000+Math.random()*9000);
+  const id = `JUS-${prefix}-${orgC}${brC}-${rand}`;
+  document.getElementById('orgID').value=id;
+  document.getElementById('genText').innerText='✅ Auto: '+id;
+}
+window.selectCat=(c)=>{ document.getElementById('catSelect').value=c; autoGenID(); }
 window.addOrg=()=>{
   const orgName=document.getElementById('orgName').value;
+  const branchName=document.getElementById('branchName').value;
   const branchTitle=document.getElementById('branchTitle').value;
   const mobile=document.getElementById('mobile').value;
   const password=document.getElementById('password').value;
   const orgID=document.getElementById('orgID').value;
   const cat=document.getElementById('catSelect').value;
-  if(!orgName ||!branchTitle ||!mobile ||!password) return alert('সব ফিল্ড পূরণ করো ভাই!');
-  push(ref(db,'jus/categories/'+cat),{orgName, branchTitle, mobile, password, orgID, category:cat, time:Date.now()});
-  // clear
-  document.getElementById('orgName').value=''; document.getElementById('branchTitle').value=''; document.getElementById('mobile').value=''; document.getElementById('password').value=''; document.getElementById('orgID').value=''; document.getElementById('genText').innerText='';
-  alert('✅ '+orgName+' - '+branchTitle+' Added! ID: '+orgID);
+  if(!orgName||!branchName||!branchTitle||!mobile||!password) return alert('সব ফিল্ড পূরণ করো ভাই!');
+  push(ref(db,'jus/categories/'+cat),{orgName, branchName, branchTitle, mobile, password, orgID, category:cat, time:Date.now()});
+  document.getElementById('orgName').value=''; document.getElementById('branchName').value=''; document.getElementById('branchTitle').value=''; document.getElementById('mobile').value=''; document.getElementById('password').value=''; document.getElementById('orgID').value=''; document.getElementById('genText').innerText='';
+  alert('✅ Saved! ID: '+orgID);
 }
-
 onValue(ref(db,'jus/categories'), s=>{
-  const d=s.val()||{};
-  const f=Object.keys(d.finance||{}).length, a=Object.keys(d.agriculture||{}).length, sh=Object.keys(d.shop||{}).length, t=Object.keys(d.travels||{}).length, o=Object.keys(d.others||{}).length;
-  const total=f+a+sh+t+o;
-  document.getElementById('totalOrgName').innerText=total; document.getElementById('totalOrgID').innerText=total;
-  document.getElementById('totalBranch').innerText=f+a+t+sh+o; document.getElementById('totalShopMain').innerText=sh; document.getElementById('totalOthersMain').innerText=o;
+  const d=s.val()||{}; const f=Object.keys(d.finance||{}).length, a=Object.keys(d.agriculture||{}).length, sh=Object.keys(d.shop||{}).length, t=Object.keys(d.travels||{}).length, o=Object.keys(d.others||{}).length; const total=f+a+sh+t+o;
+  document.getElementById('totalOrgName').innerText=total; document.getElementById('totalOrgID').innerText=total; document.getElementById('totalBranch').innerText=total; document.getElementById('totalShopMain').innerText=sh; document.getElementById('totalOthersMain').innerText=o;
   document.getElementById('totalOrg').innerText=total; document.getElementById('financeCount').innerText=f; document.getElementById('agriCount').innerText=a; document.getElementById('shopCount').innerText=sh; document.getElementById('travelsCount').innerText=t; document.getElementById('othersCount').innerText=o;
 });
 onValue(ref(db,'jus/allSales'), s=>{
